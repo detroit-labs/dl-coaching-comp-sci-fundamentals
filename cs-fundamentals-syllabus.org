@@ -1,0 +1,108 @@
+#+TITLE:  Computer Science Fundamentals
+#+AUTHOR: Nathan Dotz
+#+DATE:   Detroit Labs Dev Coaching 2018
+#+EMAIL:  ndotz@detroitlabs.com
+#+LANGUAGE:  en
+
+* Course Overview
+  This course introduces fundamentals of computer science and
+  architecture to those wishing to better understand how computer
+  programs are compiled and executed and how they relate to the
+  underlying architecture of the systems they are executed on. This
+  survey course covers introductions to Von Neumann architecture,
+  memory allocation, access and retrieval, introductions to C and C++,
+  stack- and heap-based memory, abstractions around linear memory
+  storage, memory references, and efficiency of algorithms on the
+  small scale.
+* Course Objectives
+  Students completing this course will be able to:
+  - Understand the basics of how a modern computer processor works
+  - Understand the basics of data are stored in memory
+  - Understand the difference between stack and heap memory
+  - Understand the relation between address spaces and physical memory
+  - Identify unnecessary complexity in algorithms due to inefficient
+    language application
+  - Write simple C and C++ programs utilizing arrays, pointers,
+    structs, and classes
+* Course Materials
+  - Programming in C (4th Edition), Kochan ­ ISBN-10: 0321776410
+  - C++ For C Programmers (3rd Edition), Pohl ­ ISBN-10: 0201395193 (optional)
+* Course Outline
+** Session 1 -
+   Lecture
+   - How does data look to a computer?
+   - What does a program look like to a computer?
+   - Types, sizes, and why they matter
+   Lab
+   - Hello world
+   - Type sizes
+   - Loops
+   - Conditionals
+** Session 2 -
+   - What is computer science?
+   - What is a data structure?
+   - What is an algorithm?
+   Lab
+   - Arrays
+   - Structs
+   - Functions
+** Session 3 -
+   Lecture
+   - Why is C so Weird?
+   - Systems and General Purpose programming
+   Lab
+   - Pointers
+   - Bit-wise operations
+   - Enumerations
+** Session 4 -
+   Lecture
+   - Beyond the Processor
+   - Computer Architectures
+   Lab
+   - The Preprocessor
+   - macros
+   - Working with larger programs
+   - I/O part 1
+** Session 5 -
+   Lecture
+   - The Heap and the Stack
+   Lab
+   - malloc, calloc, and free
+   - I/O part 2
+** Session 6 -
+   Lecture
+   - In search of a better C
+   - Differences between C and C++
+   Lab
+   - Ditch the preprocessor
+   - Type-safe I/O
+   - Classes and object orientation
+   - C++ Functions and Generics
+   - namespaces
+** Session 7 -
+   Lecture
+   - Principles of Object Oriented Programming
+   Lab
+   - Default constructors
+   - Initialization
+   - Conversion and Copy constructors
+   - Dynamic memory allocation
+   - Hello, STL
+** Session 8 -
+   Lecture
+   - The World's Favorite Data structures
+   Lab
+   - STL Containers
+   - STL I/O types
+   - Iterators
+** Session 9 -
+   Lecture
+   - If Only Programming Languages Were Perfect
+   Lab
+   - Inheritance
+   - Virtual members
+   - Virtual functions
+   - Assertions & Exceptions
+** Session 10 -
+   - Wrap up
+   - Final homework
