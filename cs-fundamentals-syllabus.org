@@ -17,7 +17,7 @@
 * Course Objectives
   Students completing this course will be able to:
   - Understand the basics of how a modern computer processor works
-  - Understand the basics of data are stored in memory
+  - Understand how data are stored in memory
   - Understand the difference between stack and heap memory
   - Understand the relation between address spaces and physical memory
   - Identify unnecessary complexity in algorithms due to inefficient
