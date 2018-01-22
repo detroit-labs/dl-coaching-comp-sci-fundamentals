@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Computer Science Fundamentals</title>
+<meta name="author" content="(Detroit Labs Dev Coaching)"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="./reveal.js/css/reveal.css"/>
+
+<link rel="stylesheet" href="./reveal.js/css/theme/league.css" id="theme"/>
+
+<link rel="stylesheet" href="./presentation.css"/>
+<link rel="stylesheet" href="./reveal.js/lib/css/zenburn.css"/>
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = './reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h1 class="title">Computer Science Fundamentals</h1><h2 class="author">Detroit Labs Dev Coaching</h2><h2 class="date">2018</h2>
+</section>
+
+<section>
+<section id="slide-org35ece16">
+<h2 id="org35ece16">Lab 1</h2>
+<aside class="notes">
+<ul>
+<li>Welcome to the first lab, where we will begin to explore the C
+programming language in our quest to understand the fundamentals
+of Computer Science.</li>
+
+</ul>
+
+</aside>
+<p>
+printf("Hello, C.\n");
+</p>
+</section>
+</section>
+<section>
+<section id="slide-org46bcfd9">
+<h2 id="org46bcfd9">Baby Steps</h2>
+<aside class="notes">
+<p>
+To get started, I want to take a look at a very simple C program
+and just break down what something like "Hello, World" looks like
+in C before we dig any deeper, and also as a sanity check to make
+sure that your environment works correctly.
+</p>
+
+</aside>
+</section>
+<section id="slide-org150cb74">
+<h3 id="org150cb74">Hello, C.</h3>
+<aside class="notes">
+<ul>
+<li>In the lecture we saw an even simpler C program so that we could
+look at how processors work. However, "Hello, World" is probably
+the simplest practical program that we can write.</li>
+<li>This program illustrates a few things. First, all C programs
+start with a "main" function as their entry point. Statements
+within the main function are executed sequentially until the main
+function returns.</li>
+<li>We can see that main returns an integer. This will be used as the
+exit code for the operating system, to indicate a success or
+failure.</li>
+<li>Because we're keeping things simple, we've omitted the arguments
+to the main function by simply declaring the arguments as
+void. The specifics of this are not important right now, but
+we'll be learning more about what this means next session.</li>
+<li>We utilize a library function to print things to the screen. The
+specifics of how to do this by hand are complicated, so we rely
+on a library, in this case stdio, to handle printing for us. We
+can see that this is included at the top of the file. Again, the
+specifics of how this works are not important, and we'll be
+learning more about this in future sessions.</li>
+<li>Our program concludes with returning 0, which as stated earlier
+will be reported as the exit code for our program to the
+operating system. This line is actually unnecessary, as it would
+be inserted implicitly if it were not present, but including
+explicit return values for the main function is considered good
+code style.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre id="hello.c"><code class="c" >#include &lt;stdio.h>
+
+int main(void) {
+    printf("Hello, C.\n");
+    return 0;
+}
+</code></pre>
+</div>
+</section>
+<section id="slide-org2ba4e6e">
+<h3 id="org2ba4e6e">Compiling a C program</h3>
+<aside class="notes">
+<ul>
+<li>The reading material provides more details about the specifics of
+using the compiler in rudimentary ways, but for most of this
+course, I will suggest using the following format for compiling
+you C programs.</li>
+<li>We will use the GNU C Compiler, known as GCC, to compile our
+programs. There are many other C compilers available and they
+each have their advantages, but GCC is a long-lived industry
+standard with many resources and much documentation available on
+it operation.</li>
+<li>the -Wall flag enables all warnings. This will be of assistance
+to you as you navigate the world of C programming, and may help
+to point out mistakes that are easy to make as you learn the
+programming language.</li>
+<li>We provide the C source file we want to compile as an
+argument. As we build more complex programs, we'll learn more
+about how to give GCC what it needs to compile our program, but
+this is also information that won't be important until future
+sessions.</li>
+<li>I have also provided the -o flag which takes an argument, that is
+the name of the compiled program we would like to emit. If run
+without this flag, GCC will simply make a program called "a.out"
+and expect us to figure out what to do with the output.</li>
+<li>We can run our program by calling it with a relative path in the
+local directory. As we can see, this provides the expected output
+of printing the string "Hello, C."</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="shell" >$ gcc -Wall hello.c -o hello
+$ ./hello
+Hello, C.
+</code></pre>
+</div>
+</section>
+<section id="slide-org2e22782">
+<h3 id="org2e22782">Number truncation</h3>
+<aside class="notes">
+<ul>
+<li>One of the nice features of C is that because the data types
+we've seen so far are all numbers, they can be freely assigned to
+one another. However, there is no safety built in to such type
+conversions.</li>
+<li>Rather, the byte representation of the number in memory will
+dictate what the value will be after conversion to the new type.</li>
+<li>While it is generally safe to convert types to a type that has a
+larger capacity, converting to a type that takes up less memory
+will cause rollover if the value does not fit into the new memory
+size.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre id="number_truncation1.c"><code class="c" >int a = 32323;
+char b = a;
+printf("char b is %i.\n", b);
+</code></pre>
+</div>
+<div class="org-src-container">
+
+<pre><code class="shell" >$ gcc -Wall number_truncation1.c -o num
+$ ./num
+char b is 67.
+</code></pre>
+</div>
+</section>
+<section id="slide-org9091b17">
+<h3 id="org9091b17">Number truncation</h3>
+<aside class="notes">
+<ul>
+<li>It's also important to note that there is no implicit conversion
+of types. Doing division on an integer that would leave a
+remainder will discard the fractional part of the result.</li>
+<li>If the result type of this division were a floating point value,
+we would see a more accurate result. When the type of a result
+differs, C will use an appropriate implementation to convert the
+value when possible.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre id="number_truncation2.c"><code class="c" >int a = 10 / 3;
+printf("int a is %i.\n", a);
+</code></pre>
+</div>
+<div class="org-src-container">
+
+<pre><code class="shell" >$ gcc -Wall number_truncation2.c -o num
+$ ./num
+int a is 3.
+</code></pre>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-org67adfed">
+<h2 id="org67adfed">Looping</h2>
+<div class="outline-text-2" id="text-org67adfed">
+</div>
+</section>
+<section id="slide-org6122a0f">
+<h3 id="org6122a0f">For Loops</h3>
+<aside class="notes">
+<ul>
+<li>If you've programmed before, you're probably familiar with the
+for loop. Its job is to repeat a section of code while some
+condition holds true.</li>
+<li>A for loop is commonly used for a counting or tallying loop, as
+it allows for an initial assignment or declaration, as well as a
+post-loop operation that is commonly used for incrementing a loop
+counter or accumulator. However, none of its expressions are required.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre id="triangular.c"><code class="c" >int main(void) {
+    int tri = 0;
+    for(int n = 1; n <= 100; n = n + 1) {
+        tri = tri + n;
+    }
+    printf("The 100th triangle number is %i", tri);
+    return 0;
+}
+</code></pre>
+</div>
+</section>
+<section id="slide-orge1b8658">
+<h3 id="orge1b8658">Nested For Loops</h3>
+<aside class="notes">
+<ul>
+<li>Loops can also be nested. This is an extremely common pattern.</li>
+<li>Variables declared within any scope are only available in that
+scope, so while the i variable is available for the inner loop to
+print, the outer loop will be unable to see the j variable.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre id="one_hundred.c"><code class="c" >for(int i = 0; i < 100; i = i + 10) {
+    for(int j = 1; j <= 10; j = j + 1) {
+        printf("%i\t", i + j);
+    }
+    printf("\n");
+}
+</code></pre>
+</div>
+</section>
+<section id="slide-org544f019">
+<h3 id="org544f019">While Loops</h3>
+<aside class="notes">
+<ul>
+<li>The other common iteration mechanism in C is the while loop.</li>
+<li>The while loop is a significantly simpler looping construct than
+the for loop. It only takes a single expression, which is used to
+test if the loop should continue. Because while lacks an
+initialization or post-loop increment expression, any
+initialization needs to be handled outside the loop while any
+incrementing or other changes to the conditional need to be
+handled within the loop.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre id="gcd.c"><code class="c" >int u = 1026;
+int v = 405;
+int temp;
+
+while(v != 0) {
+    temp = u % v;
+    u = v;
+    v = temp;
+}
+</code></pre>
+</div>
+</section>
+<section id="slide-org0e06b68">
+<h3 id="org0e06b68">Break &amp; Continue</h3>
+<aside class="notes">
+<ul>
+<li>There are two additional control statements we can use for
+changing the behavior of loops.</li>
+<li>Break immediately ends any iteration as soon as the statement is
+encountered and can be used to exit a loop when some other
+condition that is not accounted for by the loop control
+expression is met.</li>
+<li>Continue on the other hand is used to skip the remaining
+statements in the loop body and return to the top of the loop. It
+is often used to conditionally run part of a loop when not every
+statement needs to be run for every iteration of the loop.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >while(1) {
+    printf("this only runs once\n");
+    break;
+}
+</code></pre>
+</div>
+<div class="org-src-container">
+
+<pre><code class="c" >int i = 10;
+while(i) {
+    i = i - 1;
+    continue;
+    printf("this will never print\n");
+}
+</code></pre>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-org05fb93a">
+<h2 id="org05fb93a">Conditionals</h2>
+<aside class="notes">
+<ul>
+<li>Conditionals are a construct used to control the flow of programs
+based on some condition being met. They function similarly to the
+loop control statements we've seen already, testing their
+argument as a boolean value, but allow for branching of programs
+into different paths of execution.</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org537af2c">
+<h3 id="org537af2c">If &amp; else</h3>
+<aside class="notes">
+nil
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >
+</code></pre>
+</div>
+</section>
+<section id="slide-orgf6eac9f">
+<h3 id="orgf6eac9f">&amp;&amp; and ||</h3>
+<aside class="notes">
+nil
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >
+</code></pre>
+</div>
+</section>
+</section>
+</div>
+</div>
+<script src="./reveal.js/lib/js/head.min.js"></script>
+<script src="./reveal.js/js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: true,
+slideNumber: 'c',
+rollingLinks: false,
+keyboard: true,
+overview: true,
+margin: 0.20,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+transitionSpeed: 'default',
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: './reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+ { src: './reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+});
+</script>
+</body>
+</html>

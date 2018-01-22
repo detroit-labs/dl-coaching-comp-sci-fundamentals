@@ -1,0 +1,388 @@
+#+TITLE:  Computer Science Fundamentals
+#+AUTHOR: Detroit Labs Dev Coaching
+#+DATE:   2018
+#+EMAIL:  ndotz@detroitlabs.com
+#+LANGUAGE:  en
+#+OPTIONS:   H:3 num:nil toc:nil \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   skip:nil d:nil todo:t pri:nil tags:not-in-toc timestamp:nil
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+REVEAL_PLUGINS: (highlight notes)
+#+REVEAL_THEME: league
+#+REVEAL_MARGIN: 0.2
+# #+REVEAL_MIN_SCALE: 0.5
+# #+REVEAL_MAX_SCALE: 2.5
+#+REVEAL_EXTRA_CSS: ./presentation.css
+
+* Lecture 1
+  #+BEGIN_NOTES
+  - What does data look like to a computer
+  - What do programs look like to a computer
+  - How does the representation of data relate to how computers process data
+  - Basically, computers are dumb
+  #+END_NOTES
+* What Does Data Look Like?
+** https://upload.wikimedia.org/wikipedia/commons/3/3c/DDR_RAM-3.jpg
+   #+BEGIN_NOTES
+   - You're probably familiar with one of these ­ a RAM module.
+   - This is what most people think of when we think of "storing data
+     in the computer"
+   - But how does RAM store data? How do we get data in and out of
+     there?
+   - In the case of RAM, these chips store electricity in different
+     parts of the chip to represent data
+   #+END_NOTES
+** https://upload.wikimedia.org/wikipedia/commons/9/90/Hard_Drive_%2811644419853%29.jpg
+   #+BEGIN_NOTES
+   - Or you might think of one of these ­ a hard drive
+   - At least this is what most hard drives looked like before the
+     prevalence of solid state drives
+   - Here, minuscule points along the stripes of the platter are
+     magnetized either positively or negatively to represent data
+   #+END_NOTES
+** What does "It's all just ones and zeros" mean?
+   #+BEGIN_NOTES
+   - How do we get from a spark of electricity to data we can relate to?
+   - No doubt you've heard "it's all just ones and zeros" bandied
+     about, but what does that mean? How do we get numbers and text
+     and graphics and movies from ones and zeros?
+   - We call these ones and zeros "bits" and they are the fundamental
+     element of how we represent data in the computer
+   #+END_NOTES
+   #+ATTR_HTML: :width 100%
+   | https://cdn.pixabay.com/photo/2013/10/15/03/40/sparks-195834_960_720.jpg | https://c1.staticflickr.com/9/8016/7317420838_edb29a4043_b.jpg |
+** A Bit as a Lightbulb
+   #+BEGIN_NOTES
+   - One way to help grok how computers keep track of data is to think
+     of a bit as a light bulb
+   - If the light is off, we can think of it as a 0
+   - If the light is on, we can think of it as a 1
+   - Once we've turned a light on or off, if we forget whether it was
+     a 0 or a 1, we can look back at the bulb and see if the light is on
+   #+END_NOTES
+   https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Carbonfilament.jpg/279px-Carbonfilament.jpg
+** What is a Bit?
+   #+BEGIN_NOTES
+   - The word "bit" is a portmanteau of "binary" and "digit"
+   - A bit is the smallest value we can usefully represent
+   - We could have built computers to run on human decimal digits 0-9,
+     but then a computer would need to be significantly more
+     complicated at its fundamental level
+   - This is a Difference Engine designed by Charles Babbage for
+     solving polynomial functions capable of calculating with 6-digit
+     numbers up to second-order polynomials.
+   #+END_NOTES
+   #+ATTR_HTML: :height 50%, :width 50%
+   [[https://upload.wikimedia.org/wikipedia/commons/1/1d/Charles_Babbage_Difference_Engine_No1.jpg]]
+** How About Many Bits?
+   #+BEGIN_NOTES
+   - So if all we can store are ones and zeros, how do we get all that
+     other stuff?
+   - By adding implicit meaning into series of consecutive ones and
+     zeros, we can encode more complex ideas into bits without
+     increasing the complexity of the mechanisms needed to store them
+   - For example, if we wanted to interpret these light bulbs as
+     binary numbers, with the first light representing the 1's digit,
+     the next light representing the 2's, the third representing the
+     4's digit, and the last representing the 8's, we can read these
+     lights as either a 5 or a 10, depending on the ordering we
+     interpret them in. This still allows us 16 possible values by
+     storing only 4 pieces of simple information.
+   #+END_NOTES
+   https://noschese180.files.wordpress.com/2013/05/imag21611.jpg
+** Encoding Data
+   #+BEGIN_NOTES
+   - For practical purposes, we can call interpreting series of bits
+     in different ways as encoding.
+   - For example, instead of a binary number, we could say that series
+     of bits might represent a pixel, with the A position for red,
+     B representing green, and C representing blue, and D representing
+     a flag for whether or not this is a pixel or not. This gives us a
+     total of 8 color combinations, but also the ability to interpret
+     the other 3 bits as something else entirely.
+   - By combining arbitrary numbers of bits, we can represent any data
+     we want as a series of on-off statements
+   #+END_NOTES
+   https://i.imgur.com/Aluf9RK.png
+** https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Z3_Deutsches_Museum.JPG/1280px-Z3_Deutsches_Museum.JPG
+  #+BEGIN_NOTES
+  - This is the Zuse Z3, the world's first working electromechanical
+    programmable, fully automatic digital computer.
+  - It was built with 2000 relays, and which relays were in the "on"
+    position versus the "off" position kept track of the
+    representation of the data it was working with.
+  - The move from Babbage's decimal digits to binary digits meant that
+    reliable computers which could model more diverse types of data
+    could be built from mostly commodity components.
+  - Although the Zuse Z3 read its programs from tape, Zuse predicted
+    the versatility of binary digits and patented the idea of program
+    data also being representable as part of the computer's memory.
+  #+END_NOTES
+** What is a Byte?
+   #+BEGIN_NOTES
+   - So back to bits... we know that series of bits are more valuable
+     to us than single on/off or true/false values.
+   - The standard way we generally refer to groups of bits is the
+     byte, a unit composed of 8 bits.
+   - A byte gives us 256 possible combinations of bits, and allows for
+     the modeling of quite a few things - for example the numbers
+     between -128 and 127, or more than enough room to store every
+     character that it's possible to type on a standard American
+     keyboard.
+   - So for example, this byte is the number 45, which we could
+     interpret as just the number 45, or as the hyphen character if
+     we're interpreting it as text.
+   #+END_NOTES
+   https://upload.wikimedia.org/wikipedia/commons/f/f5/Byte45.png
+** What's in a Memory Address
+   #+BEGIN_NOTES
+   - Since we now have a lot of bytes to keep track of, I'm sure you
+     can guess that we can pull the same trick and use series of bytes
+     in the same way we use series of bits, and by combining arbitrary
+     bytes in various orders we can model almost anything we'd like.
+   - So if we want to have many bytes, we probably need a way to get
+     at all those bytes. Enter: the memory address.
+   - A memory address is a number designating a particular byte we
+     would like to look at.
+   - The addressable memory space in most modern computers correlates
+     to the "word length" of processors - that's the 32-bit or 64-bit
+     designation related to your processor. While this isn't
+     necessarily true, as word length and address size are not always
+     the same, it's generally true.
+   - In 32 bits, there are 2^32 or 4,294,967,296 combinations, and
+     therefore that many addresses. We keep one byte at each address,
+     giving us a maximum of 4GB of addressable memory.
+   #+END_NOTES
+   #+ATTR_HTML: :height 50%, :width 50%
+   https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Little-Endian.svg/2000px-Little-Endian.svg.png
+* What Do Programs Look Like?
+  #+BEGIN_NOTES
+  - Now that we know all that, we'll be switching it up for a
+    moment.
+  - Generally, we don't just want a computer to store data, we want a
+    computer to do something with that data.
+  - Now that we understand roughly how a computer stores data at a
+    fundamental level, we should try to get a grasp of what we do in
+    code does on a fundamental level.
+  #+END_NOTES
+** What does a Line of Code Look Like?
+   #+BEGIN_NOTES
+   - So what does a line of code look like?
+   - We probably think of these as single actions.
+   - In truth, each of these lines of code translates to a different
+     number of operations that need to be performed by the processor.
+   #+END_NOTES
+   #+BEGIN_SRC c
+   int a = 1;
+   int b = a;
+   int c = a + b;
+   #+END_SRC
+** What is in a Line of Code?
+   #+BEGIN_NOTES
+   - While we are learning C, which we think of as a "low-level"
+     language, it's important to remember that the code we write is
+     still translated into more and more primitive code as it talks to
+     the hardware.
+   - The following line of C code actually generates the line of
+     assembly shown after it. Notice that it is "moving" the value 1
+     onto the double-word (32-bit) length pointer 4 bytes before the
+     end address of the program's allocated memory space.
+   - This generated assembly is a set of instructions for the
+     processor on what to actually do with the hardware. The computer
+     does not know or care what an A is, and for that matter doesn't
+     even really know what an integer is. DWORD here is simply a human
+     shortcut that means "4 bytes".
+   #+END_NOTES
+   #+BEGIN_SRC c
+   int a = 1;
+   #+END_SRC
+   #+BEGIN_SRC asm
+   mov DWORD PTR [rbp-4], 1
+   #+END_SRC
+** What does a Program Look Like?
+   #+BEGIN_NOTES
+   - Here is a simple C program. All it does is allocate 3
+     integers. The first is a 1. The second is a copy of that
+     same 1. The third is the result of adding those ones together.
+   - The return 0 at the end is not necessary, as 0 would be the
+     implicit exit code of the program, but otherwise, there is no
+     output, the computer simply adds the two numbers together and
+     then does nothing.
+   - So, looking at this program, you might think it does 3 things,
+     but this is not actually the case when it comes to the assembly
+     that is generated.
+   #+END_NOTES
+   https://i.imgur.com/64LDU8k.png
+** What is in a Program?
+   #+BEGIN_NOTES
+   - In truth, this program is doing many more things when it comes to
+     talking to the hardware.
+   - First, it sets ups a space in memory for the program to run
+     in. You will later learn that this is called the stack space.
+   - Then, it allocates a 1 to memory. This takes up 4 bytes in the
+     stack.
+   - The next line gets more complicated. To us humans programming in
+     C, it looks like we just say that B is the same thing as A. In
+     truth though, we are telling the processor to go look up the
+     memory location of A and move it into a register, and then move
+     the value of that register into a space in memory - so now we're
+     actually doing two things.
+   - Having said that, it's probably not surprising that the third
+     line does even more. First, we need to load both of the pieces of
+     memory we're referencing into different registers, so that's two
+     things already. Then, it actually adds the numbers
+     together. Lastly, it needs to move that calculated value into a
+     memory register.
+   - This program is significantly more complicated than we probably
+     assumed, and this is one of the simplest programs we could
+     possibly write!
+   #+END_NOTES
+   | https://i.imgur.com/64LDU8k.png | https://i.imgur.com/Swoib35.png |
+** What is an Instruction?
+   #+BEGIN_NOTES
+   - But wait... there's more! What happens when the processor
+     executes a single instruction?
+   - You'll have to excuse my hand-drawn diagram here, but I couldn't
+     find an adequately simple representation of what the insides of a
+     CPU look like. Sticklers should note that this is a greatly
+     simplified diagram and that there are a lot of pieces missing.
+   - What you are seeing here is a rough sketch of what we call
+     Modified Harvard Architecture, the successor to Von Neumann
+     architecture. It consists of an Arithmetic Logic Unit and a
+     Control Unit, which are shown in black, a number of registers,
+     shown in green and red, as well as blocks of memory, shown in
+     blue. The Control Unit is responsible for managing the bus which
+     shuffles values around between the various registers and
+     memory. The registers show here are like tiny pieces of memory
+     capable of holding one word of memory at a time. The ALU is
+     responsible for performing operations on the data in green
+     registers. The red register is the instruction register, which is
+     responsible for keeping track of where in the program we are, by
+     storing a pointer to the program's current execution spot in the
+     program memory. The main memory is there as a place to load and
+     store values from.
+   - Here's the breakdown of what happens when we run an instruction
+     like int c = a + b; First, the control unit reads the instruction
+     from program memory to load the value of A into the data
+     register, EDX, fetches the value from the appropriate place in
+     the program memory, and loads it into EDX. Then, the control unit
+     does the same for the value of B, loading it into the accumulator
+     register, EAX. Next, the control unit instructs the ALU to add
+     the registers together, with the result ending up back in the
+     accumulator register. Lastly, the control unit reads the
+     instruction to place the result back into program memory, and
+     copies the value of EAX out to the pointer for the specified
+     place in program memory.
+   - So, even though we think of programming in C as programming at a
+     system level, remember that there is a lot going on to still
+     break down what we're telling the CPU to do, and ultimately the
+     computer is a rather dumb machine that simply does what it is
+     told at a very granular level - its power comes from the many
+     people who came before us and built abstractions making it easier
+     to solve more and more complex problems as our human brains can
+     concentrate more on the problem we're trying to solve and less on
+     the way the computer actually functions.
+   #+END_NOTES
+   #+ATTR_HTML: :height 70% :width 70%
+   https://i.imgur.com/QxUxd1p.png
+* Types, Sizes and Why They Matter
+   #+BEGIN_NOTES
+   So, now that we understand memory is complicated and processing is
+   complicated, it's a bit easier to appreciate some of the seemingly
+   archaic distinctions C is going to make between different types of
+   data.
+   #+END_NOTES
+** Integer types
+   #+BEGIN_NOTES
+   - The types we're going to start working with most from the outset
+     are integer types, because they are probably the most accessible
+     to understand.
+   - Most folks find it initially confusing when confronted with C as
+     to why there are so many different types of what seem to be the
+     same thing - integers being a primary example.
+   - However, now that we know a bit about how data are stored in
+     memory, it becomes a little clearer what we're actually telling C
+     to do when we assign values in code.
+   - The different keywords associated with different data types
+     actually allocate different amounts and lengths of memory, and
+     even these can vary from system to system, depending on word
+     length, address length, and bus size.
+   #+END_NOTES
+   #+BEGIN_SRC c
+   int a = -32767;         /* these are at least 16-bit          */
+   unsigned int b = 65535;
+
+   short c = 32767;        /* also at least 16-bit               */
+   long d = 2147483647;    /* at least 32-bit                    */
+
+   char e = 255;           /* smallest addressable unit - 1 byte */
+   #+END_SRC
+** Characters and ASCII
+   #+BEGIN_NOTES
+   - We already saw we can use the concept of encoding to make the
+     same set of bits take on special meaning depending on the context
+     they're interpreted in.
+   - This is exactly how text is handled in C. The values of the char
+     integer size are mapped to a table called the ASCII table.
+   - While we're not going to be doing much with them today, we'll
+     soon find out that there is nothing special about strings, but
+     rather that they are simply consecutively allocated 1-byte chunks
+     of memory
+   #+END_NOTES
+   #+BEGIN_SRC c
+   char a = 'a';
+   char D = 68;
+   char X = 0x58;
+   #+END_SRC
+   #+ATTR_HTML: :height 70% :width 70% :background-color #ffffff
+   https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/ASCII-Table-wide.svg/875px-ASCII-Table-wide.svg.png
+** Floating-point types
+   #+BEGIN_NOTES
+   - There are other types that are defined in the C standard. For
+     example, floating point numbers.
+   - As we saw in the first section of this talk, by combining
+     arbitrary sets of bits in order, we can model anything we'd
+     like.
+   - C takes a lot of the pain out of how processor instructions would
+     handle allocating memory for data by modeling complicated ideas
+     for us, such as number with a decimal place, called a float.
+   #+END_NOTES
+   #+BEGIN_SRC c
+   float pi = 3.14159265359;      /* 0x40490FDB =
+                             01000000 01001001 00001111 11011011 */
+   int wat = 1078530011;
+   float not_pi = -3.14159265359; /* 0xC0490FDB =
+                             11000000 01001001 00001111 11011011 */
+   float pi_high = 314159.265359; /* 0x489965E8 =
+                             01001000 10011001 01100101 11101000 */
+   double pi2 = 3.14159265359;   /* 0x400921FB54442EEA =
+                             01000000 00001001 00100001 11111011
+                             01010100 01000100 00101110 11101010 */
+   #+END_SRC
+** Boolean Values
+   #+BEGIN_NOTES
+   - For 30 years, C had no concept of Boolean values. So, if you're
+     using a language that has weird ideas about what constitutes true
+     or false, it's probably C's fault.
+   - In C, any non-zero value is considered true, while a 0 value is
+     considered false.
+   - Because we know any data type is inherently a collection of bits
+     that may be interpreted as bytes providing an integer, nearly any
+     predefined type can be evaluated as a Boolean.
+   - Because of this, empty strings evaluate to their value, the
+     string terminating character 0, and thus are false, while any
+     other value will evaluate as the first character of the string,
+     which is inherently non-zero.
+   - In short, while this is a fundamental necessity of the way C
+     works, be careful as this nuance is likely to continue to trip
+     you up even as you become an experienced C user.
+   #+END_NOTES
+   #+BEGIN_SRC c
+   int a = 1;
+   if (a) { /* executed */
+   }
+   a = 0;
+   if (a) { /* skipped */
+   }
+   #+END_SRC

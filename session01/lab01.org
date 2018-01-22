@@ -1,0 +1,296 @@
+#+TITLE:  Computer Science Fundamentals
+#+AUTHOR: Detroit Labs Dev Coaching
+#+DATE:   2018
+#+EMAIL:  ndotz@detroitlabs.com
+#+LANGUAGE:  en
+#+OPTIONS:   H:3 num:nil toc:nil \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   skip:nil d:nil todo:t pri:nil tags:not-in-toc timestamp:nil
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+REVEAL_PLUGINS: (highlight notes)
+#+REVEAL_THEME: league
+#+REVEAL_MARGIN: 0.2
+# #+REVEAL_MIN_SCALE: 0.5
+# #+REVEAL_MAX_SCALE: 2.5
+#+REVEAL_EXTRA_CSS: ./presentation.css
+
+* Lab 1
+  #+BEGIN_NOTES
+  - Welcome to the first lab, where we will begin to explore the C
+    programming language in our quest to understand the fundamentals
+    of Computer Science.
+  #+END_NOTES
+  printf("Hello, C.\n");
+* Baby Steps
+  #+BEGIN_NOTES
+  To get started, I want to take a look at a very simple C program
+  and just break down what something like "Hello, World" looks like
+  in C before we dig any deeper, and also as a sanity check to make
+  sure that your environment works correctly.
+  #+END_NOTES
+** Hello, C.
+   #+BEGIN_NOTES
+   - In the lecture we saw an even simpler C program so that we could
+     look at how processors work. However, "Hello, World" is probably
+     the simplest practical program that we can write.
+   - This program illustrates a few things. First, all C programs
+     start with a "main" function as their entry point. Statements
+     within the main function are executed sequentially until the main
+     function returns.
+   - We can see that main returns an integer. This will be used as the
+     exit code for the operating system, to indicate a success or
+     failure.
+   - Because we're keeping things simple, we've omitted the arguments
+     to the main function by simply declaring the arguments as
+     void. The specifics of this are not important right now, but
+     we'll be learning more about what this means next session.
+   - We utilize a library function to print things to the screen. The
+     specifics of how to do this by hand are complicated, so we rely
+     on a library, in this case stdio, to handle printing for us. We
+     can see that this is included at the top of the file. Again, the
+     specifics of how this works are not important, and we'll be
+     learning more about this in future sessions.
+   - Our program concludes with returning 0, which as stated earlier
+     will be reported as the exit code for our program to the
+     operating system. This line is actually unnecessary, as it would
+     be inserted implicitly if it were not present, but including
+     explicit return values for the main function is considered good
+     code style.
+   #+END_NOTES
+   #+NAME: hello.c
+   #+BEGIN_SRC c
+#include &lt;stdio.h>
+
+int main(void) {
+    printf("Hello, C.\n");
+    return 0;
+}
+   #+END_SRC
+** Compiling a C program
+   #+BEGIN_NOTES
+   - The reading material provides more details about the specifics of
+     using the compiler in rudimentary ways, but for most of this
+     course, I will suggest using the following format for compiling
+     you C programs.
+   - We will use the GNU C Compiler, known as GCC, to compile our
+     programs. There are many other C compilers available and they
+     each have their advantages, but GCC is a long-lived industry
+     standard with many resources and much documentation available on
+     it operation.
+   - the -Wall flag enables all warnings. This will be of assistance
+     to you as you navigate the world of C programming, and may help
+     to point out mistakes that are easy to make as you learn the
+     programming language.
+   - We provide the C source file we want to compile as an
+     argument. As we build more complex programs, we'll learn more
+     about how to give GCC what it needs to compile our program, but
+     this is also information that won't be important until future
+     sessions.
+   - I have also provided the -o flag which takes an argument, that is
+     the name of the compiled program we would like to emit. If run
+     without this flag, GCC will simply make a program called "a.out"
+     and expect us to figure out what to do with the output.
+   - We can run our program by calling it with a relative path in the
+     local directory. As we can see, this provides the expected output
+     of printing the string "Hello, C."
+   #+END_NOTES
+   #+BEGIN_SRC shell
+   $ gcc -Wall hello.c -o hello
+   $ ./hello
+   Hello, C.
+   #+END_SRC
+** Number truncation
+   #+BEGIN_NOTES
+   - One of the nice features of C is that because the data types
+     we've seen so far are all numbers, they can be freely assigned to
+     one another. However, there is no safety built in to such type
+     conversions.
+   - Rather, the byte representation of the number in memory will
+     dictate what the value will be after conversion to the new type.
+   - While it is generally safe to convert types to a type that has a
+     larger capacity, converting to a type that takes up less memory
+     will cause rollover if the value does not fit into the new memory
+     size.
+   #+END_NOTES
+   #+NAME: number_truncation1.c
+   #+BEGIN_SRC c
+    int a = 32323;
+    char b = a;
+    printf("char b is %i.\n", b);
+   #+END_SRC
+   #+BEGIN_SRC shell
+   $ gcc -Wall number_truncation1.c -o num
+   $ ./num
+   char b is 67.
+   #+END_SRC
+** Number truncation
+   #+BEGIN_NOTES
+   - It's also important to note that there is no implicit conversion
+     of types. Doing division on an integer that would leave a
+     remainder will discard the fractional part of the result.
+   - If the result type of this division were a floating point value,
+     we would see a more accurate result. When the type of a result
+     differs, C will use an appropriate implementation to convert the
+     value when possible.
+   #+END_NOTES
+   #+NAME: number_truncation2.c
+   #+BEGIN_SRC c
+   int a = 10 / 3;
+   printf("int a is %i.\n", a);
+   #+END_SRC
+   #+BEGIN_SRC shell
+   $ gcc -Wall number_truncation2.c -o num
+   $ ./num
+   int a is 3.
+   #+END_SRC
+* Looping
+** For Loops
+   #+BEGIN_NOTES
+   - If you've programmed before, you're probably familiar with the
+     for loop. Its job is to repeat a section of code while some
+     condition holds true.
+   - A for loop is commonly used for a counting or tallying loop, as
+     it allows for an initial assignment or declaration, as well as a
+     post-loop operation that is commonly used for incrementing a loop
+     counter or accumulator. However, none of its expressions are required.
+   #+END_NOTES
+   #+NAME: triangular.c
+   #+BEGIN_SRC c
+   int main(void) {
+       int tri = 0;
+       for(int n = 1; n <= 100; n = n + 1) {
+           tri = tri + n;
+       }
+       printf("The 100th triangle number is %i\n", tri);
+       return 0;
+   }
+   #+END_SRC
+** Nested For Loops
+   #+BEGIN_NOTES
+   - Loops can also be nested. This is an extremely common pattern.
+   - Variables declared within any scope are only available in that
+     scope, so while the i variable is available for the inner loop to
+     print, the outer loop will be unable to see the j variable.
+   #+END_NOTES
+   #+NAME: one_hundred.c
+   #+BEGIN_SRC c
+   for(int i = 0; i < 100; i = i + 10) {
+       for(int j = 1; j <= 10; j = j + 1) {
+           printf("%i\t", i + j);
+       }
+       printf("\n");
+   }
+   #+END_SRC
+** While Loops
+   #+BEGIN_NOTES
+   - The other common iteration mechanism in C is the while loop.
+   - The while loop is a significantly simpler looping construct than
+     the for loop. It only takes a single expression, which is used to
+     test if the loop should continue. Because while lacks an
+     initialization or post-loop increment expression, any
+     initialization needs to be handled outside the loop while any
+     incrementing or other changes to the conditional need to be
+     handled within the loop.
+   #+END_NOTES
+   #+NAME: gcd.c
+   #+BEGIN_SRC c
+   int u = 1026;
+   int v = 405;
+   int temp;
+
+   while(v != 0) {
+       temp = u % v;
+       u = v;
+       v = temp;
+   }
+   #+END_SRC
+** Break & Continue
+   #+BEGIN_NOTES
+   - There are two additional control statements we can use for
+     changing the behavior of loops.
+   - Break immediately ends any iteration as soon as the statement is
+     encountered and can be used to exit a loop when some other
+     condition that is not accounted for by the loop control
+     expression is met.
+   - Continue on the other hand is used to skip the remaining
+     statements in the loop body and return to the top of the loop. It
+     is often used to conditionally run part of a loop when not every
+     statement needs to be run for every iteration of the loop.
+   #+END_NOTES
+   #+BEGIN_SRC c
+   while(1) {
+       printf("this only runs once\n");
+       break;
+   }
+   #+END_SRC
+   #+BEGIN_SRC c
+   int i = 10;
+   while(i) {
+       i = i - 1;
+       continue;
+       printf("this will never print\n");
+   }
+   #+END_SRC
+* Conditionals
+   #+BEGIN_NOTES
+   - Conditionals are a construct used to control the flow of programs
+     based on some condition being met. They function similarly to the
+     loop control statements we've seen already, testing their
+     argument as a boolean value, but allow for branching of programs
+     into different paths of execution.
+   #+END_NOTES
+** If & else
+   #+BEGIN_NOTES
+   - The if statement is the fundamental way we have of control the
+     flow of our program.
+   - An if statement takes as its argument a conditional statement
+     that will be evaluated as a boolean, thus any non-zero value will
+     be considered true, and a zero will be false. In the case that
+     the boolean is non-zero, the statements inside the braces after
+     the if statement will be executed. Otherwise, these statements
+     are ignored.
+   - The if statement may be followed by an optional else
+     statement. If it is, then not only is the statement block
+     provided after the if statement skipped, but also the
+     statement block following else is executed.
+   #+END_NOTES
+   #+BEGIN_SRC c
+   if(i < 10) {
+       i = 10;
+       printf("Adjusted i to minimum value\n");
+   }
+   #+END_SRC
+   #+BEGIN_SRC c
+   if(n % 2 == 0) {
+       printf("n is even.\n");
+   } else {
+       printf("n is odd.\n");
+   }
+   #+END_SRC
+** Relational Operators
+   #+BEGIN_NOTES
+   - We've seen enough of these already, so it's probably worth taking
+     a moment to go through the relational operators available to us.
+   - The relational operators are our primary source for determining
+     the boolean value for some statement.
+   #+END_NOTES
+   #+BEGIN_SRC c
+   n == 0;      /* true if n is zero                          */
+   n != 0;      /* true if n is not zero                      */
+   n > 0;       /* true if n is greater than zero             */
+   n < 0;       /* true if n is less than zero                */
+   n >= 0;      /* true if n is greater than or equal to zero */
+   n <= 0;      /* true if n is less than or equal to zero    */
+   #+END_SRC
+** Logical Operators
+   #+BEGIN_NOTES
+   - There are also logical operators which give us the ability to
+     combine operations that would be would be evaluated as booleans.
+   #+END_NOTES
+   #+BEGIN_SRC c
+   a && b;     /* a AND b are true     */
+   a || b;     /* a OR b are true      */
+   !a          /* a is NOT true        */
+   !(a && b)   /* a AND b are NOT true */
+   #+END_SRC
