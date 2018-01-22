@@ -32,8 +32,8 @@
 </section>
 
 <section>
-<section id="slide-org35ece16">
-<h2 id="org35ece16">Lab 1</h2>
+<section id="slide-org19b09fe">
+<h2 id="org19b09fe">Lab 1</h2>
 <aside class="notes">
 <ul>
 <li>Welcome to the first lab, where we will begin to explore the C
@@ -49,8 +49,8 @@ printf("Hello, C.\n");
 </section>
 </section>
 <section>
-<section id="slide-org46bcfd9">
-<h2 id="org46bcfd9">Baby Steps</h2>
+<section id="slide-org6dc74bc">
+<h2 id="org6dc74bc">Baby Steps</h2>
 <aside class="notes">
 <p>
 To get started, I want to take a look at a very simple C program
@@ -61,8 +61,8 @@ sure that your environment works correctly.
 
 </aside>
 </section>
-<section id="slide-org150cb74">
-<h3 id="org150cb74">Hello, C.</h3>
+<section id="slide-org6d29c83">
+<h3 id="org6d29c83">Hello, C.</h3>
 <aside class="notes">
 <ul>
 <li>In the lecture we saw an even simpler C program so that we could
@@ -106,8 +106,8 @@ int main(void) {
 </code></pre>
 </div>
 </section>
-<section id="slide-org2ba4e6e">
-<h3 id="org2ba4e6e">Compiling a C program</h3>
+<section id="slide-orge995262">
+<h3 id="orge995262">Compiling a C program</h3>
 <aside class="notes">
 <ul>
 <li>The reading material provides more details about the specifics of
@@ -147,8 +147,8 @@ Hello, C.
 </code></pre>
 </div>
 </section>
-<section id="slide-org2e22782">
-<h3 id="org2e22782">Number truncation</h3>
+<section id="slide-org80d6a90">
+<h3 id="org80d6a90">Number truncation</h3>
 <aside class="notes">
 <ul>
 <li>One of the nice features of C is that because the data types
@@ -180,8 +180,8 @@ char b is 67.
 </code></pre>
 </div>
 </section>
-<section id="slide-org9091b17">
-<h3 id="org9091b17">Number truncation</h3>
+<section id="slide-org1fff485">
+<h3 id="org1fff485">Number truncation</h3>
 <aside class="notes">
 <ul>
 <li>It's also important to note that there is no implicit conversion
@@ -211,13 +211,13 @@ int a is 3.
 </section>
 </section>
 <section>
-<section id="slide-org67adfed">
-<h2 id="org67adfed">Looping</h2>
-<div class="outline-text-2" id="text-org67adfed">
+<section id="slide-org3b214de">
+<h2 id="org3b214de">Looping</h2>
+<div class="outline-text-2" id="text-org3b214de">
 </div>
 </section>
-<section id="slide-org6122a0f">
-<h3 id="org6122a0f">For Loops</h3>
+<section id="slide-orgbc1b0bc">
+<h3 id="orgbc1b0bc">For Loops</h3>
 <aside class="notes">
 <ul>
 <li>If you've programmed before, you're probably familiar with the
@@ -238,14 +238,14 @@ counter or accumulator. However, none of its expressions are required.</li>
     for(int n = 1; n <= 100; n = n + 1) {
         tri = tri + n;
     }
-    printf("The 100th triangle number is %i", tri);
+    printf("The 100th triangle number is %i\n", tri);
     return 0;
 }
 </code></pre>
 </div>
 </section>
-<section id="slide-orge1b8658">
-<h3 id="orge1b8658">Nested For Loops</h3>
+<section id="slide-org4faf65c">
+<h3 id="org4faf65c">Nested For Loops</h3>
 <aside class="notes">
 <ul>
 <li>Loops can also be nested. This is an extremely common pattern.</li>
@@ -267,8 +267,8 @@ print, the outer loop will be unable to see the j variable.</li>
 </code></pre>
 </div>
 </section>
-<section id="slide-org544f019">
-<h3 id="org544f019">While Loops</h3>
+<section id="slide-org4b9c36a">
+<h3 id="org4b9c36a">While Loops</h3>
 <aside class="notes">
 <ul>
 <li>The other common iteration mechanism in C is the while loop.</li>
@@ -297,8 +297,8 @@ while(v != 0) {
 </code></pre>
 </div>
 </section>
-<section id="slide-org0e06b68">
-<h3 id="org0e06b68">Break &amp; Continue</h3>
+<section id="slide-org8b1cfb0">
+<h3 id="org8b1cfb0">Break &amp; Continue</h3>
 <aside class="notes">
 <ul>
 <li>There are two additional control statements we can use for
@@ -336,8 +336,8 @@ while(i) {
 </section>
 </section>
 <section>
-<section id="slide-org05fb93a">
-<h2 id="org05fb93a">Conditionals</h2>
+<section id="slide-org62b8ff6">
+<h2 id="org62b8ff6">Conditionals</h2>
 <aside class="notes">
 <ul>
 <li>Conditionals are a construct used to control the flow of programs
@@ -350,25 +350,83 @@ into different paths of execution.</li>
 
 </aside>
 </section>
-<section id="slide-org537af2c">
-<h3 id="org537af2c">If &amp; else</h3>
+<section id="slide-org5925687">
+<h3 id="org5925687">If &amp; else</h3>
 <aside class="notes">
-nil
+<ul>
+<li>The if statement is the fundamental way we have of control the
+flow of our program.</li>
+<li>An if statement takes as its argument a conditional statement
+that will be evaluated as a boolean, thus any non-zero value will
+be considered true, and a zero will be false. In the case that
+the boolean is non-zero, the statements inside the braces after
+the if statement will be executed. Otherwise, these statements
+are ignored.</li>
+<li>The if statement may be followed by an optional else
+statement. If it is, then not only is the statement block
+provided after the if statement skipped, but also the
+statement block following else is executed.</li>
+
+</ul>
+
 </aside>
 <div class="org-src-container">
 
-<pre><code class="c" >
+<pre><code class="c" >if(i < 10) {
+    i = 10;
+    printf("Adjusted i to minimum value\n");
+}
+</code></pre>
+</div>
+<div class="org-src-container">
+
+<pre><code class="c" >if(n % 2 == 0) {
+    printf("n is even.\n");
+} else {
+    printf("n is odd.\n");
+}
 </code></pre>
 </div>
 </section>
-<section id="slide-orgf6eac9f">
-<h3 id="orgf6eac9f">&amp;&amp; and ||</h3>
+<section id="slide-org1351a27">
+<h3 id="org1351a27">Relational Operators</h3>
 <aside class="notes">
-nil
+<ul>
+<li>We've seen enough of these already, so it's probably worth taking
+a moment to go through the relational operators available to us.</li>
+<li>The relational operators are our primary source for determining
+the boolean value for some statement.</li>
+
+</ul>
+
 </aside>
 <div class="org-src-container">
 
-<pre><code class="c" >
+<pre><code class="c" >n == 0;      /* true if n is zero                          */
+n != 0;      /* true if n is not zero                      */
+n > 0;       /* true if n is greater than zero             */
+n < 0;       /* true if n is less than zero                */
+n >= 0;      /* true if n is greater than or equal to zero */
+n <= 0;      /* true if n is less than or equal to zero    */
+</code></pre>
+</div>
+</section>
+<section id="slide-org57599ac">
+<h3 id="org57599ac">Logical Operators</h3>
+<aside class="notes">
+<ul>
+<li>There are also logical operators which give us the ability to
+combine operations that would be would be evaluated as booleans.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >a && b;     /* a AND b are true     */
+a || b;     /* a OR b are true      */
+!a          /* a is NOT true        */
+!(a && b)   /* a AND b are NOT true */
 </code></pre>
 </div>
 </section>
