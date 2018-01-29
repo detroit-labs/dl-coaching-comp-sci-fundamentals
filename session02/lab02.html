@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Computer Science Fundamentals</title>
+<meta name="author" content="(Detroit Labs Dev Coaching)"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="./reveal.js/css/reveal.css"/>
+
+<link rel="stylesheet" href="./reveal.js/css/theme/league.css" id="theme"/>
+
+<link rel="stylesheet" href="./presentation.css"/>
+<link rel="stylesheet" href="./reveal.js/lib/css/zenburn.css"/>
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = './reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h1 class="title">Computer Science Fundamentals</h1><h2 class="author">Detroit Labs Dev Coaching</h2><h2 class="date">2018</h2>
+</section>
+
+<section>
+<section id="slide-org06eeb97">
+<h2 id="org06eeb97">Lab 2</h2>
+<aside class="notes">
+<ul>
+<li>To go along with our discussion of data structures and algorithms,
+this section of the book is going to introduce some of the tools
+that will assist us in developing more complicated data structures
+and algorithms</li>
+<li>First, we'll take a look at arrays, which will allow us to
+organize large numbers of similar pieces of data.</li>
+<li>Next we'll look at structs, which allow us to group finite numbers
+of disparately typed data.</li>
+<li>Then, we'll take our first look at functions, which are the
+primary mechanism to organize and group operations for our algorithms.</li>
+<li>Last, we'll briefly look at some potentially confusing features
+introduced by the book which, in my opinion, you should avoid
+despite their existing for very good reasons.</li>
+
+</ul>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-orgd7fce6d">
+<h2 id="orgd7fce6d">Arrays</h2>
+<aside class="notes">
+<ul>
+<li>An array in C represents an ordered set of homogeneously-typed
+data. It lets us keep a collection of similar data to be
+referenced under a single identifier.</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org0652d99">
+<h3 id="org0652d99">Defining Arrays</h3>
+<aside class="notes">
+<ul>
+<li>This line shows how we can define an array of ints assigned to
+the identified "numbers" which is capable of holding 5 values.</li>
+<li>The square brackets here are called the "subscript operator", and
+will also be used when accessing elements of the array.</li>
+<li>The memory for these values is allocated linearly in memory,
+which will help us understand more about how they work shortly.</li>
+<li>We can also initialize an array when it is defined by placing the
+values to be assigned to its elements in curly brackets.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >int numbers[5];
+</code></pre>
+</div>
+<div class="org-src-container">
+
+<pre><code class="c" >int numbers[5] = {1, 2, 3, 4, 5};
+</code></pre>
+</div>
+</section>
+<section id="slide-orgf7084a7">
+<h3 id="orgf7084a7">Using Arrays</h3>
+<aside class="notes">
+<ul>
+<li>The subscript operator is used to access elements of an
+array. The number between the brackets is the subscript, but is
+more commonly known as the index.</li>
+<li>Array indices start at 0. This is because this is actually used
+as a memory offset. That is, the first element is 0 integer-sized
+memory locations away from the beginning of the array in memory,
+the next element is 1 integer-sized memory location away from the
+beginning of the array, and so on.</li>
+<li>As demonstrated here, the use of the subscript operator works
+with indices like this on any statement once an array has been
+declared. So, we can use it to access the array elements for
+assignment or to reference specific elements of the array.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >numbers[0] = 2;
+numbers[1] = 3;
+numbers[2] = 5;
+numbers[3] = 7;
+numbers[4] = 11;
+</code></pre>
+</div>
+<div class="org-src-container">
+
+<pre><code class="c" >int five = numbers[2];
+</code></pre>
+</div>
+</section>
+<section id="slide-org6a62a9f">
+<h3 id="org6a62a9f">Array Types</h3>
+<aside class="notes">
+<ul>
+<li>Arrays may be declared of any type, not just integers.</li>
+<li>This includes even more complex types than the number types we've
+learned about so far.</li>
+<li>Declaring an array of some type simply reserves an amount of
+memory large enough to store the requisite amount of data.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >char letters[26];
+float decimals[2] = {1.618, 3.14};
+</code></pre>
+</div>
+</section>
+<section id="slide-orge5f9ee2">
+<h3 id="orge5f9ee2">Multi-Dimensional Arrays</h3>
+<aside class="notes">
+<ul>
+<li>Because arrays can be of any type, that means they can also be
+arrays of arrays. These are known as multidimensional arrays.</li>
+<li>With the set of features we've learned so far, for now any array
+must contain arrays of uniform size. In the future we'll learn
+mechanisms that allow us to keep differently-sized arrays
+together as a collection.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >int pairs[3][2];
+pairs[0] = {1, 4};
+pairs[1] = {2, 5};
+pairs[2] = {3, 6};
+int five = pairs[2][1] - pairs[0][1]; /* 6 - 1 */
+int three = five - pairs[1][0];       /* 5 - 2 */
+</code></pre>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-org0e1115c">
+<h2 id="org0e1115c">Structs</h2>
+<aside class="notes">
+<ul>
+<li>While an array can let us keep an ordered collection of similar
+data, a struct is an unordered composite data types used for
+storing heterogeneously-typed data of fixed size. This is similar
+to a "record" type in other languages.</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org4ac04a8">
+<h3 id="org4ac04a8">Struct Basics</h3>
+<aside class="notes">
+<ul>
+<li>There are many situations where it can become cumbersome to store
+multi-part data as separate variables. This can quickly pollute
+the set of identifiers.</li>
+<li>When multiple instances of some multi-part data need to be
+stored, usually a struct is the answer.</li>
+<li>Struct members are accessed with the dot operator, similar to the
+way array elements are accessed with the subscript
+operator. However, rather than an index, struct members are
+accessed by their member identifier.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >int i = 2;
+char c = 'c';
+float f = 1.618;
+</code></pre>
+</div>
+<div class="org-src-container">
+
+<pre><code class="c" >struct nums {
+    int i;
+    char c;
+    float f;
+};
+struct nums n;
+n.i = 2;
+n.c = 'c';
+n.f = 1.618;
+</code></pre>
+</div>
+</section>
+<section id="slide-orgd99c0fb">
+<h3 id="orgd99c0fb">Initializing Structs</h3>
+<aside class="notes">
+<ul>
+<li>A struct can be initialized similarly to an array by using curly
+braces.</li>
+<li>Initial values for a struct are placed inside curly braces in the
+order they are declared in the struct. However, a struct can also
+be declared by explicitly declaring each member inside the curly
+braces, which negates the necessity of ordering the members the
+same way they are declared.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >struct nums n = {2, 'c', 1.618};
+struct nums n2 = {.f = 6.28, .c = 'A', i = 0};
+</code></pre>
+</div>
+</section>
+<section id="slide-org3e70393">
+<h3 id="org3e70393">Compound Literals</h3>
+<aside class="notes">
+<ul>
+<li>A struct can also be assigned after its declaration by using a
+concept called a compound literal</li>
+<li>This is done by using the type cast operator, which informs the
+compiler that the literal collection in braces conforms to the
+struct type we are attempting to assign it to.</li>
+<li>This is our first glimpse of the type cast operator, but we'll
+become much more familiar with it in the coming sections of the course.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >struct nums n;
+n = (struct nums) {2, 'c', 1.618};
+</code></pre>
+</div>
+</section>
+<section id="slide-org846c356">
+<h3 id="org846c356">Structs and Arrays</h3>
+<aside class="notes">
+<ul>
+<li>Earlier I told you that we can create an array of any valid type,
+and that holds true for compound types such as structs.</li>
+<li>Just like any other array element, we can reference a struct that
+is part of an array by its index, after which it we can access
+its members</li>
+<li>Similarly, it's perfectly valid to allow arrays as members of a struct.</li>
+<li>Array members of a struct that are dereferenced from their struct
+can then be accessed using the subscript operator as normal.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >struct nums ns[3];
+ns[0] = {2, 'c', 1.618};
+ns[0].c == 'c';
+</code></pre>
+</div>
+<div class="org-src-container">
+
+<pre><code class="c" >struct stuff { char c; int nums[5]; };
+struct stuff s = { 's', {1, 2, 3, 4, 5} };
+int three = s.nums[2];
+</code></pre>
+</div>
+</section>
+<section id="slide-org5f00993">
+<h3 id="org5f00993">Structs of Structs</h3>
+<aside class="notes">
+<ul>
+<li>One last thing about structs: seeing as they can be composed of
+any valid type, it's also perfectly valid and quite common to
+other structs as members of a struct to create more complex
+compound types.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >struct combined {
+    struct nums;
+    struct stuff;
+}
+struct combined c = { n, s };
+float a_float = combined.nums.f;
+</code></pre>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-org13fd265">
+<h2 id="org13fd265">Functions</h2>
+<aside class="notes">
+<ul>
+<li>In the same way that arrays and records help us organize data in
+our programs, functions can help us organize operations to
+simplify our programs and better represent algorithms.</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-orgf799447">
+<h3 id="orgf799447">Basic Functions</h3>
+<aside class="notes">
+<ul>
+<li>It should be no surprise that C gives us the capability to
+separate our programs into functions.</li>
+<li>The function below has a signature showing it returns nothing
+(void) and takes no arguments (void). It simply prints a message
+to the user and then returns after executing its only statement.</li>
+<li>A function is called by using parentheses after its
+identifier. If the function takes arguments, the arguments will
+go between these parentheses.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >void notifyUser(void) {
+    printf("User, a thing happened!\n");
+}
+/* ... */
+notifyUser();
+</code></pre>
+</div>
+</section>
+<section id="slide-orgddc5a14">
+<h3 id="orgddc5a14">Function Arguments &amp; Lexical Scoping</h3>
+<aside class="notes">
+<ul>
+<li>Functions can also take arguments. This function takes a single
+integer as an argument, as indicated by the declaration within
+the parentheses after its identifier.</li>
+<li>In this case, the function receives a copy of the argument, so
+the original value would be unaffected if that value of n were
+modified.</li>
+<li>Similarly, the values of n and i in this function body are
+unavailable to other functions, including main, as identifiers
+are only available within the scope (set of braces) that they are
+defined.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >void showFiveTimes(int n) {
+     int i = 5;
+     while (i > 0) {
+          printf("I am printing %i", n);
+          --i;
+     }
+}
+/* ... */
+showFiveTimes(0);
+</code></pre>
+</div>
+</section>
+<section id="slide-org4596d99">
+<h3 id="org4596d99">Returning Values</h3>
+<aside class="notes">
+<ul>
+<li>Functions can also return values. This function takes two
+arguments and returns an int. The return value of the function is
+placed before the function's identifier. This will also cause the
+compiler to enforce that this function does indeed return a value
+of the appropriate type.</li>
+<li>The default return type for all functions that do not declare a
+return type is int, however I will suggest that you always
+declare an explicit return type for your functions to assist
+yourself and others looking at your code, as well as the compiler
+on occasion.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >int gcd(int a, int b) {
+    int tmp;
+    while(b != 0) {
+        tmp = a % b;
+        a = b;
+        b = tmp;
+    }
+    return a;
+}
+</code></pre>
+</div>
+</section>
+<section id="slide-orga8ee5e5">
+<h3 id="orga8ee5e5">Functions, Arrays, and Assignments</h3>
+<aside class="notes">
+<ul>
+<li>A note about arrays and functions. Functions can certainly take
+arrays as arguments, however they work slightly differently than
+normal arguments.</li>
+<li>Rather than receiving a copy of the argument, in the case of
+array arguments, functions only receive a pointer to the memory
+location of the array. Because of this, not only does the
+function not receive information about how large the array is,
+but it can also alter the value of the array in the context that
+it was originally used in!</li>
+<li>This behavior may seem bizarre, but we'll be learning in the next
+session what is actually going on here. In truth, C is saving us
+some typing by performing a bit of syntactic magic for us because
+passing arrays to functions is a very common operation.</li>
+<li>For now, just remember that if you pass an array as an argument
+to a function, you will also need to pass an additional argument
+for how big the array is as well as knowing that if you modify
+the contents of the array within the argument that it will affect
+the original array back in the context it was passed from!</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >void plusOne(int n, int array[]) {
+    for(int i = 0; i < n; ++i) {
+        array[i] += 1;
+    }
+}
+/* ... */
+int nums = {1, 2, 3};
+plusOne(3, nums);
+for(int i; i < 3; ++i) {
+    printf("%i ", nums[i]);
+}
+/* 2 3 4 */
+</code></pre>
+</div>
+</section>
+<section id="slide-org9e7c592">
+<h3 id="org9e7c592">Recursion</h3>
+<aside class="notes">
+<ul>
+<li>Functions can call other functions, and that includes calling
+themselves. This means that some algorithms can be re-written
+much more concisely and with simpler operations.</li>
+<li>However, it should be noted that each call to a function takes up
+a stack frame which has a limited amount of space depending on
+the system it's being compiled and executed on, while normal
+looping constructs do not take up additional stack frames. This
+means that while it might be simpler or more elegant to write
+certain kinds of algorithms, it might not be a good idea because
+if you run out of stack frames, your program will crash!</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >int gcd(int a, int b) {
+    int tmp;
+    while(b != 0) {
+        tmp = a % b;
+        a = b;
+        b = tmp;
+    }
+    return a;
+}
+</code></pre>
+</div>
+<div class="org-src-container">
+
+<pre><code class="c" >int gcd(int a, int b) {
+    if(b == 0) return a;
+    else return gcd(b, a % b);
+}
+</code></pre>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-org3169ae3">
+<h2 id="org3169ae3">Danger Zone</h2>
+<aside class="notes">
+<ul>
+<li>The book introduces a few concepts in this session's chapters that
+I consider to be anti-patterns for good programming practice and I
+wanted to take a moment to point them out.</li>
+<li>These features exist for very specific systems programming reasons
+in C, but do not necessarily make for good programming practice.</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-orgb1be9cc">
+<h3 id="orgb1be9cc">Global Variables</h3>
+<aside class="notes">
+<ul>
+<li>In chapter 8, the book introduces the concept of global
+variables. As we saw in the section of today's lecture on
+functions, variables declared within the context of a function
+are only accessible to the function itself.</li>
+<li>However, you can make declarations outside of a function
+definition. These declarations are visible to the entire program,
+from inside any function or context.</li>
+<li>While this may seem like a convenient shortcut at times to prefer
+over passing around arguments, know that there are no separation
+of packages in C, and therefore no namespaces and no safety built
+in to where these variables or other declarations might be
+seen. This includes any libraries that you import!</li>
+<li>Because of this, there is a much higher likelihood of name
+collisions with global variables which could cause more
+complicated programs to act in ways that you did not expect!</li>
+<li>In short, please do not use global variables.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >int n = 1;
+void times2(void) {
+    n *= 2;
+}
+int main(void) {
+    times2();
+    times2();
+    printf("%i\n", n);
+    return 0;
+}
+</code></pre>
+</div>
+</section>
+<section id="slide-orge6c386c">
+<h3 id="orge6c386c">Static Variables</h3>
+<aside class="notes">
+<ul>
+<li>Also in chapter 8, you'll be introduced to the concept of static
+variables. These variables are not available outside of their
+scope, but they do maintain state as if they were global
+variables, and so after they are initialized, subsequent
+references to these variables will be based on the last state
+that they were used.</li>
+<li>While this can be a boon to low-level systems programmers as it
+can be a good savings of time and memory-allocation, it can also
+cause programmers to have confusing state errors. I suggest
+avoiding the static keyword.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >void static_inc(void) {
+    static i = 0;
+    printf("%i ", ++i);
+}
+int main(void) {
+    for(int n = 0; n < 5; n++) {
+        static_inc();
+    }
+}
+/* 1 2 3 4 5 */
+</code></pre>
+</div>
+</section>
+</section>
+</div>
+</div>
+<script src="./reveal.js/lib/js/head.min.js"></script>
+<script src="./reveal.js/js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: true,
+slideNumber: 'c',
+rollingLinks: false,
+keyboard: true,
+overview: true,
+margin: 0.20,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+transitionSpeed: 'default',
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: './reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+ { src: './reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+});
+</script>
+</body>
+</html>

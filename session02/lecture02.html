@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Computer Science Fundamentals</title>
+<meta name="author" content="(Detroit Labs Dev Coaching)"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="./reveal.js/css/reveal.css"/>
+
+<link rel="stylesheet" href="./reveal.js/css/theme/league.css" id="theme"/>
+
+<link rel="stylesheet" href="./presentation.css"/>
+<link rel="stylesheet" href="./reveal.js/lib/css/zenburn.css"/>
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = './reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h1 class="title">Computer Science Fundamentals</h1><h2 class="author">Detroit Labs Dev Coaching</h2><h2 class="date">2018</h2>
+</section>
+
+<section>
+<section id="slide-orgc0caa10">
+<h2 id="orgc0caa10">Lecture 2</h2>
+<aside class="notes">
+<ul>
+<li>What is Computer Science</li>
+<li>What is a Data Structure?</li>
+
+</ul>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-org93d51e1">
+<h2 id="org93d51e1">What is Computer Science?</h2>
+<div class="outline-text-2" id="text-org93d51e1">
+</div>
+</section>
+<section id="slide-org75ddc91">
+<h3 id="org75ddc91">The Long Version</h3>
+<aside class="notes">
+nil
+</aside>
+<blockquote nil>
+<p>
+[&#x2026;] the theory, experimentation, and engineering that form the
+basics for the design and use of computers. It is the scientific
+and practical approach to computation and its applications and the
+systematic study of the feasibility, structure, expression, and
+mechanization of the methodical procedures that underlie the
+acquisition, representation, processing, storage, communication of,
+and access to information.
+</p>
+</blockquote>
+<p>
+&#x2013; Wikipedia, Computer Science Entry
+</p>
+</section>
+<section id="slide-org96d9f08">
+<h3 id="org96d9f08">The Short Version</h3>
+<aside class="notes">
+nil
+</aside>
+<blockquote nil>
+<p>
+[&#x2026;] the study of automating algorithmic processes that scale.
+</p>
+</blockquote>
+<p>
+&#x2013; Wikipedia, Computer Science Entry
+</p>
+</section>
+<section id="slide-org300a3ce">
+<h3 id="org300a3ce">Dotz's Summary</h3>
+<aside class="notes">
+<ul>
+<li>Think about trying to find a phone number in a rolodex, or a book
+in a card catalog. If the cards are dumped out on the floor, the
+process to find the right card is to go through each one
+sequentially. However, if the cards are in alphabetical or Dewey
+decimal order, it's much easier to find the appropriate place to
+look for the right card. Thus, organizing information and
+processing it efficiently go hand in hand.</li>
+
+</ul>
+
+</aside>
+<blockquote nil>
+<p>
+Computer science is the study of how to best organize information
+and process it efficiently.
+</p>
+</blockquote>
+</section>
+<section id="slide-org02e7312">
+<h3 id="org02e7312">Theory</h3>
+<aside class="notes">
+nil
+</aside>
+</section>
+<section id="slide-org69426fd">
+<h3 id="org69426fd">Systems</h3>
+<aside class="notes">
+nil
+</aside>
+</section>
+<section id="slide-org1494474">
+<h3 id="org1494474">Applications</h3>
+<aside class="notes">
+nil
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-org79727e4">
+<h2 id="org79727e4">What is a Data Structure?</h2>
+<aside class="notes">
+nil
+</aside>
+<blockquote nil>
+<p>
+A data structure is a particular way of organizing and storing data
+in a computer so that it can be accessed and modified efficiently.
+</p>
+</blockquote>
+<p>
+&#x2013; Wikipedia, Data Structure Entry
+</p>
+</section>
+<section id="slide-org0d811f6">
+<h3 id="org0d811f6">Organizing Data Efficiently</h3>
+<aside class="notes">
+<ul>
+<li>Part of creating data structures is making it easier for a
+programmer to reason about. We create an abstraction around the
+idea of how our data is stored so that we can free up precious
+brain space for thinking about other parts of the program we're
+trying to write.</li>
+<li>For example, in a program we might want an ordered list of
+numbers. It would be cumbersome for a programmer to make a
+program with separate variables for each of the values we want to
+keep track of. Additionally the programmer would have to keep
+track of what order they occurred in.</li>
+<li>To address this, we can create an abstraction for thinking of a
+list of numbers such as the linked list data structure. Each
+element in the list can tell us its value as well as where to
+find the next element of the list. This allows us to spend our
+brain power thinking more about the collection of numbers instead
+of each individual number at any time where the individual values
+of the numbers are not important.</li>
+
+</ul>
+
+</aside>
+
+<div class="figure">
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/C_language_linked_list.png" alt="C_language_linked_list.png" />
+</p>
+</div>
+</section>
+<section id="slide-org8d0b5cd">
+<h3 id="org8d0b5cd">Storing Data Efficiently</h3>
+<aside class="notes">
+<ul>
+<li>But another important part of creating data structures is efficient
+storage and access to of data. While often times a data structure
+is to assist the programmer in thinking about the data, other
+times the data structure's primary purpose is to store data in
+such a way that it is the most efficiently stored and accessed.</li>
+<li>The problem with our idea of a list of numbers is that while it
+allows us to think of the collection of numbers as a single unit
+any time we need to get at a number other than the first number,
+the computer first needs to access each number in succession
+until it finds the one we're interested in. While this might not
+be hard to think of for us as programmers, it is an inefficient
+way for a computer to get at the data.</li>
+<li>So, we might instead use an abstraction like the array data
+structure. An array keeps each of the elements linearly in memory
+so that it's easy to access each of the values simply by knowing
+where the array is and how far away from the start of the array
+the element we need is. This is much faster for the computer.</li>
+<li>This might make it seem like arrays are hands-down superior for
+computing speed, but this isn't necessarily the case. Rather,
+adding elements to an array means allocating a whole new memory
+space for the array so that it can fit the additional elements
+and then copying over the elements in the appropriate order into
+the new memory space, which is terribly inefficient. On the other
+hand, in a linked list adding an element simply means creating a
+new element to point to where we want it to within the list and
+then modifying the one element before it to point to it.</li>
+
+</ul>
+
+</aside>
+
+<div class="figure">
+<p><img src="https://i.imgur.com/lfZCMig.jpg" alt="lfZCMig.jpg" />
+</p>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-org3035b5b">
+<h2 id="org3035b5b">What is an Algorithm?</h2>
+<aside class="notes">
+nil
+</aside>
+<blockquote nil>
+<p>
+[&#x2026;] an unambiguous specification of how to solve a class of problems.
+</p>
+</blockquote>
+<p>
+&#x2013; Wikipedia, Algorithm Entry
+</p>
+</section>
+<section id="slide-org1237dde">
+<h3 id="org1237dde">Mental Math Tricks are Algorithms</h3>
+<aside class="notes">
+<ul>
+<li>Adding large numbers by rounding</li>
+<li>Multiplying by nine</li>
+
+</ul>
+
+</aside>
+
+<div class="figure">
+<p><img src="http://www.k5learning.com/sites/all/files/mental-math-subtraction-2.gif" alt="mental-math-subtraction-2.gif" />
+</p>
+</div>
+</section>
+<section id="slide-orgf2fac79">
+<h3 id="orgf2fac79">Exploring Euclid's Algorithm</h3>
+<aside class="notes">
+nil
+</aside>
+
+<div class="figure">
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/Euclids-algorithm-example-1599-650.gif" alt="Euclids-algorithm-example-1599-650.gif" />
+</p>
+</div>
+</section>
+<section id="slide-org8051da1">
+<h3 id="org8051da1">Exploring Euclid's Algorithm</h3>
+<aside class="notes">
+nil
+</aside>
+
+<div class="figure">
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/4/49/Euclid's_algorithm_Inelegant_program_1.png" alt="Euclid's_algorithm_Inelegant_program_1.png" />
+</p>
+</div>
+</section>
+<section id="slide-org63bb80d">
+<h3 id="org63bb80d">Exploring Euclid's Algorithm</h3>
+<div class="org-src-container">
+
+<pre><code class="basic" >5 REM Euclid's algorithm for greatest common divisor
+6 PRINT "Type two integers greater than 0"
+10 INPUT A,B
+20 IF B=0 THEN GOTO 80
+30 IF A &gt; B THEN GOTO 60
+40 LET B=B-A
+50 GOTO 20
+60 LET A=A-B
+70 GOTO 20
+80 PRINT A
+90 END
+</code></pre>
+</div>
+</section>
+<section id="slide-orgaf530e5">
+<h3 id="orgaf530e5">Exploring Euclid's Algorithm</h3>
+<div class="org-src-container">
+
+<pre><code class="c" >int tmp;
+while(b != 0) {
+    tmp = a % b;
+    a = b;
+    b = tmp;
+}
+return a;
+</code></pre>
+</div>
+</section>
+</section>
+</div>
+</div>
+<script src="./reveal.js/lib/js/head.min.js"></script>
+<script src="./reveal.js/js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: true,
+slideNumber: 'c',
+rollingLinks: false,
+keyboard: true,
+overview: true,
+margin: 0.20,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+transitionSpeed: 'default',
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: './reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+ { src: './reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+});
+</script>
+</body>
+</html>

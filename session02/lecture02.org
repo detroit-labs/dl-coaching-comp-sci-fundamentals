@@ -1,0 +1,170 @@
+#+TITLE:  Computer Science Fundamentals
+#+AUTHOR: Detroit Labs Dev Coaching
+#+DATE:   2018
+#+EMAIL:  ndotz@detroitlabs.com
+#+LANGUAGE:  en
+#+OPTIONS:   H:3 num:nil toc:nil \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   skip:nil d:nil todo:t pri:nil tags:not-in-toc timestamp:nil
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+REVEAL_PLUGINS: (highlight notes)
+#+REVEAL_THEME: league
+#+REVEAL_MARGIN: 0.2
+# #+REVEAL_MIN_SCALE: 0.5
+# #+REVEAL_MAX_SCALE: 2.5
+#+REVEAL_EXTRA_CSS: ./presentation.css
+
+* Lecture 2
+   #+BEGIN_NOTES
+   - What is Computer Science
+   - What is a Data Structure?
+   #+END_NOTES
+* What is Computer Science?
+** The Long Version
+   #+BEGIN_NOTES
+   #+END_NOTES
+   #+BEGIN_QUOTE
+   [...] the theory, experimentation, and engineering that form the
+   basics for the design and use of computers. It is the scientific
+   and practical approach to computation and its applications and the
+   systematic study of the feasibility, structure, expression, and
+   mechanization of the methodical procedures that underlie the
+   acquisition, representation, processing, storage, communication of,
+   and access to information.
+   #+END_QUOTE
+   -- Wikipedia, Computer Science Entry
+** The Short Version
+   #+BEGIN_NOTES
+   #+END_NOTES
+   #+BEGIN_QUOTE
+   [...] the study of automating algorithmic processes that scale.
+   #+END_QUOTE
+   -- Wikipedia, Computer Science Entry
+** Dotz's Summary
+   #+BEGIN_NOTES
+   - Think about trying to find a phone number in a rolodex, or a book
+     in a card catalog. If the cards are dumped out on the floor, the
+     process to find the right card is to go through each one
+     sequentially. However, if the cards are in alphabetical or Dewey
+     decimal order, it's much easier to find the appropriate place to
+     look for the right card. Thus, organizing information and
+     processing it efficiently go hand in hand.
+   #+END_NOTES
+   #+BEGIN_QUOTE
+   Computer science is the study of how to best organize information
+   and process it efficiently.
+   #+END_QUOTE
+** Theory
+   #+BEGIN_NOTES
+   #+END_NOTES
+** Systems
+   #+BEGIN_NOTES
+   #+END_NOTES
+** Applications
+   #+BEGIN_NOTES
+   #+END_NOTES
+* What is a Data Structure?
+   #+BEGIN_NOTES
+   #+END_NOTES
+   #+BEGIN_QUOTE
+   A data structure is a particular way of organizing and storing data
+   in a computer so that it can be accessed and modified efficiently.
+   #+END_QUOTE
+   -- Wikipedia, Data Structure Entry
+** Organizing Data Efficiently
+   #+BEGIN_NOTES
+   - Part of creating data structures is making it easier for a
+     programmer to reason about. We create an abstraction around the
+     idea of how our data is stored so that we can free up precious
+     brain space for thinking about other parts of the program we're
+     trying to write.
+   - For example, in a program we might want an ordered list of
+     numbers. It would be cumbersome for a programmer to make a
+     program with separate variables for each of the values we want to
+     keep track of. Additionally the programmer would have to keep
+     track of what order they occurred in.
+   - To address this, we can create an abstraction for thinking of a
+     list of numbers such as the linked list data structure. Each
+     element in the list can tell us its value as well as where to
+     find the next element of the list. This allows us to spend our
+     brain power thinking more about the collection of numbers instead
+     of each individual number at any time where the individual values
+     of the numbers are not important.
+   #+END_NOTES
+   https://upload.wikimedia.org/wikipedia/commons/1/1b/C_language_linked_list.png
+** Storing Data Efficiently
+   #+BEGIN_NOTES
+   - But another important part of creating data structures is efficient
+     storage and access to of data. While often times a data structure
+     is to assist the programmer in thinking about the data, other
+     times the data structure's primary purpose is to store data in
+     such a way that it is the most efficiently stored and accessed.
+   - The problem with our idea of a list of numbers is that while it
+     allows us to think of the collection of numbers as a single unit
+     any time we need to get at a number other than the first number,
+     the computer first needs to access each number in succession
+     until it finds the one we're interested in. While this might not
+     be hard to think of for us as programmers, it is an inefficient
+     way for a computer to get at the data.
+   - So, we might instead use an abstraction like the array data
+     structure. An array keeps each of the elements linearly in memory
+     so that it's easy to access each of the values simply by knowing
+     where the array is and how far away from the start of the array
+     the element we need is. This is much faster for the computer.
+   - This might make it seem like arrays are hands-down superior for
+     computing speed, but this isn't necessarily the case. Rather,
+     adding elements to an array means allocating a whole new memory
+     space for the array so that it can fit the additional elements
+     and then copying over the elements in the appropriate order into
+     the new memory space, which is terribly inefficient. On the other
+     hand, in a linked list adding an element simply means creating a
+     new element to point to where we want it to within the list and
+     then modifying the one element before it to point to it.
+   #+END_NOTES
+   https://i.imgur.com/lfZCMig.jpg
+* What is an Algorithm?
+   #+BEGIN_NOTES
+   #+END_NOTES
+  #+BEGIN_QUOTE
+  [...] an unambiguous specification of how to solve a class of problems.
+  #+END_QUOTE
+  -- Wikipedia, Algorithm Entry
+** Mental Math Tricks are Algorithms
+   #+BEGIN_NOTES
+   - Adding large numbers by rounding
+   - Multiplying by nine
+   #+END_NOTES
+   http://www.k5learning.com/sites/all/files/mental-math-subtraction-2.gif
+** Exploring Euclid's Algorithm
+   #+BEGIN_NOTES
+   #+END_NOTES
+   https://upload.wikimedia.org/wikipedia/commons/e/e1/Euclids-algorithm-example-1599-650.gif
+** Exploring Euclid's Algorithm
+   #+BEGIN_NOTES
+   #+END_NOTES
+   https://upload.wikimedia.org/wikipedia/commons/4/49/Euclid%27s_algorithm_Inelegant_program_1.png
+** Exploring Euclid's Algorithm
+   #+BEGIN_SRC basic
+    5 REM Euclid's algorithm for greatest common divisor
+    6 PRINT "Type two integers greater than 0"
+    10 INPUT A,B
+    20 IF B=0 THEN GOTO 80
+    30 IF A > B THEN GOTO 60
+    40 LET B=B-A
+    50 GOTO 20
+    60 LET A=A-B
+    70 GOTO 20
+    80 PRINT A
+    90 END
+   #+END_SRC
+** Exploring Euclid's Algorithm
+   #+BEGIN_SRC c
+   int tmp;
+   while(b != 0) {
+       tmp = a % b;
+       a = b;
+       b = tmp;
+   }
+   return a;
+   #+END_SRC
