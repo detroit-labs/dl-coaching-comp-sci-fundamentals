@@ -57,12 +57,24 @@
    #+END_QUOTE
 ** Theory
    #+BEGIN_NOTES
+   - Data Structures and algorithms
+   - Theory of computation
+   - Coding theory
+   - Programming language theory
    #+END_NOTES
 ** Systems
    #+BEGIN_NOTES
+   - Digital logic
+   - Performance analysis
+   - Concurrent, parallel and distributed systems
+   - Networks
+   - Databases
    #+END_NOTES
 ** Applications
    #+BEGIN_NOTES
+   - Graphics
+   - Scientific computing
+   - Artificial intelligence
    #+END_NOTES
 * What is a Data Structure?
    #+BEGIN_NOTES
@@ -122,10 +134,11 @@
      new element to point to where we want it to within the list and
      then modifying the one element before it to point to it.
    #+END_NOTES
+   #+ATTR_HTML: :height 50%, :width 50%
    https://i.imgur.com/lfZCMig.jpg
 * What is an Algorithm?
-   #+BEGIN_NOTES
-   #+END_NOTES
+  #+BEGIN_NOTES
+  #+END_NOTES
   #+BEGIN_QUOTE
   [...] an unambiguous specification of how to solve a class of problems.
   #+END_QUOTE
