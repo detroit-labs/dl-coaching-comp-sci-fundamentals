@@ -31,8 +31,8 @@
 </section>
 
 <section>
-<section id="slide-org06eeb97">
-<h2 id="org06eeb97">Lab 2</h2>
+<section id="slide-org5beab85">
+<h2 id="org5beab85">Lab 2</h2>
 <aside class="notes">
 <ul>
 <li>To go along with our discussion of data structures and algorithms,
@@ -55,8 +55,8 @@ despite their existing for very good reasons.</li>
 </section>
 </section>
 <section>
-<section id="slide-orgd7fce6d">
-<h2 id="orgd7fce6d">Arrays</h2>
+<section id="slide-org73f6e90">
+<h2 id="org73f6e90">Arrays</h2>
 <aside class="notes">
 <ul>
 <li>An array in C represents an ordered set of homogeneously-typed
@@ -67,8 +67,8 @@ referenced under a single identifier.</li>
 
 </aside>
 </section>
-<section id="slide-org0652d99">
-<h3 id="org0652d99">Defining Arrays</h3>
+<section id="slide-org7da5f02">
+<h3 id="org7da5f02">Defining Arrays</h3>
 <aside class="notes">
 <ul>
 <li>This line shows how we can define an array of ints assigned to
@@ -94,8 +94,8 @@ values to be assigned to its elements in curly brackets.</li>
 </code></pre>
 </div>
 </section>
-<section id="slide-orgf7084a7">
-<h3 id="orgf7084a7">Using Arrays</h3>
+<section id="slide-orgf0d798b">
+<h3 id="orgf0d798b">Using Arrays</h3>
 <aside class="notes">
 <ul>
 <li>The subscript operator is used to access elements of an
@@ -129,8 +129,8 @@ numbers[4] = 11;
 </code></pre>
 </div>
 </section>
-<section id="slide-org6a62a9f">
-<h3 id="org6a62a9f">Array Types</h3>
+<section id="slide-org2707546">
+<h3 id="org2707546">Array Types</h3>
 <aside class="notes">
 <ul>
 <li>Arrays may be declared of any type, not just integers.</li>
@@ -149,8 +149,8 @@ float decimals[2] = {1.618, 3.14};
 </code></pre>
 </div>
 </section>
-<section id="slide-orge5f9ee2">
-<h3 id="orge5f9ee2">Multi-Dimensional Arrays</h3>
+<section id="slide-orgc30ccea">
+<h3 id="orgc30ccea">Multi-Dimensional Arrays</h3>
 <aside class="notes">
 <ul>
 <li>Because arrays can be of any type, that means they can also be
@@ -176,8 +176,8 @@ int three = five - pairs[1][0];       /* 5 - 2 */
 </section>
 </section>
 <section>
-<section id="slide-org0e1115c">
-<h2 id="org0e1115c">Structs</h2>
+<section id="slide-org4a42515">
+<h2 id="org4a42515">Structs</h2>
 <aside class="notes">
 <ul>
 <li>While an array can let us keep an ordered collection of similar
@@ -189,8 +189,8 @@ to a "record" type in other languages.</li>
 
 </aside>
 </section>
-<section id="slide-org4ac04a8">
-<h3 id="org4ac04a8">Struct Basics</h3>
+<section id="slide-orgf420921">
+<h3 id="orgf420921">Struct Basics</h3>
 <aside class="notes">
 <ul>
 <li>There are many situations where it can become cumbersome to store
@@ -227,8 +227,8 @@ n.f = 1.618;
 </code></pre>
 </div>
 </section>
-<section id="slide-orgd99c0fb">
-<h3 id="orgd99c0fb">Initializing Structs</h3>
+<section id="slide-orga6f98f4">
+<h3 id="orga6f98f4">Initializing Structs</h3>
 <aside class="notes">
 <ul>
 <li>A struct can be initialized similarly to an array by using curly
@@ -249,8 +249,8 @@ struct nums n2 = {.f = 6.28, .c = 'A', i = 0};
 </code></pre>
 </div>
 </section>
-<section id="slide-org3e70393">
-<h3 id="org3e70393">Compound Literals</h3>
+<section id="slide-org7903680">
+<h3 id="org7903680">Compound Literals</h3>
 <aside class="notes">
 <ul>
 <li>A struct can also be assigned after its declaration by using a
@@ -271,8 +271,8 @@ n = (struct nums) {2, 'c', 1.618};
 </code></pre>
 </div>
 </section>
-<section id="slide-org846c356">
-<h3 id="org846c356">Structs and Arrays</h3>
+<section id="slide-orgac177fd">
+<h3 id="orgac177fd">Structs and Arrays</h3>
 <aside class="notes">
 <ul>
 <li>Earlier I told you that we can create an array of any valid type,
@@ -302,8 +302,8 @@ int three = s.nums[2];
 </code></pre>
 </div>
 </section>
-<section id="slide-org5f00993">
-<h3 id="org5f00993">Structs of Structs</h3>
+<section id="slide-org1394264">
+<h3 id="org1394264">Structs of Structs</h3>
 <aside class="notes">
 <ul>
 <li>One last thing about structs: seeing as they can be composed of
@@ -327,8 +327,8 @@ float a_float = combined.nums.f;
 </section>
 </section>
 <section>
-<section id="slide-org13fd265">
-<h2 id="org13fd265">Functions</h2>
+<section id="slide-org854c41e">
+<h2 id="org854c41e">Functions</h2>
 <aside class="notes">
 <ul>
 <li>In the same way that arrays and records help us organize data in
@@ -339,8 +339,8 @@ simplify our programs and better represent algorithms.</li>
 
 </aside>
 </section>
-<section id="slide-orgf799447">
-<h3 id="orgf799447">Basic Functions</h3>
+<section id="slide-orge2c2945">
+<h3 id="orge2c2945">Basic Functions</h3>
 <aside class="notes">
 <ul>
 <li>It should be no surprise that C gives us the capability to
@@ -365,8 +365,8 @@ notifyUser();
 </code></pre>
 </div>
 </section>
-<section id="slide-orgddc5a14">
-<h3 id="orgddc5a14">Function Arguments &amp; Lexical Scoping</h3>
+<section id="slide-org4325976">
+<h3 id="org4325976">Function Arguments &amp; Lexical Scoping</h3>
 <aside class="notes">
 <ul>
 <li>Functions can also take arguments. This function takes a single
@@ -397,8 +397,8 @@ showFiveTimes(0);
 </code></pre>
 </div>
 </section>
-<section id="slide-org4596d99">
-<h3 id="org4596d99">Returning Values</h3>
+<section id="slide-org44a3cee">
+<h3 id="org44a3cee">Returning Values</h3>
 <aside class="notes">
 <ul>
 <li>Functions can also return values. This function takes two
@@ -429,8 +429,8 @@ on occasion.</li>
 </code></pre>
 </div>
 </section>
-<section id="slide-orga8ee5e5">
-<h3 id="orga8ee5e5">Functions, Arrays, and Assignments</h3>
+<section id="slide-orga674a37">
+<h3 id="orga674a37">Functions, Arrays, and Assignments</h3>
 <aside class="notes">
 <ul>
 <li>A note about arrays and functions. Functions can certainly take
@@ -472,8 +472,8 @@ for(int i; i < 3; ++i) {
 </code></pre>
 </div>
 </section>
-<section id="slide-org9e7c592">
-<h3 id="org9e7c592">Recursion</h3>
+<section id="slide-orgf05ebb5">
+<h3 id="orgf05ebb5">Recursion</h3>
 <aside class="notes">
 <ul>
 <li>Functions can call other functions, and that includes calling
@@ -514,8 +514,8 @@ if you run out of stack frames, your program will crash!</li>
 </section>
 </section>
 <section>
-<section id="slide-org3169ae3">
-<h2 id="org3169ae3">Danger Zone</h2>
+<section id="slide-orgeb41ab7">
+<h2 id="orgeb41ab7">Danger Zone</h2>
 <aside class="notes">
 <ul>
 <li>The book introduces a few concepts in this session's chapters that
@@ -528,8 +528,8 @@ in C, but do not necessarily make for good programming practice.</li>
 
 </aside>
 </section>
-<section id="slide-orgb1be9cc">
-<h3 id="orgb1be9cc">Global Variables</h3>
+<section id="slide-org419109e">
+<h3 id="org419109e">Global Variables</h3>
 <aside class="notes">
 <ul>
 <li>In chapter 8, the book introduces the concept of global
@@ -567,8 +567,8 @@ int main(void) {
 </code></pre>
 </div>
 </section>
-<section id="slide-orge6c386c">
-<h3 id="orge6c386c">Static Variables</h3>
+<section id="slide-orged47d28">
+<h3 id="orged47d28">Static Variables</h3>
 <aside class="notes">
 <ul>
 <li>Also in chapter 8, you'll be introduced to the concept of static
