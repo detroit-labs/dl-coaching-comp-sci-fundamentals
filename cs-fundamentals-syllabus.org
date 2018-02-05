@@ -51,6 +51,7 @@
    - Why is C so Weird?
    - Systems and General Purpose programming
    Lab
+   - Strings
    - Pointers
    - Bit-wise operations
    - Enumerations
