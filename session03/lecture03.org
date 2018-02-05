@@ -1,0 +1,46 @@
+#+TITLE:  Computer Science Fundamentals
+#+AUTHOR: Detroit Labs Dev Coaching
+#+DATE:   2018
+#+EMAIL:  ndotz@detroitlabs.com
+#+LANGUAGE:  en
+#+OPTIONS:   H:3 num:nil toc:nil \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   skip:nil d:nil todo:t pri:nil tags:not-in-toc timestamp:nil
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+REVEAL_PLUGINS: (highlight notes)
+#+REVEAL_THEME: league
+#+REVEAL_MARGIN: 0.2
+# #+REVEAL_MIN_SCALE: 0.5
+# #+REVEAL_MAX_SCALE: 2.5
+#+REVEAL_EXTRA_CSS: ./presentation.css
+
+* Lecture 3
+  - Why is C so weird?
+  - Systems Programming
+  - General Purpose Programming
+* Why is C so Weird?
+** C's Lineage
+   #+BEGIN_NOTES
+   - Algol was a standard algorithmic language
+   - B and C were created as a systems implementation language to
+     facilitate the creation of the Unix operating system.
+   - K&R C set the unofficial standard for C as it began to expand
+     beyond use just to implement Unix, leading to the standardization
+     of ANSI C in 1985
+   - As C was adopted widely on many systems and the needs of those
+     systems we taken into account, the standards committees continued
+     to meet and expand the C standard to where it is now, the C99
+     standard. When relevant, C also adopted features from its many
+     language extensions or offshoots to bring back into the C standard.
+   #+END_NOTES
+   - Algol
+   - BCPL
+   - B
+   - C
+   - K&R C
+   - ANSI C
+   - ANSI/ISO C
+   - C99
+* Systems Programming
+* General Purpose Programming

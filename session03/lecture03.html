@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Computer Science Fundamentals</title>
+<meta name="author" content="(Detroit Labs Dev Coaching)"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="./reveal.js/css/reveal.css"/>
+
+<link rel="stylesheet" href="./reveal.js/css/theme/league.css" id="theme"/>
+
+<link rel="stylesheet" href="./presentation.css"/>
+<link rel="stylesheet" href="./reveal.js/lib/css/zenburn.css"/>
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = './reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h1 class="title">Computer Science Fundamentals</h1><h2 class="author">Detroit Labs Dev Coaching</h2><h2 class="date">2018</h2>
+</section>
+
+<section>
+<section id="slide-orgd37dd67">
+<h2 id="orgd37dd67">Lecture 3</h2>
+<ul>
+<li>Why is C so weird?</li>
+<li>Systems Programming</li>
+<li>General Purpose Programming</li>
+
+</ul>
+</section>
+</section>
+<section>
+<section id="slide-orgf9ba5db">
+<h2 id="orgf9ba5db">Why is C so Weird?</h2>
+<div class="outline-text-2" id="text-orgf9ba5db">
+</div>
+</section>
+<section id="slide-orgc70e352">
+<h3 id="orgc70e352">C's Lineage</h3>
+<aside class="notes">
+<ul>
+<li>Algol was a standard algorithmic language</li>
+<li>B and C were created as a systems implementation language to
+facilitate the creation of the Unix operating system.</li>
+<li>K&amp;R C set the unofficial standard for C as it began to expand
+beyond use just to implement Unix, leading to the standardization
+of ANSI C in 1985</li>
+<li>As C was adopted widely on many systems and the needs of those
+systems we taken into account, the standards committees continued
+to meet and expand the C standard to where it is now, the C99
+standard. When relevant, C also adopted features from its many
+language extensions or offshoots to bring back into the C standard.</li>
+
+</ul>
+
+</aside>
+<ul>
+<li>Algol</li>
+<li>BCPL</li>
+<li>B</li>
+<li>C</li>
+<li>K&amp;R C</li>
+<li>ANSI C</li>
+<li>ANSI/ISO C</li>
+<li>C99</li>
+
+</ul>
+</section>
+</section>
+<section>
+<section id="slide-orgb3b0fad">
+<h2 id="orgb3b0fad">Systems Programming</h2>
+</section>
+</section>
+<section>
+<section id="slide-orgeb01e9e">
+<h2 id="orgeb01e9e">General Purpose Programming</h2>
+</section>
+</section>
+</div>
+</div>
+<script src="./reveal.js/lib/js/head.min.js"></script>
+<script src="./reveal.js/js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: true,
+slideNumber: 'c',
+rollingLinks: false,
+keyboard: true,
+overview: true,
+margin: 0.20,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+transitionSpeed: 'default',
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: './reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+ { src: './reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+});
+</script>
+</body>
+</html>
