@@ -45,7 +45,7 @@
 
    char c = "c"; /* this compiles but probably
                     isn't what you intended!   */
-   #+END_SRC c
+   #+END_SRC
 ** Strings are char[]
    #+BEGIN_NOTES
    - So, what is the type for a string? We can define a string literal

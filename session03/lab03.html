@@ -29,6 +29,743 @@
 <div class="slides">
 <section id="sec-title-slide"><h1 class="title">Computer Science Fundamentals</h1><h2 class="author">Detroit Labs Dev Coaching</h2><h2 class="date">2018</h2>
 </section>
+
+<section>
+<section id="slide-orgad8f0c7">
+<h2 id="orgad8f0c7">Lab 3</h2>
+<aside class="notes">
+<ul>
+<li>Strings</li>
+<li>Pointers</li>
+<li>Bit-wise Operations</li>
+<li>Enumerations</li>
+
+</ul>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-orgf741259">
+<h2 id="orgf741259">Strings</h2>
+<div class="outline-text-2" id="text-orgf741259">
+</div>
+</section>
+<section id="slide-org469a5c6">
+<h3 id="org469a5c6">Strings vs Chars</h3>
+<aside class="notes">
+<ul>
+<li>You might be familiar with how we designate strings from other
+languages, which is done with the double-quote.</li>
+<li>As we've seen a few times but have not belabored, this is
+distinct from defining a single character, which is done with the
+single-quote.</li>
+<li>It's important to note that even a single character in a string
+is not the same as a char variable definition containing the same
+character.</li>
+<li>More confounding is that assigning a string to a char variable
+will compile, and hopefully we'll understand why that is
+acceptable shortly. This does generate a warning but is still a
+potential point of confusion.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >"C is weird"  /* string */
+'c'           /* char   */
+"C"           /* string */
+
+char c = "c"; /* this compiles but probably
+                 isn't what you intended!   */
+</code></pre>
+</div>
+</section>
+<section id="slide-orgf9e3f42">
+<h3 id="orgf9e3f42">Strings are char[]</h3>
+<aside class="notes">
+<ul>
+<li>So, what is the type for a string? We can define a string literal
+by placing whatever characters we would like in the string
+between double-quotes, but there is no built-in string type in C.</li>
+<li>The actual type we need to assign a string literal to is an array
+of characters.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >char d[] = "Detroit";
+</code></pre>
+</div>
+</section>
+<section id="slide-orge21e9d7">
+<h3 id="orge21e9d7">String sizes and '\0'</h3>
+<aside class="notes">
+<ul>
+<li>When we declare a string to be a character array, we're actually
+getting a bit of compiler magic to work for us.</li>
+<li>When we assign a string to a character array, the compiler adds
+an additional null character to the end of the string if there is
+room in the array. This null character is used by convention to
+mark the end of a string and is used by library functions like
+printf to know when to stop functioning on values.</li>
+<li>This is why you will usually see string literals defined as a
+non-specific size.</li>
+<li>If explicitly defining the size of a character array to hold a
+string, be sure to leave an additional character's worth of space
+in the array's size to take full advantage of the compiler's
+special treatment for strings.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >char d[8] = { 'D', 'e', 't', 'r', 'o', 'i', 't', '\0' };
+</code></pre>
+</div>
+</section>
+<section id="slide-orgd2d7cdc">
+<h3 id="orgd2d7cdc">String Equality</h3>
+<aside class="notes">
+<ul>
+<li>If you're used to more fully-featured languages, you'll be
+disappointed to know that comparing strings can't be accomplished
+with the equality operator for numbers.</li>
+<li>This is because even if they contain the same data, or even the
+same first element, arrays will never evaluate as the same from
+via the number equality operator.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >char c[] = "cat";
+char c2[] = "cat";
+if (c == c2) {
+    printf("match\n");
+}  else {
+    printf("no match\n");  /* cannot compare arrays! */
+}
+</code></pre>
+</div>
+</section>
+<section id="slide-orga0bb7cf">
+<h3 id="orga0bb7cf">Null String</h3>
+<aside class="notes">
+<ul>
+<li>This is, of course, except for the null string.</li>
+<li>The null string is a string containing only the special null
+character, which is the default for an empty string assigned to a
+character array of unspecified length. The null string will
+compare correctly with a char representing the null character,
+which we'll understand more in a moment when we talk about pointers.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >char c[] = "";
+char c2 = '\0';
+if (c[0] == c2) {
+    printf("match\n");
+}  else {
+    printf("no match\n");
+}
+</code></pre>
+</div>
+</section>
+<section id="slide-org8123fd7">
+<h3 id="org8123fd7">Escape Characters</h3>
+<aside class="notes">
+<ul>
+<li>The null character is not the only special character available,
+it is one of several escape characters available, each of which
+is prefaced by the backslash.</li>
+<li>The backslash itself is an escape character, and thus if we want
+to represent a literal backslash in a string, we can do so by
+prefacing it with a backslash.</li>
+<li>We can also use the backslash to escape a single-quote to
+define a character representing a single-quote, or to escape
+double-quotes that we would like to show up as literals in a string.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >char newline = '\n';
+char about_newline[] = "the newline character is \\n";
+
+char sing_quo = '\'';
+char doub_quo[] = "This string \"contains quotes\"";
+</code></pre>
+</div>
+</section>
+<section id="slide-orgb55a6a7">
+<h3 id="orgb55a6a7">Character Math</h3>
+<aside class="notes">
+<ul>
+<li>As we discussed in session 1, it's important to note that
+characters are still number values, just ones that are
+interpreted specially based on context. Because of this, it's
+still possible to use math operations on them, and potentially
+change the contents of the string.</li>
+<li>This also gives us the advantage of using comparison operators
+for if we know how to use the ASCII table.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >char c[] = "cars go fast";
+printf("%s\n", c);
+c[2] += 2;
+c[10] -= 1;
+printf("%s\n", c);
+</code></pre>
+</div>
+<div class="org-src-container">
+
+<pre><code class="c" >if (thing >= 'A' && thing <= 'Z') {
+    printf("is captial\n");
+}
+</code></pre>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-org46aca67">
+<h2 id="org46aca67">Pointers</h2>
+<div class="outline-text-2" id="text-org46aca67">
+</div>
+</section>
+<section id="slide-orgd15d63c">
+<h3 id="orgd15d63c">Pointers and Addresses</h3>
+<aside class="notes">
+<ul>
+<li>It finally comes time to talk about pointers.</li>
+<li>Pointers are an abstraction around a memory address, and are
+denoted by the asterisk in their declaration.</li>
+<li>A pointer can be made to point to any valid data type, and points
+to wherever that type begins in memory.</li>
+<li>We can find the address of a given value by using the address
+operator, represented by the ampersand. This is often used to
+provide an address for a pointer value to point to.</li>
+<li>The pointer can then be dereferenced once again using the
+asterisk, which provides the value of whatever memory address it
+points to.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >int some_int = 322;
+int *ptr = &some_int;
+printf("some_int is %i, ptr is %i, ptr points to %i\n",
+       some_int, ptr, *ptr);
+</code></pre>
+</div>
+<pre  class="example">
+some_int is 322, ptr is -486382484, ptr points to 322
+</pre>
+</section>
+<section id="slide-org5180062">
+<h3 id="org5180062">Pointers and Complex Data Types</h3>
+<aside class="notes">
+<ul>
+<li>Again, pointers can be made to point to any valid data type, so
+it's not only acceptable but common to create pointers to complex
+data structures. This is especially common when passing large
+data structure to functions to help maintain efficiency by
+preventing the copying of large amounts of data into a
+function. When passed as pointers, structs then become mutable in
+the same way that arrays are from within a function's body.</li>
+<li>If a pointer points to a struct, the pointer must first be
+dereferenced before its members can be accessed. Again, this is
+so common that there is an operator dedicated to exactly this
+functionality, the structure pointer operator, more commonly
+known as the right arrow.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >struct time {
+    int hour;
+    int minute;
+};
+struct time now = { 12, 21 };
+struct time *now_p = &now;
+
+(*now_p).hour = 13;
+now_p->minute = 31;
+</code></pre>
+</div>
+</section>
+<section id="slide-orgb31cabf">
+<h3 id="orgb31cabf">Pointers and Arrays</h3>
+<aside class="notes">
+<ul>
+<li>In session 2 we learned that passing an array to a function
+actually passes a pointer to the array. Because of this, unlike
+other function arguments, the function body was not given its own
+copy of the array argument and therefore was mutable from the
+context of the array, but also no information about the length of
+the array accompanied array argument, so if the length was
+relevant, we would need to provide that as a separate argument
+ourselves.</li>
+<li>As we now know, pointers simply point to a memory location. This
+memory location, like every non-complex data type we've
+encountered so far, is represented internally as just another
+number. This means that number can be incremented and
+decremented, and the resulting memory locations can be
+accessed. Deep down, this is all the index of the array is - an
+offset distance of memory locations away from the start of the
+array.</li>
+<li>Accessing memory locations in the way is actually more efficient
+than using array indices, but this shouldn't tempt you away from
+using the subscript operator with array indices unless you have
+other good reasons.</li>
+<li>Notice we also don't need the address operator here: the compiler
+recognizes a reference to an array without the use of the
+subscript operator as a pointer by default.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >int nums[] = {1, 2, 3, 4, 5};
+int *n = nums;
+
+*n          == 1;
+*(n    + 1) == 2;
+*(nums + 2) == 3;
+*(nums + 3) == 4;
+*(nums + 4) == 5;
+</code></pre>
+</div>
+</section>
+<section id="slide-orgabd5320">
+<h3 id="orgabd5320">Pointers and Arrays</h3>
+<aside class="notes">
+<ul>
+<li>This is an example of how we can use an array pointer and
+incrementing to access the array elements in a loop.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >int nums[] = {1, 2, 3, 4, 5};
+int i = 0;
+while(i < 5) {
+    printf("%i\n", *(nums + i));
+    i++;
+}
+</code></pre>
+</div>
+</section>
+<section id="slide-org6b8ac9d">
+<h3 id="org6b8ac9d">Arrays of Strings</h3>
+<aside class="notes">
+<ul>
+<li>Previously I told you that multi-dimensional arrays needed to be
+of uniform size. That was true at the time given the tools that
+we had at hand. However, now that we have pointers, we can work
+around those limitations.</li>
+<li>By defining an array of pointers, we still have an array of
+uniform size - 1 pointer per index. However, what those pointers
+point to may be of arbitrary size. Therefore, by pointing to an
+array of pointers instead of an array of arrays, the sub arrays
+can be of undeclared size.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >char *words[] = {"NOT", "4", "CATS"};
+
+for(int i = 0; i < 3; i++) {
+    printf("%s\n", *(words + i));
+}
+</code></pre>
+</div>
+</section>
+<section id="slide-orgfdeb5c5">
+<h3 id="orgfdeb5c5">Linked Lists</h3>
+<aside class="notes">
+<ul>
+<li>As we approach the wrap-up of our discussion of pointers, we can
+look at a practical use of pointers. Last session we discussed
+the concept of a linked list data structure and its relative
+merit compared to an array. We now have the tools at hand to
+design this data structure ourselves.</li>
+<li>A linked list item will be of some value and hold a pointer to
+another item. To link items together, we simply set the pointer
+reference of one item to the address of the item that we intend
+to follow it. If we choose to iterate over the list, we can use
+the handy knowledge that eventually we will come across a null
+pointer (which evaluates to false in a boolean context) as our
+looping condition.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >struct item {
+    int value;
+    struct item *next;
+};
+struct item first = { .value = 10 };
+struct item second = { .value = 20 };
+first.next = &second;
+
+struct item new_first = { 5, &first };
+
+struct item *head = &new_first;
+int i = 0;
+while (head) {
+    printf("position %i - %i\n", i, head->value);
+    i++;
+    head = head->next;
+}
+</code></pre>
+</div>
+</section>
+<section id="slide-org5c3d25f">
+<h3 id="org5c3d25f">Pointers and Functions</h3>
+<aside class="notes">
+<ul>
+<li>While not common in most practical C programs, you may find some
+situations where you will encounter a pointer to a
+function. Often, these may be attached to a struct to mimic
+something along the lines of object-orientation by having a data
+structure carry with it access to the functions that might
+operate on its data, or it may be used for higher-order function
+implementations, such as the C standard library's quicksort
+implementation, qsort.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >int add1(int i) {
+    return i + 1;
+}
+
+int (*f)(int) = &add1;
+
+int six = (*f)(5);
+</code></pre>
+</div>
+<div class="org-src-container">
+
+<pre><code class="c" >void qsort(void *base, size_t nitems, size_t size, int (*compar)(const void *, const void*))
+
+</code></pre>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-orgdd8f475">
+<h2 id="orgdd8f475">Bit-twiddling</h2>
+<div class="outline-text-2" id="text-orgdd8f475">
+</div>
+</section>
+<section id="slide-orged9612c">
+<h3 id="orged9612c">Byte Layout and Ordering</h3>
+<aside class="notes">
+<ul>
+<li>While often we use the abstractions provided by the system to
+manipulate numbers in memory, this is not necessarily the optimal
+solution. It could be less memory or speed efficient to do so,
+although those are rarely problems we may come up against as
+application developers on fast, modern systems, and so we are
+often just as happy to accept the abstractions available to get
+our work done.</li>
+<li>However, there are numerous applications where the ordering of
+specific bits actually matters, and we may not be able to
+reliably depend on the compiler to do what we need. We can see
+here simply by looking at a short integer definition of the
+number 15 - the bytes are reversed on big and little endian
+systems, so if the actual bits in question here are important
+outside of their context as a short int, we can't rely on them!</li>
+<li>So, we may need to resort to what is known colloquially as
+"bit-twiddling" - that is: manipulating bits directly.</li>
+<li>This is most common when dealing with low-level programming such
+as low-powered bluetooth or radio programming, or when writing
+systems software that talks directly to hardware.</li>
+<li>Take for example this completely contrived bit field / byte flag
+/ bit mask which shows which of a devices telecommunications
+services are available.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >0x000F = 0b00000000 0b00001111 /* big endian */
+       = 0b00001111 0b00000000 /* little endian */
+</code></pre>
+</div>
+<pre  class="example">
+BT   GPS_C  FM    4G
+|     |     |     |
+0  0  1  0  0  1  0  1
+   |     |     |     |
+  NFC  GPS_F  WIFI  CELL
+</pre>
+</section>
+<section id="slide-org34ff233">
+<h3 id="org34ff233">Twos Complement</h3>
+<aside class="notes">
+<ul>
+<li>To put this in context before we get into the thick of it, let's
+think back to the way C implements negative numbers.</li>
+<li>The actual formula for representing a signed number in C is to
+add one to the number if it is positive, then flip the remaining
+bits. In this way, the leftmost bit controls the sign, and the
+remaining bits control the distance away from the 0 point.</li>
+<li>Thus, in all signed integer implementation, the value of -1 is
+always all available bits set to one.</li>
+
+</ul>
+
+</aside>
+<pre  class="example">
+ 4 = 0000 0100
+ 5 = 0000 0101
+-4 = 1111 1010
+</pre>
+</section>
+<section id="slide-org5559df7">
+<h3 id="org5559df7">Bit Operations</h3>
+<aside class="notes">
+<ul>
+<li>There are 6 operations available to us for manipulating bits.</li>
+
+</ul>
+
+</aside>
+<pre  class="example">
+&amp;    AND
+|    OR
+^    XOR
+~    Ones complement
+&lt;&lt;   Left Shift
+&gt;&gt;   Right Shift
+</pre>
+</section>
+<section id="slide-org3f299e2">
+<h3 id="org3f299e2">Bitwise AND</h3>
+<aside class="notes">
+<ul>
+<li>Using AND on two sets of bits will produce a new set of bits
+containing only bits set to 1 where their positions were 1 in both
+sets of the original bits.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >0b00100101      /* 37 - 4G is off, WIFI is on */
+</code></pre>
+</div>
+<div class="org-src-container">
+
+<pre><code class="c" >  0b00100101
+& 0b00000010    /* is 4G available? */
+= 0b00000000    /*    37 & 2 = 0    */
+</code></pre>
+</div>
+<div class="org-src-container">
+
+<pre><code class="c" >  0b00100101
+& 0b00000100    /*   is WIFI on?    */
+= 0b00000100    /*    37 & 4 = 4    */
+</code></pre>
+</div>
+</section>
+<section id="slide-org2d70021">
+<h3 id="org2d70021">Bitwise OR and XOR</h3>
+<aside class="notes">
+<ul>
+<li>Using OR on two sets of bits will produce a new set of bits
+containing bits set to 1 where their positions were 1 in either
+of the sets of the original bits.</li>
+<li>Using XOR on two sets of bits will produce a new set of bits
+containing bits set to 1 where their positions were 1 in either
+one of the sets of the original bits, but not ones that were set
+in both sets of bits.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >  0b00100101
+| 0b00000010    /* make 4G available */
+= 0b00100111    /*    37 | 2 = 39    */
+</code></pre>
+</div>
+<div class="org-src-container">
+
+<pre><code class="c" >  0b00100101
+^ 0b00000100    /*   turn WIFI off   */
+= 0b00100001    /*    37 ^ 4 = 33    */
+</code></pre>
+</div>
+</section>
+<section id="slide-org5557bb0">
+<h3 id="org5557bb0">Ones Complement</h3>
+<aside class="notes">
+<ul>
+<li>The ones complement operator flips all the available bits to
+their opposite value for any given set of bits.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" > ~0b00110101   /*  53 */
+= 0b11001010   /* -54 */
+</code></pre>
+</div>
+<div class="org-src-container">
+
+<pre><code class="c" >  0b00000100   /*  4 */
++ 0b00000001   /* +1 */
+= 0b00000101   /*  5 */
+ ~0b00000101   /* ~5 */
+= 0b11111010   /* -4 */
+</code></pre>
+</div>
+</section>
+<section id="slide-orgaf854df">
+<h3 id="orgaf854df">Shift Operators</h3>
+<aside class="notes">
+<ul>
+<li>The left and right shift operators shift bits left and
+right. They are effectively multiply and divide by two per step,
+respectively.</li>
+<li>However, note that whatever direction the bits are shifted, the
+remaining bits in the memory space will always be filled with 0
+bits. Shifting too far will inevitably cause a rollover the value
+if the most-significant bits are shifted out of a memory space.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >0b00110101; /* 53  - 00110101 */
+bits < 1;  /* 106 - 01101010 */
+bits < 4;  /* 80  - 01010000 */
+</code></pre>
+</div>
+<div class="org-src-container">
+
+<pre><code class="c" >0b00110101; /* 53  - 00110101 */
+bits >> 1;  /* 26  - 00011010 */
+bits >> 4;  /* 3   - 00000011 */
+</code></pre>
+</div>
+</section>
+<section id="slide-org2eb137b">
+<h3 id="org2eb137b">Bit Fields</h3>
+<aside class="notes">
+<ul>
+<li>By this point, you may be intimidated about trying to keep track
+of which bits belong to which portions of the data when dealing
+with packed bit fields as we have been up to this point. Luckily,
+C provides us with a mechanism for dealing with bit field in the
+form of the bit field struct.</li>
+<li>Using this syntax, we can specify how many bits each of a bit
+field should be used for each field, and we can use the struct
+member syntax to access and set these values as if they were the
+type we have declared them.
+p294</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >struct pixel {
+    unsigned int x:2;
+    unsigned int y:2;
+    unsigned int r:4;
+    unsigned int g:4;
+    unsigned int b:4;
+};
+</code></pre>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-org62e67de">
+<h2 id="org62e67de">Enumerations</h2>
+<aside class="notes">
+<p>
+p321
+</p>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >enum pixelColor { red, green, blue };
+enum pixelColor one = red, two = blue;
+
+if(one == blue) { /* ... */ }
+
+switch(two) {
+   case red:   break;
+   case green: break;
+   /* ... */
+</code></pre>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-orgc6ea10c">
+<h2 id="orgc6ea10c">Typedef</h2>
+<aside class="notes">
+<p>
+p325
+</p>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >typedef char* String;
+typedef String[] StringArray;
+
+typedef struct {
+    int x;
+    int y;
+} Coordinate;
+
+Coordinate point1 = { 3, 5 };
+</code></pre>
+</div>
+</section>
+</section>
 </div>
 </div>
 <script src="./reveal.js/lib/js/head.min.js"></script>
