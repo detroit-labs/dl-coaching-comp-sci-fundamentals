@@ -150,7 +150,7 @@
    #+END_SRC
    #+BEGIN_SRC c
    if (thing >= 'A' && thing <= 'Z') {
-       printf("is captial\n");
+       printf("is capital\n");
    }
    #+END_SRC
 * Pointers
