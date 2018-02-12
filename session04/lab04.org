@@ -1,0 +1,519 @@
+#+TITLE:  Computer Science Fundamentals
+#+AUTHOR: Detroit Labs Dev Coaching
+#+DATE:   2018
+#+EMAIL:  ndotz@detroitlabs.com
+#+LANGUAGE:  en
+#+OPTIONS:   H:3 num:nil toc:nil \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   skip:nil d:nil todo:t pri:nil tags:not-in-toc timestamp:nil
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+REVEAL_PLUGINS: (highlight notes)
+#+REVEAL_THEME: league
+#+REVEAL_MARGIN: 0.2
+# #+REVEAL_MIN_SCALE: 0.5
+# #+REVEAL_MAX_SCALE: 2.5
+#+REVEAL_EXTRA_CSS: ./presentation.css
+
+* Lab 4
+  #+BEGIN_NOTES
+  - The Preprocessor
+  - macros
+  - Working with larger programs
+  - Delving into I/O
+  #+END_NOTES
+* The Preprocessor
+** What is the Preprocessor?
+  #+BEGIN_NOTES
+  p299
+  #+END_NOTES
+** #define
+  #+BEGIN_NOTES
+  - Most commonly used to define constants and magic numbers
+  - Literal text substitution. Don't use semicolons unless needed.
+  p302
+  #+END_NOTES
+  #+BEGIN_SRC c
+  #define YES 1
+  #define NO  0
+  #define AND &&
+  #define OR  ||
+  #+END_SRC
+  #+BEGIN_SRC c
+  #define PHI       1.618033
+  #define MAX_LINES 1024
+  #+END_SRC
+** #include
+  #+BEGIN_NOTES
+  - Include includes text from other files.
+  - This is used to include definitions or declarations from other files.
+  - Double-quotes make the preprocessor look in local include paths
+  - The angle brackets cause the preprocessor to look for
+  p313
+  #+END_NOTES
+  #+BEGIN_SRC c
+  #include "myheader.h"
+  #include <stdio.h>
+  #+END_SRC
+* Macros
+  #+BEGIN_NOTES
+  - Short for macroinstruction, macros are a rule or pattern to
+    specify how some input should be mapped to a replacement output.
+  - Utilizing the inline replacement of define, we can create macros
+    to reduce the complexity of code that might not be best suited for
+    a function or other mechanism.
+  p306
+  #+END_NOTES
+** Macros with Arguments
+  #+BEGIN_NOTES
+  - Macros can be defined to take arguments. They're placed after the
+    macro definition in parentheses.
+  - Just like our other definitions, macros are in-lined into our code
+    wherever the macro pattern occurs.
+  p308
+  #+END_NOTES
+  #+BEGIN_SRC c
+  #define UNDER_100(y) y >= 1 && y < 100
+  #define SQUARE(x)    x * x
+  #+END_SRC
+** Macros with Arguments
+  #+BEGIN_NOTES
+  - Be careful when defining macros, because the expansion may not
+    turn out as you intend.
+  - Ample use of parenthesis will help to make sure that expressions
+    passed as arguments to macros will be evaluated in the correct order.
+  p308
+  #+END_NOTES
+  #+BEGIN_SRC c
+  #define SQUARE(x)    x * x
+  #+END_SRC
+  #+BEGIN_SRC c
+  y = SQUARE(x + 1); /* expands to x + 1 * x + 1 */
+  #+END_SRC
+  #+BEGIN_SRC c
+  #define SQUARE(x)    (x * x)
+  #define MAX(a,b)     ( ((a) > (b)) ? (a) : (b) )
+  #+END_SRC
+** Macros with VARARGS
+  #+BEGIN_NOTES
+  - There is a special macro substitution form for macros to use
+    variable numbers of arguments.
+  - Using this format, we can define macros that abstract around
+    functions that normally take variable numbers of arguments.
+  p311
+  #+END_NOTES
+  #+BEGIN_SRC c
+  #define myprintf(...) printf("MESSAGE: " __VA_ARGS__);
+  #+END_SRC
+** #ifdef, #endif, #else
+  #+BEGIN_NOTES
+  - We can use conditionals based on definitions to provide
+    conditional preprocessor commands
+  - Then, we can make the definition that the ifdef depends on before
+    including the file containing the conditional.
+  - Modern compilers provide the ability to set definition from the
+    command line when compiling. This allows us to turn on or off
+    certain definitions controlled by ifdef
+  p316
+  #+END_NOTES
+  #+BEGIN_SRC c
+  #ifdef DEBUG
+    #define log(...) printf("DEBUG: " __VA_ARGS__);
+  #else
+    #define log(...) printf(__VA_ARGS__);
+  #endif
+  #+END_SRC
+  #+BEGIN_SRC c
+  #define DEBUG
+  #+END_SRC
+  #+BEGIN_SRC bash
+  gcc -D DEBUG myapp.c -o SuperCoolApp
+  #+END_SRC
+** #ifndef and Multiple Inclusion
+  #+BEGIN_NOTES
+  - There is a similar preprocessor directive, ifndef, which is the
+    inverse of ifdef.
+  - This is most commonly used to prevent problems surrounding
+    "multiple inclusion" - or redefining definitions because a header
+    has been included by multiple files in the project.
+  p316
+  #+END_NOTES
+  #+BEGIN_SRC c
+  #ifndef _MYHEADER_H
+    #define _MYHEADER_H
+    #define MYDEFINITION 1
+    int myfunc(int n, char *cs);
+  #endif /* _MYHEADER_H */
+  #+END_SRC
+  #+BEGIN_SRC c
+  #include "myheader.h"
+  #+END_SRC
+** #if, #elif
+  #+BEGIN_NOTES
+  p316
+  #+END_NOTES
+  #+BEGIN_SRC c
+  #if    DEBUGLEVEL == 1
+    #define log(...) printf("MAJOR ERROR: " __VA_ARGS__);
+  #elif  DEBUGLEVEL == 2
+    #define log(...) printf("MEH THING: " __VA_ARGS__);
+  #elif  DEBUGLEVEL == 3
+    #define log(...) printf("DEBUG: " __VA_ARGS__);
+  #endif
+  #+END_SRC
+  #+BEGIN_SRC bash
+  gcc -D DEBUGLEVEL=2 myapp.c -o SuperCoolApp
+  #+END_SRC
+* Larger Programs
+** Compiling Multiple Modules
+  #+BEGIN_NOTES
+  - As programs get bigger, it will be important to be able to divide
+    them into multiple files to make it easier to organize parts of
+    our programs into operable units or modules.
+  - We can do this with gcc simply by providing multiple C files to
+    the compiler at compile time
+  - It's important to know that each of these source files is compiled
+    into its own object code file before being combined into the final
+    binary
+  p334
+  #+END_NOTES
+  #+BEGIN_SRC c
+  gcc constants.c utils.c main.c -o myapp
+  #+END_SRC
+** extern
+  #+BEGIN_NOTES
+  - As previously discussed, by default declarations made at top level
+    are visible to other modules.
+  - However, a module might not necessarily recognize that there is a
+    declaration that will be available to it provided by another
+    module.
+  - This is what the extern keyword does - it tells the compiler to
+    assume that a value will be available from another module.
+  - This is not a guarantee that the symbol will be provided that when
+    combined with other object code to create a binary, though
+    compilers will often warn or fail if the symbol is never provided.
+  p336
+  #+END_NOTES
+  #+BEGIN_SRC c
+  /* constants.c */
+  int MY_GLOBAL_VAR = 1;
+  #+END_SRC
+  #+BEGIN_SRC c
+  /* utils.c */
+  extern int MY_GLOBAL_VAR;
+  MY_GLOBAL_VAR = 10;
+  #+END_SRC
+** static
+  #+BEGIN_NOTES
+  - All top-level declarations are visible to external modules by
+    default. While external modules might need to declare values they
+    want to use from other modules as external declarations, sometimes
+    want to invert this behavior, which is what the static declaration does.
+  - Adding static to a declaration makes it so that it is explicitly
+    invisible to external modules. A static value or function will
+    only be visible from within its own module.
+  - Even if another module declares an identifier of the same name to
+    be external, a static declaration will never fulfill that extern
+    declaration.
+  p339
+  #+END_NOTES
+  #+BEGIN_SRC c
+  /* utils.c */
+  static char[] secret = "my secret string";
+  static short privateKeyGen(int seed) { /* ... */ }
+  #+END_SRC
+  #+BEGIN_SRC c
+  /* main.c */
+  extern char[] secret; /* never fulfilled */
+  #+END_SRC
+** static and extern
+  #+BEGIN_SRC c
+    /* util.c */
+    extern double x;
+    double square(void);
+        return x * x;
+    }
+  #+END_SRC
+  #+BEGIN_SRC c
+    /* main.c */
+    double x;
+    static double result;
+    static void doSquare(void) {
+        double square(void);
+        x = 2.0;
+        result = square();
+    }
+    int main(void) {
+        doSquare();
+        printf("%g\n", result);
+        return 0;
+    }
+  #+END_SRC
+** Header files
+  #+BEGIN_NOTES
+  p341
+  #+END_NOTES
+  #+BEGIN_SRC c
+    /* constatnts.h */
+    struct item {
+        int value;
+        struct item *next;
+    };
+    typedef struct item Item;
+    typedef struct item List;
+    #define newList(x) = (List) { .value = x }
+    #define cons(x, l) = (List) { .value = x, .next = l }
+  #+END_SRC
+  #+BEGIN_SRC c
+    /* main.c */
+    #include "constants.h"
+
+    int main(void) {
+        List list = newList(4);
+        Item i = cons(3, list);
+        return 0;
+    }
+  #+END_SRC
+** make
+  #+BEGIN_NOTES
+  p343
+  #+END_NOTES
+  #+BEGIN_SRC makefile
+  CC=gcc
+  CFLAGS=-c -Wall
+
+  all: mycp
+
+  mycp: main.o utils.o fileio.o
+      $(CC) main.o utils.o fileio.o -o mycp
+
+  main.o: main.c
+      $(CC) $(CFLAGS) main.c
+
+  utils.o: utils.c
+      $(CC) $(CFLAGS) utils.c
+
+  fileio.o: fileio.c
+      $(CC) $(CFLAGS) fileio.c
+
+  clean:
+      rm *o fileio
+  #+END_SRC
+* I/O
+  #+BEGIN_NOTES
+  - The C standard library provides a bunch of functionality
+    abstracting around I/O.
+  - We've already been using printf and scanf for a while, but let's
+    take a deeper look at some of the other functionality it provides.
+  - This is probably the most-used set of abstractions it provides,
+    which makes sense because without input or output, programs don't
+    do much.
+  #+END_NOTES
+  #+BEGIN_SRC
+fclose  remove  fprintf  escanf    vsprintf rewind   fgetc   gets
+fflush  rename  fscanf   vfprintf  vsscanf  clearerr fgets   putc
+fopen   tmpfile printf   vfscanf   fgetpos  feof     fputc   putchar
+freopen tmpnam  scanf    vprintf   fseek    ferror   fputs   puts
+setbuf  fread   snprintf vscanf    fsetpos  perror   getc
+setvbuf fwrite  sprintf  vsnprintf ftell    ungetc   getchar
+  #+END_SRC
+** printf and scanf
+  #+BEGIN_NOTES
+  - So, as I mentioned, we've seen quite a bit of printf and scanf
+    already, so coming across them this week won't be anything new or
+    exciting.
+  - However, this week's reading material extensively covers the
+    patterns involved in printf and scanf in a way that many of you
+    asked about in earlier sessions.
+  - How the options and patterns work would be worthy of its own full
+    class session worth of discussion, but the book covers this in
+    enough detail to be a great reference.
+  p348
+  #+END_NOTES
+  #+BEGIN_SRC c
+  printf("20.5%s", "Jessica");  /* "                Jessi" */
+  printf("-20.5%s", "Jessica"); /* "Jessi                " */
+
+  scanf("%[^\n]\n", &buffer);
+  #+END_SRC
+** getchar and putchar
+  #+BEGIN_NOTES
+  - getchar and putchar are the bread and butter of I/O.
+  - They are responsible for getting one character from input and
+    sending one character to output, respectively
+  p348
+  #+END_NOTES
+  #+BEGIN_SRC c
+  int c = getchar();
+  putchar('\n');
+  #+END_SRC
+** STDIN on Unix
+  #+BEGIN_NOTES
+  - Now, if you're familiar with Unix, you're probably familiar with
+    the ability to change the input stream to a program.
+  - Harnessing this ability to change where input comes from gives us
+    an easy way to start working with files.
+  - Here, we have a program to emulate basic behavior of the Unix cat
+    tool
+  - Note that the special constant EOF is used to denote an end of
+    file marker character
+  p359
+  #+END_NOTES
+  #+BEGIN_SRC c
+    /* cat.c */
+    #include &lt;stdio.h>
+
+    int main(void) {
+        int c;
+
+        while ((c=getchar()) != EOF) {
+            putchar(c);
+        }
+        return 0;
+    }
+  #+END_SRC
+** STDIN on Unix
+  #+BEGIN_NOTES
+  - Running this program will capture and print each character, as
+    expected. It will read from the standard input or stdin, so if we
+    run this without piping input to it, it will expect us to enter
+    that input directly from the keyboard.
+  - However, by piping input to it from the command-line, we can use
+    the same functions we'd use to interact with our program to read
+    from other commands or files non-interactively.
+  #+END_NOTES
+  #+BEGIN_SRC bash
+session04/src$ gcc -Wall cat.c -o cat
+session04/src/$ ./cat
+I am typing this
+I am typing this
+and it prints out
+and it prints out
+  C-c C-c
+  #+END_SRC
+  #+BEGIN_SRC bash
+session04/src/$ echo "Hello, input" | ./cat
+Hello, input
+session04/src$ ./cat < cat.c
+#include &lt;stdio.h>
+
+int main(void) {
+    int c;
+
+    ...
+  #+END_SRC
+** fopen
+  #+BEGIN_NOTES
+  - However, the C standard library includes its own method for
+    dealing with files
+  - fopen is for getting a file handle. It can open files for reading,
+    writing, or appending, and can handle them as text or binary, as
+    indicated by the letters handed in its second parameter.
+  - fopen will return the special value NULL if it is unable to open
+    the file.
+  p363
+  #+END_NOTES
+  #+BEGIN_SRC c
+  char filename[] = "cat.c";
+  FILE *input;
+  input = fopen(filename, "r");
+
+  if (input == NULL) {
+      printf("Oh no it's broken!\n");
+      exit 1;
+  }
+  #+END_SRC
+** getc & putc
+  #+BEGIN_NOTES
+  - getc and putc work exactly like getchar and putchar respectively,
+    but they take additional arguments, which are a FILE pointer.
+  - In this way, we can read and write to files directly from within C
+    and not rely on piping input around in a Unix environment.
+  p365
+  #+END_NOTES
+  #+BEGIN_SRC c
+  FILE *output = fopen(outputFileName, "w");
+
+  while((c=getc(input)) != EOF) {
+      putc(c, output);
+  }
+  #+END_SRC
+** fclose
+  #+BEGIN_NOTES
+  - It would be remiss to not also discuss fclose. fclose is
+    the opposite of fopen, and explicitly closes the file handler.
+  - While most of the time your program will probably perform properly
+    if you forget to call fclose when you're done operating on a file,
+    it explicitly closes the file stream and causes a clean-up of
+    several resources. It flushes any buffers that were active
+    (finishes writing your file!) and frees a system file
+    handler. Modern systems are good at cleaning these up, but could
+    potentially leak them - and you don't want to try dealing with a
+    system that is no longer able to open files due to being out of
+    file handlers!
+  p365
+  #+END_NOTES
+  #+BEGIN_SRC c
+  fclose(input);
+  fclose(output);
+  #+END_SRC
+** File I/O Functions
+  #+BEGIN_NOTES
+  - The C standard library also provides file-centric versions of
+    most of the I/O functions you're familiar with already.
+  - fprintf and fscanf work exactly like their non-file counterparts,
+    except for the file pointers as their first argument.
+  - fgets and fputs are also unsurprising in their operation.
+  p368
+  #+END_NOTES
+  #+BEGIN_SRC c
+  fprintf(outfile, "I take the same patterns as %s!\n", "printf");
+
+  fscanf(infile, "%[^\n]\n", &buffer);
+
+  fgets(buffer, maxChars, infile);
+
+  fputs(buffer, outfile);
+  #+END_SRC
+** Unix Standard Streams
+  #+BEGIN_NOTES
+  - Moments ago I showed you how to redirect Unix streams to change
+    the behavior of scanf and getchar. However, the C standard library
+    defines constants for the standard Unix streams that we can use to
+    access these directly
+  - So, by using the standard Unix streams identifier, the two
+    versions of printf below are equivalent.
+  p369
+  #+END_NOTES
+  #+BEGIN_SRC c
+  printf("Hello, world!\n");
+  fprintf(stdout, "Hello, world!\n");
+  #+END_SRC
+
+  #+BEGIN_SRC c
+  fprintf(stderr, "An error occurred! %s", errMessage);
+  #+END_SRC
+** Rename and Remove
+  #+BEGIN_NOTES
+  - rename returns a non-zero value if it can't rename a file,
+    otherwise, a 0
+  - remove functions similarly, except that it deletes a file.
+  p371
+  #+END_NOTES
+  #+BEGIN_SRC c
+  rename("oldfile.txt", "newfile.txt");
+  remove("junkfile.o");
+  #+END_SRC
+** exit
+  #+BEGIN_NOTES
+  p370
+  #+END_NOTES
+  #+BEGIN_SRC c
+  #include &lt;stdlib>
+
+  if(inFile == NULL) {
+      exit(EXIT_FAILURE);
+  }
+  processFile(inFile);
+  exit(EXIT_SUCCESS);
+  #+END_SRC

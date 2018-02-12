@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Computer Science Fundamentals</title>
+<meta name="author" content="(Detroit Labs Dev Coaching)"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="./reveal.js/css/reveal.css"/>
+
+<link rel="stylesheet" href="./reveal.js/css/theme/league.css" id="theme"/>
+
+<link rel="stylesheet" href="./presentation.css"/>
+<link rel="stylesheet" href="./reveal.js/lib/css/zenburn.css"/>
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = './reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h1 class="title">Computer Science Fundamentals</h1><h2 class="author">Detroit Labs Dev Coaching</h2><h2 class="date">2018</h2>
+</section>
+
+<section>
+<section id="slide-org2304d41">
+<h2 id="org2304d41">Lab 4</h2>
+<aside class="notes">
+<ul>
+<li>The Preprocessor</li>
+<li>macros</li>
+<li>Working with larger programs</li>
+<li>Delving into I/O</li>
+
+</ul>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-orge6e9edc">
+<h2 id="orge6e9edc">The Preprocessor</h2>
+<div class="outline-text-2" id="text-orge6e9edc">
+</div>
+</section>
+<section id="slide-org727b437">
+<h3 id="org727b437">What is the Preprocessor?</h3>
+<aside class="notes">
+<p>
+p299
+</p>
+
+</aside>
+</section>
+<section id="slide-org54d7af0">
+<h3 id="org54d7af0">#define</h3>
+<aside class="notes">
+<ul>
+<li>Most commonly used to define constants and magic numbers</li>
+<li>Literal text substitution. Don't use semicolons unless needed.</li>
+
+</ul>
+<p>
+p302
+</p>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >#define YES 1
+#define NO  0
+#define AND &&
+#define OR  ||
+</code></pre>
+</div>
+<div class="org-src-container">
+
+<pre><code class="c" >#define PHI       1.618033
+#define MAX_LINES 1024
+</code></pre>
+</div>
+</section>
+<section id="slide-orgbf28438">
+<h3 id="orgbf28438">#include</h3>
+<aside class="notes">
+<ul>
+<li>Include includes text from other files.</li>
+<li>This is used to include definitions or declarations from other files.</li>
+<li>Double-quotes make the preprocessor look in local include paths</li>
+<li>The angle brackets cause the preprocessor to look for</li>
+
+</ul>
+<p>
+p313
+</p>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >#include "myheader.h"
+#include <stdio.h>
+</code></pre>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-org3348393">
+<h2 id="org3348393">Macros</h2>
+<aside class="notes">
+<ul>
+<li>Short for macroinstruction, macros are a rule or pattern to
+specify how some input should be mapped to a replacement output.</li>
+<li>Utilizing the inline replacement of define, we can create macros
+to reduce the complexity of code that might not be best suited for
+a function or other mechanism.</li>
+
+</ul>
+<p>
+p306
+</p>
+
+</aside>
+</section>
+<section id="slide-orgb5514c4">
+<h3 id="orgb5514c4">Macros with Arguments</h3>
+<aside class="notes">
+<ul>
+<li>Macros can be defined to take arguments. They're placed after the
+macro definition in parentheses.</li>
+<li>Just like our other definitions, macros are in-lined into our code
+wherever the macro pattern occurs.</li>
+
+</ul>
+<p>
+p308
+</p>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >#define UNDER_100(y) y >= 1 && y < 100
+#define SQUARE(x)    x * x
+</code></pre>
+</div>
+</section>
+<section id="slide-orga50e924">
+<h3 id="orga50e924">Macros with Arguments</h3>
+<aside class="notes">
+<ul>
+<li>Be careful when defining macros, because the expansion may not
+turn out as you intend.</li>
+<li>Ample use of parenthesis will help to make sure that expressions
+passed as arguments to macros will be evaluated in the correct order.</li>
+
+</ul>
+<p>
+p308
+</p>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >#define SQUARE(x)    x * x
+</code></pre>
+</div>
+<div class="org-src-container">
+
+<pre><code class="c" >y = SQUARE(x + 1); /* expands to x + 1 * x + 1 */
+</code></pre>
+</div>
+<div class="org-src-container">
+
+<pre><code class="c" >#define SQUARE(x)    (x * x)
+#define MAX(a,b)     ( ((a) > (b)) ? (a) : (b) )
+</code></pre>
+</div>
+</section>
+<section id="slide-org8a6437d">
+<h3 id="org8a6437d">Macros with VARARGS</h3>
+<aside class="notes">
+<ul>
+<li>There is a special macro substitution form for macros to use
+variable numbers of arguments.</li>
+<li>Using this format, we can define macros that abstract around
+functions that normally take variable numbers of arguments.</li>
+
+</ul>
+<p>
+p311
+</p>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >#define myprintf(...) printf("MESSAGE: " __VA_ARGS__);
+</code></pre>
+</div>
+</section>
+<section id="slide-org1541072">
+<h3 id="org1541072">#ifdef, #endif, #else</h3>
+<aside class="notes">
+<ul>
+<li>We can use conditionals based on definitions to provide
+conditional preprocessor commands</li>
+<li>Then, we can make the definition that the ifdef depends on before
+including the file containing the conditional.</li>
+<li>Modern compilers provide the ability to set definition from the
+command line when compiling. This allows us to turn on or off
+certain definitions controlled by ifdef</li>
+
+</ul>
+<p>
+p316
+</p>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >#ifdef DEBUG
+  #define log(...) printf("DEBUG: " __VA_ARGS__);
+#else
+  #define log(...) printf(__VA_ARGS__);
+#endif
+</code></pre>
+</div>
+<div class="org-src-container">
+
+<pre><code class="c" >#define DEBUG
+</code></pre>
+</div>
+<div class="org-src-container">
+
+<pre><code class="bash" >gcc -D DEBUG myapp.c -o SuperCoolApp
+</code></pre>
+</div>
+</section>
+<section id="slide-orgccf261c">
+<h3 id="orgccf261c">#ifndef and Multiple Inclusion</h3>
+<aside class="notes">
+<ul>
+<li>There is a similar preprocessor directive, ifndef, which is the
+inverse of ifdef.</li>
+<li>This is most commonly used to prevent problems surrounding
+"multiple inclusion" - or redefining definitions because a header
+has been included by multiple files in the project.</li>
+
+</ul>
+<p>
+p316
+</p>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >#ifndef _MYHEADER_H
+  #define _MYHEADER_H
+  #define MYDEFINITION 1
+  int myfunc(int n, char *cs);
+#endif /* _MYHEADER_H */
+</code></pre>
+</div>
+<div class="org-src-container">
+
+<pre><code class="c" >#include "myheader.h"
+</code></pre>
+</div>
+</section>
+<section id="slide-org110dc45">
+<h3 id="org110dc45">#if, #elif</h3>
+<aside class="notes">
+<p>
+p316
+</p>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >#if    DEBUGLEVEL == 1
+  #define log(...) printf("MAJOR ERROR: " __VA_ARGS__);
+#elif  DEBUGLEVEL == 2
+  #define log(...) printf("MEH THING: " __VA_ARGS__);
+#elif  DEBUGLEVEL == 3
+  #define log(...) printf("DEBUG: " __VA_ARGS__);
+#endif
+</code></pre>
+</div>
+<div class="org-src-container">
+
+<pre><code class="bash" >gcc -D DEBUGLEVEL=2 myapp.c -o SuperCoolApp
+</code></pre>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-org1fc577b">
+<h2 id="org1fc577b">Larger Programs</h2>
+<div class="outline-text-2" id="text-org1fc577b">
+</div>
+</section>
+<section id="slide-org7a185f3">
+<h3 id="org7a185f3">Compiling Multiple Modules</h3>
+<aside class="notes">
+<ul>
+<li>As programs get bigger, it will be important to be able to divide
+them into multiple files to make it easier to organize parts of
+our programs into operable units or modules.</li>
+<li>We can do this with gcc simply by providing multiple C files to
+the compiler at compile time</li>
+<li>It's important to know that each of these source files is compiled
+into its own object code file before being combined into the final
+binary</li>
+
+</ul>
+<p>
+p334
+</p>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >gcc constants.c utils.c main.c -o myapp
+</code></pre>
+</div>
+</section>
+<section id="slide-org72ada2b">
+<h3 id="org72ada2b">extern</h3>
+<aside class="notes">
+<ul>
+<li>As previously discussed, by default declarations made at top level
+are visible to other modules.</li>
+<li>However, a module might not necessarily recognize that there is a
+declaration that will be available to it provided by another
+module.</li>
+<li>This is what the extern keyword does - it tells the compiler to
+assume that a value will be available from another module.</li>
+<li>This is not a guarantee that the symbol will be provided that when
+combined with other object code to create a binary, though
+compilers will often warn or fail if the symbol is never provided.</li>
+
+</ul>
+<p>
+p336
+</p>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >/* constants.c */
+int MY_GLOBAL_VAR = 1;
+</code></pre>
+</div>
+<div class="org-src-container">
+
+<pre><code class="c" >/* utils.c */
+extern int MY_GLOBAL_VAR;
+MY_GLOBAL_VAR = 10;
+</code></pre>
+</div>
+</section>
+<section id="slide-org4f6a0a1">
+<h3 id="org4f6a0a1">static</h3>
+<aside class="notes">
+<ul>
+<li>All top-level declarations are visible to external modules by
+default. While external modules might need to declare values they
+want to use from other modules as external declarations, sometimes
+want to invert this behavior, which is what the static declaration does.</li>
+<li>Adding static to a declaration makes it so that it is explicitly
+invisible to external modules. A static value or function will
+only be visible from within its own module.</li>
+<li>Even if another module declares an identifier of the same name to
+be external, a static declaration will never fulfill that extern
+declaration.</li>
+
+</ul>
+<p>
+p339
+</p>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >/* utils.c */
+static char[] secret = "my secret string";
+static short privateKeyGen(int seed) { /* ... */ }
+</code></pre>
+</div>
+<div class="org-src-container">
+
+<pre><code class="c" >/* main.c */
+extern char[] secret; /* never fulfilled */
+</code></pre>
+</div>
+</section>
+<section id="slide-org796d0ba">
+<h3 id="org796d0ba">static and extern</h3>
+<div class="org-src-container">
+
+<pre><code class="c" >/* util.c */
+extern double x;
+double square(void);
+    return x * x;
+}
+</code></pre>
+</div>
+<div class="org-src-container">
+
+<pre><code class="c" >/* main.c */
+double x;
+static double result;
+static void doSquare(void) {
+    double square(void);
+    x = 2.0;
+    result = square();
+}
+int main(void) {
+    doSquare();
+    printf("%g\n", result);
+    return 0;
+}
+</code></pre>
+</div>
+</section>
+<section id="slide-org5329a64">
+<h3 id="org5329a64">Header files</h3>
+<aside class="notes">
+<p>
+p341
+</p>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >/* constatnts.h */
+struct item {
+    int value;
+    struct item *next;
+};
+typedef struct item Item;
+typedef struct item List;
+#define newList(x) = (List) { .value = x }
+#define cons(x, l) = (List) { .value = x, .next = l }
+</code></pre>
+</div>
+<div class="org-src-container">
+
+<pre><code class="c" >/* main.c */
+#include "constants.h"
+
+int main(void) {
+    List list = newList(4);
+    Item i = cons(3, list);
+    return 0;
+}
+</code></pre>
+</div>
+</section>
+<section id="slide-orgf673794">
+<h3 id="orgf673794">make</h3>
+<aside class="notes">
+<p>
+p343
+</p>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="makefile" >CC=gcc
+CFLAGS=-c -Wall
+
+all: mycp
+
+mycp: main.o utils.o fileio.o
+    $(CC) main.o utils.o fileio.o -o mycp
+
+main.o: main.c
+    $(CC) $(CFLAGS) main.c
+
+utils.o: utils.c
+    $(CC) $(CFLAGS) utils.c
+
+fileio.o: fileio.c
+    $(CC) $(CFLAGS) fileio.c
+
+clean:
+    rm *o fileio
+</code></pre>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-org934c1fa">
+<h2 id="org934c1fa">I/O</h2>
+<aside class="notes">
+<ul>
+<li>The C standard library provides a bunch of functionality
+abstracting around I/O.</li>
+<li>We've already been using printf and scanf for a while, but let's
+take a deeper look at some of the other functionality it provides.</li>
+<li>This is probably the most-used set of abstractions it provides,
+which makes sense because without input or output, programs don't
+do much.</li>
+
+</ul>
+
+</aside>
+<pre  class="example">
+fclose  remove  fprintf  escanf    vsprintf rewind   fgetc   gets
+fflush  rename  fscanf   vfprintf  vsscanf  clearerr fgets   putc
+fopen   tmpfile printf   vfscanf   fgetpos  feof     fputc   putchar
+freopen tmpnam  scanf    vprintf   fseek    ferror   fputs   puts
+setbuf  fread   snprintf vscanf    fsetpos  perror   getc
+setvbuf fwrite  sprintf  vsnprintf ftell    ungetc   getchar
+</pre>
+</section>
+<section id="slide-orgfa3ebe1">
+<h3 id="orgfa3ebe1">printf and scanf</h3>
+<aside class="notes">
+<ul>
+<li>So, as I mentioned, we've seen quite a bit of printf and scanf
+already, so coming across them this week won't be anything new or
+exciting.</li>
+<li>However, this week's reading material extensively covers the
+patterns involved in printf and scanf in a way that many of you
+asked about in earlier sessions.</li>
+<li>How the options and patterns work would be worthy of its own full
+class session worth of discussion, but the book covers this in
+enough detail to be a great reference.</li>
+
+</ul>
+<p>
+p348
+</p>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >printf("20.5%s", "Jessica");  /* "                Jessi" */
+printf("-20.5%s", "Jessica"); /* "Jessi                " */
+
+scanf("%[^\n]\n", &buffer);
+</code></pre>
+</div>
+</section>
+<section id="slide-orgf912a6f">
+<h3 id="orgf912a6f">getchar and putchar</h3>
+<aside class="notes">
+<ul>
+<li>getchar and putchar are the bread and butter of I/O.</li>
+<li>They are responsible for getting one character from input and
+sending one character to output, respectively</li>
+
+</ul>
+<p>
+p348
+</p>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >int c = getchar();
+putchar('\n');
+</code></pre>
+</div>
+</section>
+<section id="slide-orgb2dfb7c">
+<h3 id="orgb2dfb7c">STDIN on Unix</h3>
+<aside class="notes">
+<ul>
+<li>Now, if you're familiar with Unix, you're probably familiar with
+the ability to change the input stream to a program.</li>
+<li>Harnessing this ability to change where input comes from gives us
+an easy way to start working with files.</li>
+<li>Here, we have a program to emulate basic behavior of the Unix cat
+tool</li>
+<li>Note that the special constant EOF is used to denote an end of
+file marker character</li>
+
+</ul>
+<p>
+p359
+</p>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >/* cat.c */
+#include &lt;stdio.h>
+
+int main(void) {
+    int c;
+
+    while ((c=getchar()) != EOF) {
+        putchar(c);
+    }
+    return 0;
+}
+</code></pre>
+</div>
+</section>
+<section id="slide-orgc22b951">
+<h3 id="orgc22b951">STDIN on Unix</h3>
+<aside class="notes">
+<ul>
+<li>Running this program will capture and print each character, as
+expected. It will read from the standard input or stdin, so if we
+run this without piping input to it, it will expect us to enter
+that input directly from the keyboard.</li>
+<li>However, by piping input to it from the command-line, we can use
+the same functions we'd use to interact with our program to read
+from other commands or files non-interactively.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="bash" >session04/src$ gcc -Wall cat.c -o cat
+session04/src/$ ./cat
+I am typing this
+I am typing this
+and it prints out
+and it prints out
+  C-c C-c
+</code></pre>
+</div>
+<div class="org-src-container">
+
+<pre><code class="bash" >session04/src/$ echo "Hello, input" | ./cat
+Hello, input
+session04/src$ ./cat < cat.c
+#include &lt;stdio.h>
+
+int main(void) {
+    int c;
+
+    ...
+</code></pre>
+</div>
+</section>
+<section id="slide-org9294511">
+<h3 id="org9294511">fopen</h3>
+<aside class="notes">
+<ul>
+<li>However, the C standard library includes its own method for
+dealing with files</li>
+<li>fopen is for getting a file handle. It can open files for reading,
+writing, or appending, and can handle them as text or binary, as
+indicated by the letters handed in its second parameter.</li>
+<li>fopen will return the special value NULL if it is unable to open
+the file.</li>
+
+</ul>
+<p>
+p363
+</p>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >char filename[] = "cat.c";
+FILE *input;
+input = fopen(filename, "r");
+
+if (input == NULL) {
+    printf("Oh no it's broken!\n");
+    exit 1;
+}
+</code></pre>
+</div>
+</section>
+<section id="slide-org1a17943">
+<h3 id="org1a17943">getc &amp; putc</h3>
+<aside class="notes">
+<ul>
+<li>getc and putc work exactly like getchar and putchar respectively,
+but they take additional arguments, which are a FILE pointer.</li>
+<li>In this way, we can read and write to files directly from within C
+and not rely on piping input around in a Unix environment.</li>
+
+</ul>
+<p>
+p365
+</p>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >FILE *output = fopen(outputFileName, "w");
+
+while((c=getc(input)) != EOF) {
+    putc(c, output);
+}
+</code></pre>
+</div>
+</section>
+<section id="slide-org672430c">
+<h3 id="org672430c">fclose</h3>
+<aside class="notes">
+<ul>
+<li>It would be remiss to not also discuss fclose. fclose is
+the opposite of fopen, and explicitly closes the file handler.</li>
+<li>While most of the time your program will probably perform properly
+if you forget to call fclose when you're done operating on a file,
+it explicitly closes the file stream and causes a clean-up of
+several resources. It flushes any buffers that were active
+(finishes writing your file!) and frees a system file
+handler. Modern systems are good at cleaning these up, but could
+potentially leak them - and you don't want to try dealing with a
+system that is no longer able to open files due to being out of
+file handlers!</li>
+
+</ul>
+<p>
+p365
+</p>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >fclose(input);
+fclose(output);
+</code></pre>
+</div>
+</section>
+<section id="slide-org52a7ba8">
+<h3 id="org52a7ba8">File I/O Functions</h3>
+<aside class="notes">
+<ul>
+<li>The C standard library also provides file-centric versions of
+most of the I/O functions you're familiar with already.</li>
+<li>fprintf and fscanf work exactly like their non-file counterparts,
+except for the file pointers as their first argument.</li>
+<li>fgets and fputs are also unsurprising in their operation.</li>
+
+</ul>
+<p>
+p368
+</p>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >fprintf(outfile, "I take the same patterns as %s!\n", "printf");
+
+fscanf(infile, "%[^\n]\n", &buffer);
+
+fgets(buffer, maxChars, infile);
+
+fputs(buffer, outfile);
+</code></pre>
+</div>
+</section>
+<section id="slide-org2a9db24">
+<h3 id="org2a9db24">Unix Standard Streams</h3>
+<aside class="notes">
+<ul>
+<li>Moments ago I showed you how to redirect Unix streams to change
+the behavior of scanf and getchar. However, the C standard library
+defines constants for the standard Unix streams that we can use to
+access these directly</li>
+<li>So, by using the standard Unix streams identifier, the two
+versions of printf below are equivalent.</li>
+
+</ul>
+<p>
+p369
+</p>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >printf("Hello, world!\n");
+fprintf(stdout, "Hello, world!\n");
+</code></pre>
+</div>
+
+<div class="org-src-container">
+
+<pre><code class="c" >fprintf(stderr, "An error occurred! %s", errMessage);
+</code></pre>
+</div>
+</section>
+<section id="slide-orgd3031f3">
+<h3 id="orgd3031f3">Rename and Remove</h3>
+<aside class="notes">
+<ul>
+<li>rename returns a non-zero value if it can't rename a file,
+otherwise, a 0</li>
+<li>remove functions similarly, except that it deletes a file.</li>
+
+</ul>
+<p>
+p371
+</p>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >rename("oldfile.txt", "newfile.txt");
+remove("junkfile.o");
+</code></pre>
+</div>
+</section>
+<section id="slide-orgd182abd">
+<h3 id="orgd182abd">exit</h3>
+<aside class="notes">
+<p>
+p370
+</p>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >#include &lt;stdlib>
+
+if(inFile == NULL) {
+    exit(EXIT_FAILURE);
+}
+processFile(inFile);
+exit(EXIT_SUCCESS);
+</code></pre>
+</div>
+</section>
+</section>
+</div>
+</div>
+<script src="./reveal.js/lib/js/head.min.js"></script>
+<script src="./reveal.js/js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: true,
+slideNumber: 'c',
+rollingLinks: false,
+keyboard: true,
+overview: true,
+margin: 0.20,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+transitionSpeed: 'default',
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: './reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+ { src: './reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+});
+</script>
+</body>
+</html>
