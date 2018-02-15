@@ -254,7 +254,7 @@
   p341
   #+END_NOTES
   #+BEGIN_SRC c
-    /* constatnts.h */
+    /* constants.h */
     struct item {
         int value;
         struct item *next;
