@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Computer Science Fundamentals</title>
+<meta name="author" content="(Detroit Labs Dev Coaching)"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="./reveal.js/css/reveal.css"/>
+
+<link rel="stylesheet" href="./reveal.js/css/theme/league.css" id="theme"/>
+
+<link rel="stylesheet" href="./presentation.css"/>
+<link rel="stylesheet" href="./reveal.js/lib/css/zenburn.css"/>
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = './reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h1 class="title">Computer Science Fundamentals</h1><h2 class="author">Detroit Labs Dev Coaching</h2><h2 class="date">2018</h2>
+</section>
+
+<section>
+<section id="slide-org50c8ce1">
+<h2 id="org50c8ce1">Lab 5</h2>
+<aside class="notes">
+<ul>
+<li>Command-line Arguments</li>
+<li>Dynamic Memory</li>
+
+</ul>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-orga6cf94d">
+<h2 id="orga6cf94d">Program Arguments</h2>
+<div class="outline-text-2" id="text-orga6cf94d">
+</div>
+</section>
+<section id="slide-org9a3dc25">
+<h3 id="org9a3dc25">argc &amp; argv</h3>
+<aside class="notes">
+<ul>
+<li>Up to now we have been using void for the arguments to our main function.</li>
+<li>However, this has been a stand-in for main's proper arguments,
+which are an integer and an array of string pointers.</li>
+<li>The first argument, the integer, is the number of arguments
+provided to the program. This is known as the argument count, or argc.</li>
+<li>The second argument, the array of string pointers, is an array
+pointing to each of the arguments provided to the program, known
+as the argument vector or argv.</li>
+<li>It's important to note that the argument vector contains all of
+the strings used to call the program. Thus, the 0th element of the
+array is the name the program was called by according to the
+operating system.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >int main(int argc, char *argv[]) {
+    printf("the arguments you provided are\n");
+    for(int i = 0; i < argc; i++) {
+        printf("%i - %s\n", i, argv[i]);
+    }
+}
+</code></pre>
+</div>
+<div class="org-src-container">
+
+<pre><code class="shell" >$ gcc -Wall arguments.c -o args
+$ ./args derp hurr blop
+the arguments you provided are
+0 - ./args
+1 - derp
+2 - hurr
+3 - blop
+</code></pre>
+</div>
+</section>
+<section id="slide-org6ed2cdd">
+<h3 id="org6ed2cdd">argv's null terminator</h3>
+<aside class="notes">
+<ul>
+<li>argv is terminated by a null pointer</li>
+<li>The last element of the argument vector is always the null
+pointer. Thus, it is possible to iterate over the argument vector
+without knowing the number of arguments provided.</li>
+<li>This program operates the same way as the previous program.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >int main(int argc, char *argv[]) {
+    printf("the arguments you provided are\n");
+    for(int i = 0; argv[i] != 0; i++) {
+        printf("%i - %s\n", i, argv[i]);
+    }
+}
+</code></pre>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-orge4bb752">
+<h2 id="orge4bb752">Dynamic Memory</h2>
+<div class="outline-text-2" id="text-orge4bb752">
+</div>
+</section>
+<section id="slide-orga08ae61">
+<h3 id="orga08ae61">Automatic vs Dynamic</h3>
+<aside class="notes">
+<ul>
+<li>You may remember a brief discussion around automatic variables
+from back in chapter 8.</li>
+<li>An automatic variable is one whose declaration only lives for the
+duration of the scope that it is declared in. Thus, once a function
+exits, any automatic variables that it declares become unavailable.</li>
+<li>By default all non-global variables in C are automatic, so we
+haven't had much need for the "auto" keyword.</li>
+<li>Automatic declarations are how we expect most variables to work
+based on experience - indeed they are not only the default in C
+but are the standard adopted by many programming languages since.</li>
+<li>When we have returned a value from a function, we have done
+exactly that, returned the value. Thus, the actual reference to
+that value in the scope it was in need not continue to exist.</li>
+<li>However, this creates a problem of disjoint between memory
+allocated in functions for their variables and our ability to
+access those variables once a function exits.</li>
+<li>To address this problem in C, we have the capability to
+dynamically allocate memory.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >int f(void) {
+    auto int i = 0; /* auto keyword here is default */
+
+    /* do stuff to i ... */
+    return i;
+}
+</code></pre>
+</div>
+</section>
+<section id="slide-org2c4bf11">
+<h3 id="org2c4bf11">malloc &amp; sizeof</h3>
+<aside class="notes">
+<ul>
+<li>sizeof returns the number of char-sized storage units required to
+store an instance of the type provided as its argument.</li>
+<li>malloc takes a single argument, which is the number of bytes to
+allocate on the heap, and it returns a pointer to a location in
+memory with that amount of dynamic memory space reserved.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >sizeof(char) == 1; /* guaranteed true */
+
+size_t double_size = sizeof(double);
+
+int *i_p = malloc(sizeof(int));
+
+int *pointer = malloc(10 * sizeof(int));
+</code></pre>
+</div>
+</section>
+<section id="slide-orgbad41c0">
+<h3 id="orgbad41c0">insert Revisited</h3>
+<aside class="notes">
+<ul>
+<li>By utilizing malloc and sizeof, we can now rewrite one of the
+functions we saw from our exercises ventures with strings and pointers.</li>
+<li>Instead of trying to do an in-place insert and worrying about
+running over the end of our source string or altering the
+original instance, we can allocate an amount of memory
+appropriate to hold the new string and return a pointer to it.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >char* insert(char source[], char insert[], int insertIndex) {
+    int s_len = strlen(source);
+    int i_len = strlen(insert);
+    int new_size = s_len + i_len + 1;
+
+    char *result = (char *) malloc(sizeof(char) * new_size);
+
+    int i = 0, j = 0, k = 0;
+
+    while(i < insertIndex) result[k++] = source[i++];
+    while(j < i_len) result[k++] = insert[j++];
+    while(i < s_len) result[k++] = source[i++];
+
+    result[k] = '\0';
+
+    return result;
+}
+</code></pre>
+</div>
+</section>
+<section id="slide-org76a3b2a">
+<h3 id="org76a3b2a">calloc</h3>
+<aside class="notes">
+<ul>
+<li>calloc is another alternative to malloc. It also allocates memory
+on the heap. The primary difference being that it "clears" the
+memory space before returning, initializing the values to 0.</li>
+<li>Because of this, calloc needs the element size and number of
+elements passed as separate arguments so it knows at what
+intervals to set the appropriate 0 values.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >int *pointer = calloc(sizeof(int), 10);
+</code></pre>
+</div>
+<div class="org-src-container">
+
+<pre><code class="c" >char* insert(char source[], char insert[], int insertIndex) {
+    int s_len = strlen(source);
+    int i_len = strlen(insert);
+
+    char *result = (char *) malloc(sizeof(char) * (s_len + i_len + 1));
+
+    int i = 0, j = 0, k = 0;
+
+    while(i < insertIndex) result[k++] = source[i++];
+    while(j < i_len) result[k++] = insert[j++];
+    while(i < s_len) result[k++] = source[i++];
+
+    result[k] = '\0';
+
+    return result;
+}
+</code></pre>
+</div>
+</section>
+<section id="slide-org6d561dc">
+<h3 id="org6d561dc">free</h3>
+<aside class="notes">
+<ul>
+<li>It's important to note that memory allocated to the heap is not
+managed in the same way as automatic variables allocated to the
+stack.</li>
+<li>When a function that has allocated memory to the heap exits, that
+memory is still marked as in use. This does provide us the
+utility to freely pass around pointers to memory locations
+allocated anywhere in our program, but it also means that it is
+up to us to decide when to deallocate the memory and return it to
+the system for later allocation. Failure to do this is called a
+memory leak and will cause your program or system to run out of memory.</li>
+<li>Thus, when we call malloc or calloc, it is important to retain a
+pointer to the memory location that was initially allocated so
+that we can pass it to the free function to return this memory to
+the system for future allocation.</li>
+<li>If we alter a pointer's value by incrementing it, it's no longer
+useful to free and the memory is effectively leaked.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >char *newString = insert(argv[1], argv[2], atoi(argv[3]));
+printf("%s\n", newString);
+free(newString);
+</code></pre>
+</div>
+</section>
+</section>
+</div>
+</div>
+<script src="./reveal.js/lib/js/head.min.js"></script>
+<script src="./reveal.js/js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: true,
+slideNumber: 'c',
+rollingLinks: false,
+keyboard: true,
+overview: true,
+margin: 0.20,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+transitionSpeed: 'default',
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: './reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+ { src: './reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+});
+</script>
+</body>
+</html>

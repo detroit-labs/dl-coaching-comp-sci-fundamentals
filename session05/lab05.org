@@ -1,0 +1,200 @@
+#+TITLE:  Computer Science Fundamentals
+#+AUTHOR: Detroit Labs Dev Coaching
+#+DATE:   2018
+#+EMAIL:  ndotz@detroitlabs.com
+#+LANGUAGE:  en
+#+OPTIONS:   H:3 num:nil toc:nil \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   skip:nil d:nil todo:t pri:nil tags:not-in-toc timestamp:nil
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+REVEAL_PLUGINS: (highlight notes)
+#+REVEAL_THEME: league
+#+REVEAL_MARGIN: 0.2
+# #+REVEAL_MIN_SCALE: 0.5
+# #+REVEAL_MAX_SCALE: 2.5
+#+REVEAL_EXTRA_CSS: ./presentation.css
+
+* Lab 5
+  #+BEGIN_NOTES
+  - Command-line Arguments
+  - Dynamic Memory
+  #+END_NOTES
+* Program Arguments
+** argc & argv
+  #+BEGIN_NOTES
+  - Up to now we have been using void for the arguments to our main function.
+  - However, this has been a stand-in for main's proper arguments,
+    which are an integer and an array of string pointers.
+  - The first argument, the integer, is the number of arguments
+    provided to the program. This is known as the argument count, or argc.
+  - The second argument, the array of string pointers, is an array
+    pointing to each of the arguments provided to the program, known
+    as the argument vector or argv.
+  - It's important to note that the argument vector contains all of
+    the strings used to call the program. Thus, the 0th element of the
+    array is the name the program was called by according to the
+    operating system.
+  #+END_NOTES
+  #+BEGIN_SRC c
+  int main(int argc, char *argv[]) {
+      printf("the arguments you provided are\n");
+      for(int i = 0; i < argc; i++) {
+          printf("%i - %s\n", i, argv[i]);
+      }
+  }
+  #+END_SRC
+  #+BEGIN_SRC shell
+  $ gcc -Wall arguments.c -o args
+  $ ./args derp hurr blop
+  the arguments you provided are
+  0 - ./args
+  1 - derp
+  2 - hurr
+  3 - blop
+  #+END_SRC
+** argv's null terminator
+   #+BEGIN_NOTES
+   - argv is terminated by a null pointer
+   - The last element of the argument vector is always the null
+     pointer. Thus, it is possible to iterate over the argument vector
+     without knowing the number of arguments provided.
+   - This program operates the same way as the previous program.
+   #+END_NOTES
+   #+BEGIN_SRC c
+   int main(int argc, char *argv[]) {
+       printf("the arguments you provided are\n");
+       for(int i = 0; argv[i] != 0; i++) {
+           printf("%i - %s\n", i, argv[i]);
+       }
+   }
+   #+END_SRC
+* Dynamic Memory
+** Automatic vs Dynamic
+   #+BEGIN_NOTES
+   - You may remember a brief discussion around automatic variables
+     from back in chapter 8.
+   - An automatic variable is one whose declaration only lives for the
+     duration of the scope that it is declared in. Thus, once a function
+     exits, any automatic variables that it declares become unavailable.
+   - By default all non-global variables in C are automatic, so we
+     haven't had much need for the "auto" keyword.
+   - Automatic declarations are how we expect most variables to work
+     based on experience - indeed they are not only the default in C
+     but are the standard adopted by many programming languages since.
+   - When we have returned a value from a function, we have done
+     exactly that, returned the value. Thus, the actual reference to
+     that value in the scope it was in need not continue to exist.
+   - However, this creates a problem of disjoint between memory
+     allocated in functions for their variables and our ability to
+     access those variables once a function exits.
+   - To address this problem in C, we have the capability to
+     dynamically allocate memory.
+   #+END_NOTES
+   #+BEGIN_SRC c
+   int f(void) {
+       auto int i = 0; /* auto keyword here is default */
+
+       /* do stuff to i ... */
+       return i;
+   }
+   #+END_SRC
+** malloc & sizeof
+   #+BEGIN_NOTES
+   - sizeof returns the number of char-sized storage units required to
+     store an instance of the type provided as its argument.
+   - malloc takes a single argument, which is the number of bytes to
+     allocate on the heap, and it returns a pointer to a location in
+     memory with that amount of dynamic memory space reserved.
+   #+END_NOTES
+   #+BEGIN_SRC c
+   sizeof(char) == 1; /* guaranteed true */
+
+   size_t double_size = sizeof(double);
+
+   int *i_p = malloc(sizeof(int));
+
+   int *pointer = malloc(10 * sizeof(int));
+   #+END_SRC
+** insert Revisited
+   #+BEGIN_NOTES
+   - By utilizing malloc and sizeof, we can now rewrite one of the
+     functions we saw from our exercises ventures with strings and pointers.
+   - Instead of trying to do an in-place insert and worrying about
+     running over the end of our source string or altering the
+     original instance, we can allocate an amount of memory
+     appropriate to hold the new string and return a pointer to it.
+   #+END_NOTES
+   #+BEGIN_SRC c
+   char* insert(char source[], char insert[], int insertIndex) {
+       int s_len = strlen(source);
+       int i_len = strlen(insert);
+       int new_size = s_len + i_len + 1;
+
+       char *result = (char *) malloc(sizeof(char) * new_size);
+
+       int i = 0, j = 0, k = 0;
+
+       while(i < insertIndex) result[k++] = source[i++];
+       while(j < i_len) result[k++] = insert[j++];
+       while(i < s_len) result[k++] = source[i++];
+
+       result[k] = '\0';
+
+       return result;
+   }
+   #+END_SRC
+** calloc
+   #+BEGIN_NOTES
+   - calloc is another alternative to malloc. It also allocates memory
+     on the heap. The primary difference being that it "clears" the
+     memory space before returning, initializing the values to 0.
+   - Because of this, calloc needs the element size and number of
+     elements passed as separate arguments so it knows at what
+     intervals to set the appropriate 0 values.
+   #+END_NOTES
+   #+BEGIN_SRC c
+   int *pointer = calloc(sizeof(int), 10);
+   #+END_SRC
+   #+BEGIN_SRC c
+   char* insert(char source[], char insert[], int insertIndex) {
+       int s_len = strlen(source);
+       int i_len = strlen(insert);
+
+       char *result = (char *) malloc(sizeof(char) * (s_len + i_len + 1));
+
+       int i = 0, j = 0, k = 0;
+
+       while(i < insertIndex) result[k++] = source[i++];
+       while(j < i_len) result[k++] = insert[j++];
+       while(i < s_len) result[k++] = source[i++];
+
+       result[k] = '\0';
+
+       return result;
+   }
+   #+END_SRC
+** free
+   #+BEGIN_NOTES
+   - It's important to note that memory allocated to the heap is not
+     managed in the same way as automatic variables allocated to the
+     stack.
+   - When a function that has allocated memory to the heap exits, that
+     memory is still marked as in use. This does provide us the
+     utility to freely pass around pointers to memory locations
+     allocated anywhere in our program, but it also means that it is
+     up to us to decide when to deallocate the memory and return it to
+     the system for later allocation. Failure to do this is called a
+     memory leak and will cause your program or system to run out of memory.
+   - Thus, when we call malloc or calloc, it is important to retain a
+     pointer to the memory location that was initially allocated so
+     that we can pass it to the free function to return this memory to
+     the system for future allocation.
+   - If we alter a pointer's value by incrementing it, it's no longer
+     useful to free and the memory is effectively leaked.
+   #+END_NOTES
+   #+BEGIN_SRC c
+   char *newString = insert(argv[1], argv[2], atoi(argv[3]));
+   printf("%s\n", newString);
+   free(newString);
+   #+END_SRC
