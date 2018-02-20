@@ -17,7 +17,7 @@
 
 * Lecture 5
   #+BEGIN_NOTES
-  The Stack and The Heap
+  - The Stack and The Heap
   #+END_NOTES
 * The Stack
   #+BEGIN_NOTES

@@ -29,8 +29,129 @@
 <div class="slides">
 <section id="sec-title-slide"><h1 class="title">Computer Science Fundamentals</h1><h2 class="author">Detroit Labs Dev Coaching</h2><h2 class="date">2018</h2>
 </section>
-<p>
-t</p>
+
+<section>
+<section id="slide-org952104d">
+<h2 id="org952104d">Lecture 5</h2>
+<aside class="notes">
+<ul>
+<li>The Stack and The Heap</li>
+
+</ul>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-org6f9497f">
+<h2 id="org6f9497f">The Stack</h2>
+<aside class="notes">
+<ul>
+<li>We've already talked about the stack a few times. Specifically,
+we saw how memory is allocated at a low level for simple
+programs. All of this memory was allocated on the stack.</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org6ec3f4a">
+<h3 id="org6ec3f4a"><img src="https://i.imgur.com/QxUxd1p.png" alt="QxUxd1p.png" /></h3>
+<aside class="notes">
+<ul>
+<li>Remember this diagram?</li>
+<li>So far, when we've been creating programs, every variable we've
+allocated so far has been in the stack.</li>
+<li>That is, given this simplified hand-drawn CPU model, we've been
+allocating space in what is labeled here as "program memory.</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org7a28466">
+<h3 id="org7a28466"><img src="https://i.imgur.com/Swoib35.png" alt="Swoib35.png" /></h3>
+<aside class="notes">
+<ul>
+<li>We know at compile time based on all the things we've declared in
+our program exactly how much space our program will take up,
+because every instance of every variable is accounted for.</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-orge855521">
+<h3 id="orge855521"><object type="image/svg+xml" data="https://upload.wikimedia.org/wikipedia/commons/1/1f/Call-stack-layout.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object></h3>
+<aside class="notes">
+<ul>
+<li>Not only that but the compiler, for all of the times we may have
+called it dumb, can figure out how many times a function might be
+called and manage memory space and reuse for any allocations we
+do within functions because all of the sizes we are using are
+already declared.</li>
+<li>Because of this, the stack space for a program can grow and
+shrink to accommodate functions pushing and popping their
+declarations.</li>
+<li>Stack space is also somewhat limited.</li>
+
+</ul>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-org9a55aa5">
+<h2 id="org9a55aa5">The Heap</h2>
+<aside class="notes">
+<ul>
+<li>The heap is a logically separate memory space from the stack.</li>
+<li>For convenience, you could consider the heap "the rest of your memory".</li>
+<li>Because of this, there is no theoretical limit to how much heap
+space may be available.</li>
+<li>Your program can request to allocate memory on the heap, and
+receives a reference to the memory allocated.</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-orgb58e829">
+<h3 id="orgb58e829"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Heap_metal.jpg/640px-Heap_metal.jpg" alt="640px-Heap_metal.jpg" /></h3>
+<aside class="notes">
+<ul>
+<li>Unlike the stack however, memory in the heap is not managed
+automatically. If we request that memory be allocated by the heap,
+we must also request its deallocation to return the memory back to
+the pool of memory available to the system.</li>
+<li>The computer keeps track of which sections of memory have been
+allocated to which programs and how much. This is how it knows
+what memory to return when we deallocate it.</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org052da2e">
+<h3 id="org052da2e"><object type="image/svg+xml" data="https://upload.wikimedia.org/wikipedia/commons/4/4a/External_Fragmentation.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object></h3>
+<aside class="notes">
+<ul>
+<li>Because of this bookkeeping, the heap is relatively slow (but
+still not by enough for you to notice in a normal program)
+compared to the stack, where it's likely that much of the memory
+is mapped to the CPU's cache.</li>
+<li>This also means that depending on the strategy your program is
+using to allocate and deallocate memory, it's quite possible for
+the heap memory to become fragmented over time, making access
+even slower.</li>
+
+</ul>
+
+</aside>
+</section>
+</section>
 </div>
 </div>
 <script src="./reveal.js/lib/js/head.min.js"></script>
