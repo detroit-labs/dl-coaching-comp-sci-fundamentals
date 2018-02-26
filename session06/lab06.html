@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Computer Science Fundamentals</title>
+<meta name="author" content="(Detroit Labs Dev Coaching)"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="./reveal.js/css/reveal.css"/>
+
+<link rel="stylesheet" href="./reveal.js/css/theme/league.css" id="theme"/>
+
+<link rel="stylesheet" href="./presentation.css"/>
+<link rel="stylesheet" href="./reveal.js/lib/css/zenburn.css"/>
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = './reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h1 class="title">Computer Science Fundamentals</h1><h2 class="author">Detroit Labs Dev Coaching</h2><h2 class="date">2018</h2>
+</section>
+
+<section>
+<section id="slide-org86e1665">
+<h2 id="org86e1665">Lab 6</h2>
+<aside class="notes">
+<ul>
+<li>Ditch the preprocessor</li>
+<li>Type-safe I/O</li>
+<li>Classes and Object Orientation</li>
+<li>C++ Functions and Generics</li>
+<li>namespaces</li>
+
+</ul>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-org4c51295">
+<h2 id="org4c51295">Ditch the Preprocessor</h2>
+<div class="outline-text-2" id="text-org4c51295">
+</div>
+</section>
+<section id="slide-org25fb692">
+<h3 id="org25fb692">inline</h3>
+<aside class="notes">
+<ul>
+<li>As we saw in the lecture, the preprocessor falls short in the same
+ways that it provides and advantage for C programmers. While
+providing direct text substitution lets the programmer work around
+a number of issues for generalizing code, it also has no
+consideration for the rules of the language or its types.</li>
+<li>C++ addresses this by providing 2 language features to address the
+most common reasons C programmers used the preprocessor. The first
+is inline.</li>
+<li>inline allows us to write functions which work like any other
+function and are checked by the compiler for correctness. However,
+when compiled, they have the effect of inlining the resulting
+assembly code to preserve the context of the execution and prevent
+pushing a new function stack frame.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >#define MAX(a,b)     ( ((a) > (b)) ? (a) : (b) )
+</code></pre>
+</div>
+<div class="org-src-container">
+
+<pre><code class="c++" >inline int max(int x, int y) {
+    return (x > y) ? x : y;
+}
+</code></pre>
+</div>
+</section>
+<section id="slide-org4891fb4">
+<h3 id="org4891fb4">Templates</h3>
+<aside class="notes">
+<ul>
+<li>One of the other common uses for the preprocessor is to make
+macros that can operate on various types. With these, the purpose
+is often to get around the type system and not have to define
+multiple functions that work the same way on different kinds of
+parameters.</li>
+<li>C++ adds the language feature of templates to allow for functions
+and classes to abstract around multiple types, while also still
+providing the ability for the compiler to do type-checking on the
+resulting code.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >#define SUM(arr, len, sum) do {  \
+        int i;                   \
+        for(i = 0; i < len; ++i) \
+            sum += arr[i];       \
+    } while(0);
+</code></pre>
+</div>
+<div class="org-src-container">
+
+<pre><code class="c++" >template<class t1>
+t1 sum(t1 a[], int len) {
+    t1 sum = 0;
+    for(int i = 0; i < len; ++i) {
+        sum += a[i];
+    }
+    return sum;
+}
+</code></pre>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-org71e18ba">
+<h2 id="org71e18ba">Type-safe I/O</h2>
+<aside class="notes">
+<ul>
+<li>C++ improves I/O significantly with the iostream library.</li>
+<li>Because of operator overloading the stream operators can
+effectively infer the type of data being read or output, and
+handle it correctly, eliminating the need for specific printf
+formatting strings.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >int x = 3672;
+float y = 1.618;
+printf("Ints and Floats! Like %i and %f\n", x, y);
+scanf("%i", &x);
+</code></pre>
+</div>
+<div class="org-src-container">
+
+<pre><code class="c++" >int x = 3672;
+float y = 1.618
+cout < "Ints and Floats! Like " < x < " and " < y < endl;
+cin >> x;
+</code></pre>
+</div>
+</section>
+<section id="slide-orgfa3a20b">
+<h3 id="orgfa3a20b">File I/O</h3>
+<aside class="notes">
+<ul>
+<li>This operator overloading means that the iostream library can
+figure out not just the way to handle data being input or output,
+but also how to handle destinations for the data uniformly,
+whether they are to standard out or to a file.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c++" >fstream outfile;
+outfile.open("log.txt", fstream::out | fstream::app);
+outfile < "Same operator to print to files!" < endl;
+outfile.close();
+</code></pre>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-orgb5f96ff">
+<h2 id="orgb5f96ff">Classes and OO</h2>
+<div class="outline-text-2" id="text-orgb5f96ff">
+</div>
+</section>
+<section id="slide-org05bac9c">
+<h3 id="org05bac9c">Defining a Class</h3>
+<aside class="notes">
+nil
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c++" >class Rect {
+    int width, height;
+    public:
+    void set_width(int w);
+    void set_height(int h);
+    int perimeter() {
+        return width * 2 + height * 2;
+    }
+}
+void Rect::set_width(int w) { width = w; }
+void Rect::set_height(int h) { height = h; }
+</code></pre>
+</div>
+</section>
+<section id="slide-org91ced72">
+<h3 id="org91ced72">Access Control</h3>
+<div class="org-src-container">
+
+<pre><code class="c++" >class Rect {
+    private:
+    int width, height;
+    public:
+    void set_width(int w);
+    void set_height(int h);
+    int perimeter() {
+        return width * 2 + height * 2;
+    }
+}
+</code></pre>
+</div>
+<div class="org-src-container">
+
+<pre><code class="c++" >Rect *r = new Rect;
+r->set_width(10);
+r->set_height(5);
+cout < r->width; // <- won't compile!
+</code></pre>
+</div>
+</section>
+<section id="slide-orgc419a69">
+<h3 id="orgc419a69">Access Control</h3>
+<div class="org-src-container">
+
+<pre><code class="c++" >class Rect {
+    public:
+    int width, height;
+    int perimeter() {
+        return width * 2 + height * 2;
+    }
+}
+</code></pre>
+</div>
+<div class="org-src-container">
+
+<pre><code class="c++" >Rect *r = new Rect;
+r->width = 10;
+r->height = 5;
+cout < r->width;
+</code></pre>
+</div>
+</section>
+<section id="slide-org4e55f29">
+<h3 id="org4e55f29">this</h3>
+<div class="org-src-container">
+
+<pre><code class="c++" >bool Rect::bigger_than(Rect r) {
+    return this->perimeter() > r.perimeter();
+}
+</code></pre>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-orgf8febfc">
+<h2 id="orgf8febfc">C++ Functions and Generics</h2>
+<div class="outline-text-2" id="text-orgf8febfc">
+</div>
+</section>
+<section id="slide-orgc7a2fc5">
+<h3 id="orgc7a2fc5">Default Arguments</h3>
+<div class="org-src-container">
+
+<pre><code class="c" >double f(int n) {
+    return 5 * 3.14;
+}
+double f(int n, double d) {
+    return 5 * d;
+}
+</code></pre>
+</div>
+<div class="org-src-container">
+
+<pre><code class="c++" >double f(int n, double d = 3.14) {
+    return 5 * d;
+}
+</code></pre>
+</div>
+</section>
+<section id="slide-org1534e02">
+<h3 id="org1534e02">Function Arguments</h3>
+<div class="org-src-container">
+
+<pre><code class="c" >void qsort(void *base, size_t nitems, size_t size, int (*compar)(const void *, const void*))
+</code></pre>
+</div>
+<div class="org-src-container">
+
+<pre><code class="c++" >template <class t1>
+void sort(t1 ns[], int len, int cmp(t1, t1))
+</code></pre>
+</div>
+</section>
+<section id="slide-org5765e0f">
+<h3 id="org5765e0f">Overloaded Functions</h3>
+<div class="org-src-container">
+
+<pre><code class="c++" >int do_math (int a, int b) {
+    return a * b;
+}
+double do_math (double a, double b) {
+    return a / b;
+}
+</code></pre>
+</div>
+</section>
+<section id="slide-org656c101">
+<h3 id="org656c101">Template Classes</h3>
+<div class="org-src-container">
+
+<pre><code class="c++" >template &lt;class T>
+class Stack {
+public:
+    void push(T t) { s[++top] = t; }
+    T    pop()     { return s[top--]; }
+private:
+    T* s;
+    int top;
+    int max_size;
+}
+</code></pre>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-org702ea44">
+<h2 id="org702ea44">Namespaces</h2>
+<aside class="notes">
+<ul>
+<li>As mentioned in the lecture, C++ provides the ability to create
+namespaces.</li>
+<li>These provide a logical separation for modules of code.</li>
+<li>Because of this separation, programmers need not be concerned with
+name collisions. By defining a separate namespace, programmers can
+name functions similar to existing functions they need to interact
+with without worrying about a multiple definition problem.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c++" >namespace WeatherApp {
+    typedef UnixTime unsigned long;
+    UnixTime last_updated = 0;
+    class Temperature { /* ... */ };
+    class Location { /* ... */ };
+    double f_to_c(double f);
+}
+</code></pre>
+</div>
+</section>
+<section id="slide-orgdffdd1b">
+<h3 id="orgdffdd1b">using</h3>
+<aside class="notes">
+<ul>
+<li>Along with the definitions for namespaces comes the "using"
+declaration.</li>
+<li>While there are several specific uses of the "using" declaration,
+primarily we use it in source files so that we can access members
+of a particular namespace without having to type out the namespace
+in its entirety each time we want to use one of its members.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c++" >std::cout < "hello, world!" < std::endl;
+</code></pre>
+</div>
+<div class="org-src-container">
+
+<pre><code class="c++" >using namespace std;
+cout < "hello, world!" < endl;
+</code></pre>
+</div>
+</section>
+</section>
+</div>
+</div>
+<script src="./reveal.js/lib/js/head.min.js"></script>
+<script src="./reveal.js/js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: true,
+slideNumber: 'c',
+rollingLinks: false,
+keyboard: true,
+overview: true,
+margin: 0.20,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+transitionSpeed: 'default',
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: './reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+ { src: './reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+});
+</script>
+</body>
+</html>

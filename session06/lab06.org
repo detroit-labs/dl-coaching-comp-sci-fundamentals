@@ -1,0 +1,250 @@
+#+TITLE:  Computer Science Fundamentals
+#+AUTHOR: Detroit Labs Dev Coaching
+#+DATE:   2018
+#+EMAIL:  ndotz@detroitlabs.com
+#+LANGUAGE:  en
+#+OPTIONS:   H:3 num:nil toc:nil \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   skip:nil d:nil todo:t pri:nil tags:not-in-toc timestamp:nil
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+REVEAL_PLUGINS: (highlight notes)
+#+REVEAL_THEME: league
+#+REVEAL_MARGIN: 0.2
+# #+REVEAL_MIN_SCALE: 0.5
+# #+REVEAL_MAX_SCALE: 2.5
+#+REVEAL_EXTRA_CSS: ./presentation.css
+
+* Lab 6
+  #+BEGIN_NOTES
+  - Ditch the preprocessor
+  - Type-safe I/O
+  - Classes and Object Orientation
+  - C++ Functions and Generics
+  - namespaces
+  #+END_NOTES
+* Ditch the Preprocessor
+** inline
+  #+BEGIN_NOTES
+  - As we saw in the lecture, the preprocessor falls short in the same
+    ways that it provides and advantage for C programmers. While
+    providing direct text substitution lets the programmer work around
+    a number of issues for generalizing code, it also has no
+    consideration for the rules of the language or its types.
+  - C++ addresses this by providing 2 language features to address the
+    most common reasons C programmers used the preprocessor. The first
+    is inline.
+  - inline allows us to write functions which work like any other
+    function and are checked by the compiler for correctness. However,
+    when compiled, they have the effect of inlining the resulting
+    assembly code to preserve the context of the execution and prevent
+    pushing a new function stack frame.
+  #+END_NOTES
+  #+BEGIN_SRC c
+  #define MAX(a,b)     ( ((a) > (b)) ? (a) : (b) )
+  #+END_SRC
+  #+BEGIN_SRC c++
+  inline int max(int x, int y) {
+      return (x > y) ? x : y;
+  }
+  #+END_SRC
+** Templates
+  #+BEGIN_NOTES
+  - One of the other common uses for the preprocessor is to make
+    macros that can operate on various types. With these, the purpose
+    is often to get around the type system and not have to define
+    multiple functions that work the same way on different kinds of
+    parameters.
+  - C++ adds the language feature of templates to allow for functions
+    and classes to abstract around multiple types, while also still
+    providing the ability for the compiler to do type-checking on the
+    resulting code.
+  #+END_NOTES
+  #+BEGIN_SRC c
+   #define SUM(arr, len, sum) do {  \
+           int i;                   \
+           for(i = 0; i < len; ++i) \
+               sum += arr[i];       \
+       } while(0);
+  #+END_SRC
+  #+BEGIN_SRC c++
+  template &lt;class t1>
+  t1 sum(t1 a[], int len) {
+      t1 sum = 0;
+      for(int i = 0; i < len; ++i) {
+          sum += a[i];
+      }
+      return sum;
+  }
+  #+END_SRC
+* Type-safe I/O
+  #+BEGIN_NOTES
+  - C++ improves I/O significantly with the iostream library.
+  - Because of operator overloading the stream operators can
+    effectively infer the type of data being read or output, and
+    handle it correctly, eliminating the need for specific printf
+    formatting strings.
+  #+END_NOTES
+  #+BEGIN_SRC c
+  int x = 3672;
+  float y = 1.618;
+  printf("Ints and Floats! Like %i and %f\n", x, y);
+  scanf("%i", &x);
+  #+END_SRC
+  #+BEGIN_SRC c++
+  int x = 3672;
+  float y = 1.618
+  cout << "Ints and Floats! Like " << x << " and " << y << endl;
+  cin >> x;
+  #+END_SRC
+** File I/O
+   #+BEGIN_NOTES
+   - This operator overloading means that the iostream library can
+     figure out not just the way to handle data being input or output,
+     but also how to handle destinations for the data uniformly,
+     whether they are to standard out or to a file.
+   #+END_NOTES
+   #+BEGIN_SRC c++
+   fstream outfile;
+   outfile.open("log.txt", fstream::out | fstream::app);
+   outfile << "Same operator to print to files!" << endl;
+   outfile.close();
+   #+END_SRC
+* Classes and OO
+** Defining a Class
+   #+BEGIN_NOTES
+   #+END_NOTES
+   #+BEGIN_SRC c++
+   class Rect {
+       int width, height;
+       public:
+       void set_width(int w);
+       void set_height(int h);
+       int perimeter() {
+           return width * 2 + height * 2;
+       }
+   }
+   void Rect::set_width(int w) { width = w; }
+   void Rect::set_height(int h) { height = h; }
+   #+END_SRC
+** Access Control
+   #+BEGIN_SRC c++
+   class Rect {
+       private:
+       int width, height;
+       public:
+       void set_width(int w);
+       void set_height(int h);
+       int perimeter() {
+           return width * 2 + height * 2;
+       }
+   }
+   #+END_SRC
+   #+BEGIN_SRC c++
+   Rect *r = new Rect;
+   r->set_width(10);
+   r->set_height(5);
+   cout << r->width; // <- won't compile!
+   #+END_SRC
+** Access Control
+   #+BEGIN_SRC c++
+   class Rect {
+       public:
+       int width, height;
+       int perimeter() {
+           return width * 2 + height * 2;
+       }
+   }
+   #+END_SRC
+   #+BEGIN_SRC c++
+   Rect *r = new Rect;
+   r->width = 10;
+   r->height = 5;
+   cout << r->width;
+  #+END_SRC
+** this
+   #+BEGIN_SRC c++
+   bool Rect::bigger_than(Rect r) {
+       return this->perimeter() > r.perimeter();
+   }
+  #+END_SRC
+* C++ Functions and Generics
+** Default Arguments
+   #+BEGIN_SRC c
+   double f(int n) {
+       return 5 * 3.14;
+   }
+   double f(int n, double d) {
+       return 5 * d;
+   }
+   #+END_SRC
+   #+BEGIN_SRC c++
+   double f(int n, double d = 3.14) {
+       return 5 * d;
+   }
+   #+END_SRC
+** Function Arguments
+   #+BEGIN_SRC c
+   void qsort(void *base, size_t nitems, size_t size, int (*compar)(const void *, const void*))
+   #+END_SRC
+   #+BEGIN_SRC c++
+   template &lt;class t1>
+   void sort(t1 ns[], int len, int cmp(t1, t1))
+   #+END_SRC
+** Overloaded Functions
+   #+BEGIN_SRC c++
+   int do_math (int a, int b) {
+       return a * b;
+   }
+   double do_math (double a, double b) {
+       return a / b;
+   }
+   #+END_SRC
+** Template Classes
+   #+BEGIN_SRC c++
+   template &lt;class T>
+   class Stack {
+   public:
+       void push(T t) { s[++top] = t; }
+       T    pop()     { return s[top--]; }
+   private:
+       T* s;
+       int top;
+       int max_size;
+   }
+   #+END_SRC
+* Namespaces
+  #+BEGIN_NOTES
+  - As mentioned in the lecture, C++ provides the ability to create
+    namespaces.
+  - These provide a logical separation for modules of code.
+  - Because of this separation, programmers need not be concerned with
+    name collisions. By defining a separate namespace, programmers can
+    name functions similar to existing functions they need to interact
+    with without worrying about a multiple definition problem.
+  #+END_NOTES
+  #+BEGIN_SRC c++
+  namespace WeatherApp {
+      typedef UnixTime unsigned long;
+      UnixTime last_updated = 0;
+      class Temperature { /* ... */ };
+      class Location { /* ... */ };
+      double f_to_c(double f);
+  }
+  #+END_SRC
+** using
+  #+BEGIN_NOTES
+  - Along with the definitions for namespaces comes the "using"
+    declaration.
+  - While there are several specific uses of the "using" declaration,
+    primarily we use it in source files so that we can access members
+    of a particular namespace without having to type out the namespace
+    in its entirety each time we want to use one of its members.
+  #+END_NOTES
+  #+BEGIN_SRC c++
+  std::cout << "hello, world!" << std::endl;
+  #+END_SRC
+  #+BEGIN_SRC c++
+  using namespace std;
+  cout << "hello, world!" << endl;
+  #+END_SRC
