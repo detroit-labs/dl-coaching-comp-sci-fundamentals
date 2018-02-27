@@ -31,8 +31,8 @@
 </section>
 
 <section>
-<section id="slide-org86e1665">
-<h2 id="org86e1665">Lab 6</h2>
+<section id="slide-org8b11b89">
+<h2 id="org8b11b89">Lab 6</h2>
 <aside class="notes">
 <ul>
 <li>Ditch the preprocessor</li>
@@ -47,13 +47,13 @@
 </section>
 </section>
 <section>
-<section id="slide-org4c51295">
-<h2 id="org4c51295">Ditch the Preprocessor</h2>
-<div class="outline-text-2" id="text-org4c51295">
+<section id="slide-org9e9a6ed">
+<h2 id="org9e9a6ed">Ditch the Preprocessor</h2>
+<div class="outline-text-2" id="text-org9e9a6ed">
 </div>
 </section>
-<section id="slide-org25fb692">
-<h3 id="org25fb692">inline</h3>
+<section id="slide-org447c755">
+<h3 id="org447c755">inline</h3>
 <aside class="notes">
 <ul>
 <li>As we saw in the lecture, the preprocessor falls short in the same
@@ -86,8 +86,8 @@ pushing a new function stack frame.</li>
 </code></pre>
 </div>
 </section>
-<section id="slide-org4891fb4">
-<h3 id="org4891fb4">Templates</h3>
+<section id="slide-org4d400d8">
+<h3 id="org4d400d8">Templates</h3>
 <aside class="notes">
 <ul>
 <li>One of the other common uses for the preprocessor is to make
@@ -114,9 +114,9 @@ resulting code.</li>
 </div>
 <div class="org-src-container">
 
-<pre><code class="c++" >template<class t1>
-t1 sum(t1 a[], int len) {
-    t1 sum = 0;
+<pre><code class="c++" >template &lt;class T>
+T sum(T a[], int len) {
+    T sum = 0;
     for(int i = 0; i < len; ++i) {
         sum += a[i];
     }
@@ -127,8 +127,8 @@ t1 sum(t1 a[], int len) {
 </section>
 </section>
 <section>
-<section id="slide-org71e18ba">
-<h2 id="org71e18ba">Type-safe I/O</h2>
+<section id="slide-orgb2fbc01">
+<h2 id="orgb2fbc01">Type-safe I/O</h2>
 <aside class="notes">
 <ul>
 <li>C++ improves I/O significantly with the iostream library.</li>
@@ -152,13 +152,13 @@ scanf("%i", &x);
 
 <pre><code class="c++" >int x = 3672;
 float y = 1.618
-cout < "Ints and Floats! Like " < x < " and " < y < endl;
+cout &lt;&lt; "Ints and Floats! Like " &lt;&lt; x &lt;&lt; " and " &lt;&lt; y &lt;&lt; endl;
 cin >> x;
 </code></pre>
 </div>
 </section>
-<section id="slide-orgfa3a20b">
-<h3 id="orgfa3a20b">File I/O</h3>
+<section id="slide-org652e75a">
+<h3 id="org652e75a">File I/O</h3>
 <aside class="notes">
 <ul>
 <li>This operator overloading means that the iostream library can
@@ -173,20 +173,20 @@ whether they are to standard out or to a file.</li>
 
 <pre><code class="c++" >fstream outfile;
 outfile.open("log.txt", fstream::out | fstream::app);
-outfile < "Same operator to print to files!" < endl;
+outfile &lt;&lt; "Same operator to print to files!" &lt;&lt; endl;
 outfile.close();
 </code></pre>
 </div>
 </section>
 </section>
 <section>
-<section id="slide-orgb5f96ff">
-<h2 id="orgb5f96ff">Classes and OO</h2>
-<div class="outline-text-2" id="text-orgb5f96ff">
+<section id="slide-orgedff40e">
+<h2 id="orgedff40e">Classes and OO</h2>
+<div class="outline-text-2" id="text-orgedff40e">
 </div>
 </section>
-<section id="slide-org05bac9c">
-<h3 id="org05bac9c">Defining a Class</h3>
+<section id="slide-orgb7d2f09">
+<h3 id="orgb7d2f09">Defining a Class</h3>
 <aside class="notes">
 nil
 </aside>
@@ -206,8 +206,8 @@ void Rect::set_height(int h) { height = h; }
 </code></pre>
 </div>
 </section>
-<section id="slide-org91ced72">
-<h3 id="org91ced72">Access Control</h3>
+<section id="slide-orgd0b8274">
+<h3 id="orgd0b8274">Access Control</h3>
 <div class="org-src-container">
 
 <pre><code class="c++" >class Rect {
@@ -227,12 +227,12 @@ void Rect::set_height(int h) { height = h; }
 <pre><code class="c++" >Rect *r = new Rect;
 r->set_width(10);
 r->set_height(5);
-cout < r->width; // <- won't compile!
+cout &lt;&lt; r->width; // <- won't compile!
 </code></pre>
 </div>
 </section>
-<section id="slide-orgc419a69">
-<h3 id="orgc419a69">Access Control</h3>
+<section id="slide-org20bc462">
+<h3 id="org20bc462">Access Control</h3>
 <div class="org-src-container">
 
 <pre><code class="c++" >class Rect {
@@ -249,12 +249,12 @@ cout < r->width; // <- won't compile!
 <pre><code class="c++" >Rect *r = new Rect;
 r->width = 10;
 r->height = 5;
-cout < r->width;
+cout &lt;&lt; r->width;
 </code></pre>
 </div>
 </section>
-<section id="slide-org4e55f29">
-<h3 id="org4e55f29">this</h3>
+<section id="slide-org5a20bcc">
+<h3 id="org5a20bcc">this</h3>
 <div class="org-src-container">
 
 <pre><code class="c++" >bool Rect::bigger_than(Rect r) {
@@ -265,13 +265,13 @@ cout < r->width;
 </section>
 </section>
 <section>
-<section id="slide-orgf8febfc">
-<h2 id="orgf8febfc">C++ Functions and Generics</h2>
-<div class="outline-text-2" id="text-orgf8febfc">
+<section id="slide-org5975357">
+<h2 id="org5975357">C++ Functions and Generics</h2>
+<div class="outline-text-2" id="text-org5975357">
 </div>
 </section>
-<section id="slide-orgc7a2fc5">
-<h3 id="orgc7a2fc5">Default Arguments</h3>
+<section id="slide-orgbbf608e">
+<h3 id="orgbbf608e">Default Arguments</h3>
 <div class="org-src-container">
 
 <pre><code class="c" >double f(int n) {
@@ -290,8 +290,8 @@ double f(int n, double d) {
 </code></pre>
 </div>
 </section>
-<section id="slide-org1534e02">
-<h3 id="org1534e02">Function Arguments</h3>
+<section id="slide-org6a6b4f0">
+<h3 id="org6a6b4f0">Function Arguments</h3>
 <div class="org-src-container">
 
 <pre><code class="c" >void qsort(void *base, size_t nitems, size_t size, int (*compar)(const void *, const void*))
@@ -299,13 +299,13 @@ double f(int n, double d) {
 </div>
 <div class="org-src-container">
 
-<pre><code class="c++" >template <class t1>
-void sort(t1 ns[], int len, int cmp(t1, t1))
+<pre><code class="c++" >template &lt;class T>
+void sort(T ns[], int len, int cmp(T, T))
 </code></pre>
 </div>
 </section>
-<section id="slide-org5765e0f">
-<h3 id="org5765e0f">Overloaded Functions</h3>
+<section id="slide-orgb939cae">
+<h3 id="orgb939cae">Overloaded Functions</h3>
 <div class="org-src-container">
 
 <pre><code class="c++" >int do_math (int a, int b) {
@@ -317,8 +317,8 @@ double do_math (double a, double b) {
 </code></pre>
 </div>
 </section>
-<section id="slide-org656c101">
-<h3 id="org656c101">Template Classes</h3>
+<section id="slide-org4a149e3">
+<h3 id="org4a149e3">Template Classes</h3>
 <div class="org-src-container">
 
 <pre><code class="c++" >template &lt;class T>
@@ -336,8 +336,8 @@ private:
 </section>
 </section>
 <section>
-<section id="slide-org702ea44">
-<h2 id="org702ea44">Namespaces</h2>
+<section id="slide-org43dd1a4">
+<h2 id="org43dd1a4">Namespaces</h2>
 <aside class="notes">
 <ul>
 <li>As mentioned in the lecture, C++ provides the ability to create
@@ -363,8 +363,8 @@ with without worrying about a multiple definition problem.</li>
 </code></pre>
 </div>
 </section>
-<section id="slide-orgdffdd1b">
-<h3 id="orgdffdd1b">using</h3>
+<section id="slide-orgfcdf276">
+<h3 id="orgfcdf276">using</h3>
 <aside class="notes">
 <ul>
 <li>Along with the definitions for namespaces comes the "using"
@@ -379,13 +379,13 @@ in its entirety each time we want to use one of its members.</li>
 </aside>
 <div class="org-src-container">
 
-<pre><code class="c++" >std::cout < "hello, world!" < std::endl;
+<pre><code class="c++" >std::cout &lt;&lt; "hello, world!" &lt;&lt; std::endl;
 </code></pre>
 </div>
 <div class="org-src-container">
 
 <pre><code class="c++" >using namespace std;
-cout < "hello, world!" < endl;
+cout &lt;&lt; "hello, world!" &lt;&lt; endl;
 </code></pre>
 </div>
 </section>

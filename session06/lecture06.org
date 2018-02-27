@@ -86,9 +86,9 @@
      signatures
    #+END_NOTES
    #+BEGIN_SRC c++
-   void print(int i)   { cout << "Printing int: " << i << endl;   }
-   void print(float f) { cout << "Printing float: " << f << endl; }
-   void print(char* c) { cout << "Printing char: " << c << endl;  }
+   void print(int i)   { cout &lt;&lt; "Printing int: " &lt;&lt; i &lt;&lt; endl;   }
+   void print(float f) { cout &lt;&lt; "Printing float: " &lt;&lt; f &lt;&lt; endl; }
+   void print(char* c) { cout &lt;&lt; "Printing char: " &lt;&lt; c &lt;&lt; endl;  }
    #+END_SRC
    #+BEGIN_SRC c++
    Fraction operator+(const Fraction& f) { // ...
@@ -110,7 +110,7 @@
    #+BEGIN_SRC c++
    int x = 3672;
    float y = 1.618
-   cout << "Ints and Floats! Like " << x << " and " << y << endl;
+   cout &lt;&lt; "Ints and Floats! Like " &lt;&lt; x &lt;&lt; " and " &lt;&lt; y &lt;&lt; endl;
    cin >> x;
    #+END_SRC
 ** typesafe casts
@@ -123,7 +123,7 @@
    #+END_SRC
    #+BEGIN_SRC c++
    char str[] = "derp";
-   cout << static_cast<int>(str); // Will not compile!
+   cout &lt;&lt; static_cast&lt;int>(str); // Will not compile!
    #+END_SRC
 ** memory management
    #+BEGIN_SRC c

@@ -68,9 +68,9 @@
        } while(0);
   #+END_SRC
   #+BEGIN_SRC c++
-  template &lt;class t1>
-  t1 sum(t1 a[], int len) {
-      t1 sum = 0;
+  template &lt;class T>
+  T sum(T a[], int len) {
+      T sum = 0;
       for(int i = 0; i < len; ++i) {
           sum += a[i];
       }
@@ -94,7 +94,7 @@
   #+BEGIN_SRC c++
   int x = 3672;
   float y = 1.618
-  cout << "Ints and Floats! Like " << x << " and " << y << endl;
+  cout &lt;&lt; "Ints and Floats! Like " &lt;&lt; x &lt;&lt; " and " &lt;&lt; y &lt;&lt; endl;
   cin >> x;
   #+END_SRC
 ** File I/O
@@ -107,7 +107,7 @@
    #+BEGIN_SRC c++
    fstream outfile;
    outfile.open("log.txt", fstream::out | fstream::app);
-   outfile << "Same operator to print to files!" << endl;
+   outfile &lt;&lt; "Same operator to print to files!" &lt;&lt; endl;
    outfile.close();
    #+END_SRC
 * Classes and OO
@@ -144,7 +144,7 @@
    Rect *r = new Rect;
    r->set_width(10);
    r->set_height(5);
-   cout << r->width; // <- won't compile!
+   cout &lt;&lt; r->width; // <- won't compile!
    #+END_SRC
 ** Access Control
    #+BEGIN_SRC c++
@@ -160,7 +160,7 @@
    Rect *r = new Rect;
    r->width = 10;
    r->height = 5;
-   cout << r->width;
+   cout &lt;&lt; r->width;
   #+END_SRC
 ** this
    #+BEGIN_SRC c++
@@ -188,8 +188,8 @@
    void qsort(void *base, size_t nitems, size_t size, int (*compar)(const void *, const void*))
    #+END_SRC
    #+BEGIN_SRC c++
-   template &lt;class t1>
-   void sort(t1 ns[], int len, int cmp(t1, t1))
+   template &lt;class T>
+   void sort(T ns[], int len, int cmp(T, T))
    #+END_SRC
 ** Overloaded Functions
    #+BEGIN_SRC c++
@@ -242,9 +242,9 @@
     in its entirety each time we want to use one of its members.
   #+END_NOTES
   #+BEGIN_SRC c++
-  std::cout << "hello, world!" << std::endl;
+  std::cout &lt;&lt; "hello, world!" &lt;&lt; std::endl;
   #+END_SRC
   #+BEGIN_SRC c++
   using namespace std;
-  cout << "hello, world!" << endl;
+  cout &lt;&lt; "hello, world!" &lt;&lt; endl;
   #+END_SRC

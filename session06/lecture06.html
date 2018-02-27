@@ -29,6 +29,256 @@
 <div class="slides">
 <section id="sec-title-slide"><h1 class="title">Computer Science Fundamentals</h1><h2 class="author">Detroit Labs Dev Coaching</h2><h2 class="date">2018</h2>
 </section>
+
+<section>
+<section id="slide-orgb521783">
+<h2 id="orgb521783">Lecture 6</h2>
+<aside class="notes">
+<ul>
+<li>In search of a better C</li>
+<li>Differences between C and C++</li>
+
+</ul>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-org0c89924">
+<h2 id="org0c89924">A Better C</h2>
+<aside class="notes">
+nil
+</aside>
+</section>
+<section id="slide-orgca254de">
+<h3 id="orgca254de">C is a Systems-Level Language</h3>
+<aside class="notes">
+<ul>
+<li>C is designed to abstract around the way processors and memory
+organize data and provide a mechanism to write code in one
+language that operates the same way on many computers.</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org4054023">
+<h3 id="org4054023">C++ is a General Purpose Language</h3>
+<aside class="notes">
+<ul>
+<li>C++ is an object-oriented language that caters to logical
+modeling of problems by thinking of them as interacting objects.</li>
+
+</ul>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-orgb7a2452">
+<h2 id="orgb7a2452">C vs. C++</h2>
+<div class="outline-text-2" id="text-orgb7a2452">
+</div>
+</section>
+<section id="slide-org57e97a5">
+<h3 id="org57e97a5">namespaces</h3>
+<aside class="notes">
+<ul>
+<li>C has no built-in method of organizing code into logically divided
+modules. Declarations cannot share the same names or prototypes.</li>
+<li>C++ has the concept of namespaces built into the language, so
+multiple modules that have functions with the same names or
+prototypes can be used without concern for name collisions.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >void foo1(char *s, int i);
+void foo2(char *s, int i);
+</code></pre>
+</div>
+<div class="org-src-container">
+
+<pre><code class="c++" >bar::foo(s, i);
+baz::foo(s, i);
+</code></pre>
+</div>
+</section>
+<section id="slide-org0c25462">
+<h3 id="org0c25462">inline</h3>
+<aside class="notes">
+<ul>
+<li>C has no mechanism for altering the execution scheme of
+functions. C programmers rely on text substitution from the
+preprocessor to inline code, usually as a means of optimization or
+generalization.</li>
+<li>C++ has an builtin inline directive allowing for the language
+itself to manage the correctness of inlined code. Thus,
+programmers can organize code into logical blocks while also
+managing the execution scheme and relying on the compiler for
+added safety.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >#define MAX(a,b)     ( ((a) > (b)) ? (a) : (b) )
+</code></pre>
+</div>
+<div class="org-src-container">
+
+<pre><code class="c++" >inline int max(int x, int y) {
+    return (x > y) ? x : y;
+}
+</code></pre>
+</div>
+</section>
+<section id="slide-org605e7d2">
+<h3 id="org605e7d2">localized declarations</h3>
+<aside class="notes">
+<ul>
+<li>for loops and similar constructs can make declarations that are
+local to their scope.</li>
+<li>This is available in C99.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c++" >for(int i = 0; i < 10; i++) { // ...
+</code></pre>
+</div>
+</section>
+<section id="slide-orgad7a46b">
+<h3 id="orgad7a46b">overloading</h3>
+<aside class="notes">
+<ul>
+<li>functions and operators can be declared to work with a variety of
+signatures</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c++" >void print(int i)   { cout &lt;&lt; "Printing int: " &lt;&lt; i &lt;&lt; endl;   }
+void print(float f) { cout &lt;&lt; "Printing float: " &lt;&lt; f &lt;&lt; endl; }
+void print(char* c) { cout &lt;&lt; "Printing char: " &lt;&lt; c &lt;&lt; endl;  }
+</code></pre>
+</div>
+<div class="org-src-container">
+
+<pre><code class="c++" >Fraction operator+(const Fraction& f) { // ...
+</code></pre>
+</div>
+</section>
+<section id="slide-org1124620">
+<h3 id="org1124620">Default Arguments</h3>
+<aside class="notes">
+<ul>
+<li>C++ provides the ability to provide default arguments, which
+allows a single function prototype to satisfy multiple calling
+argument patterns.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c++" >int power(int n, int k = 2) { // ...
+</code></pre>
+</div>
+</section>
+<section id="slide-orgdfa8dda">
+<h3 id="orgdfa8dda">typesafe I/O</h3>
+<aside class="notes">
+<ul>
+<li>cout and cin understand the type of the thing they are printing
+or reading.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c++" >int x = 3672;
+float y = 1.618
+cout &lt;&lt; "Ints and Floats! Like " &lt;&lt; x &lt;&lt; " and " &lt;&lt; y &lt;&lt; endl;
+cin >> x;
+</code></pre>
+</div>
+</section>
+<section id="slide-org0673d07">
+<h3 id="org0673d07">typesafe casts</h3>
+<aside class="notes">
+<ul>
+<li>static casts are good!</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c" >char str[] = "derp";
+printf("%i\n", (int) str); // hilarity ensues.
+</code></pre>
+</div>
+<div class="org-src-container">
+
+<pre><code class="c++" >char str[] = "derp";
+cout &lt;&lt; static_cast&lt;int>(str); // Will not compile!
+</code></pre>
+</div>
+</section>
+<section id="slide-org50dc8cf">
+<h3 id="org50dc8cf">memory management</h3>
+<div class="org-src-container">
+
+<pre><code class="c" >struct fraction *f = malloc(struct fraction);
+/* ... */
+free(f);
+</code></pre>
+</div>
+<div class="org-src-container">
+
+<pre><code class="c++" >Fraction *f = new Fraction;
+/* ... */
+delete(f);
+</code></pre>
+</div>
+</section>
+<section id="slide-orgb6abbed">
+<h3 id="orgb6abbed">Object Orientation</h3>
+<aside class="notes">
+<ul>
+<li>polymorphism, encapsulation, inheritance</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c++" >void draw_shape(Shape s) { /* ... */ }
+Circle c;
+Rect r;
+draw_shape(c);
+draw_shape(r);
+</code></pre>
+</div>
+<div class="org-src-container">
+
+<pre><code class="c++" >Circle c;
+Rect r;
+c->perimeter();
+r->perimeter();
+</code></pre>
+</div>
+</section>
+</section>
 </div>
 </div>
 <script src="./reveal.js/lib/js/head.min.js"></script>
