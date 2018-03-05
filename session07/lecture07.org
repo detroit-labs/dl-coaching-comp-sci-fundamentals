@@ -1,0 +1,227 @@
+#+TITLE:  Computer Science Fundamentals
+#+AUTHOR: Detroit Labs Dev Coaching
+#+DATE:   2018
+#+EMAIL:  ndotz@detroitlabs.com
+#+LANGUAGE:  en
+#+OPTIONS:   H:3 num:nil toc:nil \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   skip:nil d:nil todo:t pri:nil tags:not-in-toc timestamp:nil
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+REVEAL_PLUGINS: (highlight notes)
+#+REVEAL_THEME: league
+#+REVEAL_MARGIN: 0.2
+# #+REVEAL_MIN_SCALE: 0.5
+# #+REVEAL_MAX_SCALE: 2.5
+#+REVEAL_EXTRA_CSS: ./presentation.css
+
+* Lecture 7
+  #+BEGIN_NOTES
+  - In this lecture we're going to go over some of the principles that
+    started to have influence over everyday programming as more and
+    more programmers entered the field and inspired refinement of the
+    state of the art.
+  #+END_NOTES
+* Principles of Object Oriented Programming
+  #+BEGIN_NOTES
+  - First up are what are generally know as "The 4 Principles of
+    Object Oriented Design" or other similarly official-sounding titles.
+  - These are the principles that inspired the feature set for
+    object-oriented programming languages such as C++.
+  #+END_NOTES
+** Encapsulation
+   #+BEGIN_NOTES
+   - Encapsulation is the hiding of data implementation by restricting
+     access to accessors and mutators.
+   - Accessors
+   - Mutators
+   - Hiding the internal representation helps prevent users from
+     putting the internal data representation into an invalid or
+     inconsistent state. This is something we had very little control
+     over in our purely procedural programming efforts.
+   #+END_NOTES
+   #+BEGIN_SRC c++
+   template &lt;class T>
+   class Stack {
+   public:
+       void push(T t) { s[++top] = t; }
+       T    pop()     { return s[top--]; }
+   private:
+       T* s;
+       int top;
+       int max_size;
+   }
+   #+END_SRC
+** Abstraction
+   #+BEGIN_NOTES
+   - Abstraction is the process of developing objects and types to
+     represent real items or problems as we might find them in the
+     real world, so that we may think of them in terms of their
+     actions and interfaces as opposed to their implementation
+     details.
+   - While encapsulation is the process of actually hiding the
+     implementation details of an object, abstraction focuses on
+     modeling objects and types as we would like to think about them
+     in the context of developing software.
+   #+END_NOTES
+   #+BEGIN_QUOTE
+   An abstraction denotes the essential characteristics of an object
+   that distinguish it from all other kinds of object and thus provide
+   crisply defined conceptual boundaries, relative to the perspective
+   of the viewer.
+   - Grady Booch, Object-Oriented Analysis and Design with
+     Applications
+   #+END_QUOTE
+** Abstraction
+   #+BEGIN_NOTES
+   - Thus, encapsulation and abstraction are closely related. While
+     encapsulation with the use of private members protects those
+     members from exposure to users, abstraction gives us their public
+     interface such that we might push things onto or pop things off
+     of a stack.
+   #+END_NOTES
+   #+BEGIN_SRC c++
+   template &lt;class T>
+   class Stack {
+   public:
+       void push(T t) { s[++top] = t; }
+       T    pop()     { return s[top--]; }
+   private:
+       T* s;
+       int top;
+       int max_size;
+   }
+   #+END_SRC
+** Inheritance
+   #+BEGIN_NOTES
+   - Inheritance establishes an "is-a" relationship.
+   - That is, with inheritance, objects share properties and/or
+     functionality based on their membership in categories of other
+     objects.
+   - In inheritance, classes can declare that they inherit from other
+     classes, which give them some or all of their functionality to
+     use, modify, customize or supplement.
+   #+END_NOTES
+   #+BEGIN_SRC c++
+   template &lt;class T>
+   class Stack : Container {
+   public:
+       void push(T t) { s[++top] = t; }
+       void add(T t)  { push(t); }
+       T    pop()     { return s[top--]; }
+       T    remove()  { return pop(); }
+       /* ... */
+   }
+   #+END_SRC
+** Polymorphism
+   #+BEGIN_NOTES
+   - Polymorphism is the principle in which objects of shared
+     hierarchies (that is, similar inheritance) can respond to the
+     same operations or messages with different results.
+   - We might send a container the "add" message and not concern
+     ourselves with exactly how the container chooses to add its
+     elements.
+   - Similarly, we might have methods or functions that take objects
+     belonging to a particular hierarchy as parameters, without
+     concern for which specific type the object is.
+   #+END_NOTES
+   #+BEGIN_SRC c++
+   template &lt;class T>
+   class Stack : Container {
+   public:
+       void add(T t);
+       T    remove();
+       /* ... */
+   }
+   template &lt;class T>
+   class Queue : Container {
+   public:
+       void add(T t);
+       T    remove();
+       /* ... */
+   }
+   #+END_SRC
+* SOLID Principles
+** Single Responsibility Principle
+   #+BEGIN_NOTES
+   - Each class should only do one thing.
+   - To this end, classes should be loosely coupled but highly cohesive.
+   - Uncle Bob Martin suggests that we think of this as the single
+     change principle. If we can think of more than one reason to
+     change a class, it probably has more than one responsibility.
+   #+END_NOTES
+** Open/Close Principle
+   #+BEGIN_NOTES
+   - Software entities should be open for extension but closed for
+     modification.
+   - For example, don't hard-code strings, pass them as parameters
+   - Classes should allow overriding of parameters and methods that
+     could alter their functionality to be more useful.
+   #+END_NOTES
+** Liskov Substitution Principle
+   #+BEGIN_NOTES
+   - Liskov Substitution Principle states that subtypes must be
+     substitutable for their base types.
+   - With this in mind, classes should not be designed in a way that
+     causes them to behave differently from their parent classes for
+     methods that only make use of their parent's functionality.
+   - Unimplemented methods off a interface are a smell
+   - Square/Rectangle area example
+   #+END_NOTES
+** Interface Segregation Principle
+   #+BEGIN_NOTES
+   - Clients should not depend on methods that they do not use.
+   - Many client-specific interfaces are better than one
+     general-purpose interface.
+   - "Sends login request" and "receives login callback" are better
+     than "login methods interface"
+   #+END_NOTES
+** Dependency Inversion Principle
+   #+BEGIN_NOTES
+   - One should depend upon abstractions, not concretions.
+   - high level modules should not depend on low level modules; both
+     should depend on abstractions. Abstractions should not depend on
+     details.  Details should depend upon abstractions.
+   - Rather than creating instances of the what they need, creating
+     tight coupling, classes should take their dependencies as
+     parameters and use them.
+   #+END_NOTES
+* Criticism
+** Paul Graham
+   #+BEGIN_QUOTE
+   At big companies, software tends to be written by large (and
+   frequently changing) teams of mediocre programmers. Object-oriented
+   programming imposes a discipline on these programmers that prevents
+   any one of them from doing too much damage. The price is that the
+   resulting code is bloated with protocols and full of duplication.
+   #+END_QUOTE
+   - Paul Graham, Why ARC isn't especially Object-Oriented.
+** Eric S Raymond
+   #+BEGIN_QUOTE
+   OO has far too often been promoted as the One True Solution to the
+   software-complexity problem. But...
+   OO languages make abstraction easy — perhaps too easy. They
+   encourage architectures with thick glue and elaborate layers. This
+   can be good when the problem domain is truly complex and demands a
+   lot of abstraction, but it can backfire badly if coders end up
+   doing simple things in complex ways just because they can.
+   #+END_QUOTE
+   - Eric S. Raymond, Unix and Object-Oriented Languages
+** Luca Cardelli
+   #+BEGIN_QUOTE
+   Although reuse is a big win of object-oriented languages, it is also
+   the case that these languages have extremely poor modularity
+   properties with respect to class extension and modification. For
+   example, it is easy to override a method that should not be
+   overridden, or to reimplement a class in a way that causes problems in
+   subclasses.
+   #+END_QUOTE
+   - Luca Cardelli, Bad Engineering Properties of Object-Oriented Languages
+** Joe Armstrong
+   #+BEGIN_QUOTE
+   The problem with object-oriented languages is they've got all this
+   implicit environment that they carry around with them. You wanted a
+   banana but what you got was a gorilla holding the banana and the
+   entire jungle.
+   #+END_QUOTE
+   - Joe Armstrong, Coders at Work
