@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Computer Science Fundamentals</title>
+<meta name="author" content="(Detroit Labs Dev Coaching)"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="./reveal.js/css/reveal.css"/>
+
+<link rel="stylesheet" href="./reveal.js/css/theme/league.css" id="theme"/>
+
+<link rel="stylesheet" href="./presentation.css"/>
+<link rel="stylesheet" href="./reveal.js/lib/css/zenburn.css"/>
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = './reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h1 class="title">Computer Science Fundamentals</h1><h2 class="author">Detroit Labs Dev Coaching</h2><h2 class="date">2018</h2>
+</section>
+
+<section>
+<section id="slide-orgaafcd71">
+<h2 id="orgaafcd71">Lecture 7</h2>
+<aside class="notes">
+<ul>
+<li>In this lecture we're going to go over some of the principles that
+started to have influence over everyday programming as more and
+more programmers entered the field and inspired refinement of the
+state of the art.</li>
+
+</ul>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-orga795c30">
+<h2 id="orga795c30">Principles of Object Oriented Programming</h2>
+<aside class="notes">
+<ul>
+<li>First up are what are generally know as "The 4 Principles of
+Object Oriented Design" or other similarly official-sounding titles.</li>
+<li>These are the principles that inspired the feature set for
+object-oriented programming languages such as C++.</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-orgaac8741">
+<h3 id="orgaac8741">Encapsulation</h3>
+<aside class="notes">
+<ul>
+<li>Encapsulation is the hiding of data implementation by restricting
+access to accessors and mutators.</li>
+<li>Accessors</li>
+<li>Mutators</li>
+<li>Hiding the internal representation helps prevent users from
+putting the internal data representation into an invalid or
+inconsistent state. This is something we had very little control
+over in our purely procedural programming efforts.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c++" >template &lt;class T>
+class Stack {
+public:
+    void push(T t) { s[++top] = t; }
+    T    pop()     { return s[top--]; }
+private:
+    T* s;
+    int top;
+    int max_size;
+}
+</code></pre>
+</div>
+</section>
+<section id="slide-orgc2ac4b7">
+<h3 id="orgc2ac4b7">Abstraction</h3>
+<aside class="notes">
+<ul>
+<li>Abstraction is the process of developing objects and types to
+represent real items or problems as we might find them in the
+real world, so that we may think of them in terms of their
+actions and interfaces as opposed to their implementation
+details.</li>
+<li>While encapsulation is the process of actually hiding the
+implementation details of an object, abstraction focuses on
+modeling objects and types as we would like to think about them
+in the context of developing software.</li>
+
+</ul>
+
+</aside>
+<blockquote nil>
+<p>
+An abstraction denotes the essential characteristics of an object
+that distinguish it from all other kinds of object and thus provide
+crisply defined conceptual boundaries, relative to the perspective
+of the viewer.
+</p>
+<ul>
+<li>Grady Booch, Object-Oriented Analysis and Design with
+Applications</li>
+
+</ul>
+</blockquote>
+</section>
+<section id="slide-org40f7685">
+<h3 id="org40f7685">Abstraction</h3>
+<aside class="notes">
+<ul>
+<li>Thus, encapsulation and abstraction are closely related. While
+encapsulation with the use of private members protects those
+members from exposure to users, abstraction gives us their public
+interface such that we might push things onto or pop things off
+of a stack.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c++" >template &lt;class T>
+class Stack {
+public:
+    void push(T t) { s[++top] = t; }
+    T    pop()     { return s[top--]; }
+private:
+    T* s;
+    int top;
+    int max_size;
+}
+</code></pre>
+</div>
+</section>
+<section id="slide-org17f8cf9">
+<h3 id="org17f8cf9">Inheritance</h3>
+<aside class="notes">
+<ul>
+<li>Inheritance establishes an "is-a" relationship.</li>
+<li>That is, with inheritance, objects share properties and/or
+functionality based on their membership in categories of other
+objects.</li>
+<li>In inheritance, classes can declare that they inherit from other
+classes, which give them some or all of their functionality to
+use, modify, customize or supplement.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c++" >template &lt;class T>
+class Stack : Container {
+public:
+    void push(T t) { s[++top] = t; }
+    void add(T t)  { push(t); }
+    T    pop()     { return s[top--]; }
+    T    remove()  { return pop(); }
+    /* ... */
+}
+</code></pre>
+</div>
+</section>
+<section id="slide-org0de45d2">
+<h3 id="org0de45d2">Polymorphism</h3>
+<aside class="notes">
+<ul>
+<li>Polymorphism is the principle in which objects of shared
+hierarchies (that is, similar inheritance) can respond to the
+same operations or messages with different results.</li>
+<li>We might send a container the "add" message and not concern
+ourselves with exactly how the container chooses to add its
+elements.</li>
+<li>Similarly, we might have methods or functions that take objects
+belonging to a particular hierarchy as parameters, without
+concern for which specific type the object is.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c++" >template &lt;class T>
+class Stack : Container {
+public:
+    void add(T t);
+    T    remove();
+    /* ... */
+}
+template &lt;class T>
+class Queue : Container {
+public:
+    void add(T t);
+    T    remove();
+    /* ... */
+}
+</code></pre>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-orgbae0bd5">
+<h2 id="orgbae0bd5">SOLID Principles</h2>
+<div class="outline-text-2" id="text-orgbae0bd5">
+</div>
+</section>
+<section id="slide-org1624f3b">
+<h3 id="org1624f3b">Single Responsibility Principle</h3>
+<aside class="notes">
+<ul>
+<li>Each class should only do one thing.</li>
+<li>To this end, classes should be loosely coupled but highly cohesive.</li>
+<li>Uncle Bob Martin suggests that we think of this as the single
+change principle. If we can think of more than one reason to
+change a class, it probably has more than one responsibility.</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-orgf7d3eb0">
+<h3 id="orgf7d3eb0">Open/Close Principle</h3>
+<aside class="notes">
+<ul>
+<li>Software entities should be open for extension but closed for
+modification.</li>
+<li>For example, don't hard-code strings, pass them as parameters</li>
+<li>Classes should allow overriding of parameters and methods that
+could alter their functionality to be more useful.</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org83e08d2">
+<h3 id="org83e08d2">Liskov Substitution Principle</h3>
+<aside class="notes">
+<ul>
+<li>Liskov Substitution Principle states that subtypes must be
+substitutable for their base types.</li>
+<li>With this in mind, classes should not be designed in a way that
+causes them to behave differently from their parent classes for
+methods that only make use of their parent's functionality.</li>
+<li>Unimplemented methods off a interface are a smell</li>
+<li>Square/Rectangle area example</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org0c8b01d">
+<h3 id="org0c8b01d">Interface Segregation Principle</h3>
+<aside class="notes">
+<ul>
+<li>Clients should not depend on methods that they do not use.</li>
+<li>Many client-specific interfaces are better than one
+general-purpose interface.</li>
+<li>"Sends login request" and "receives login callback" are better
+than "login methods interface"</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org465752d">
+<h3 id="org465752d">Dependency Inversion Principle</h3>
+<aside class="notes">
+<ul>
+<li>One should depend upon abstractions, not concretions.</li>
+<li>high level modules should not depend on low level modules; both
+should depend on abstractions. Abstractions should not depend on
+details.  Details should depend upon abstractions.</li>
+<li>Rather than creating instances of the what they need, creating
+tight coupling, classes should take their dependencies as
+parameters and use them.</li>
+
+</ul>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-org56e1b72">
+<h2 id="org56e1b72">Criticism</h2>
+<div class="outline-text-2" id="text-org56e1b72">
+</div>
+</section>
+<section id="slide-org851532f">
+<h3 id="org851532f">Paul Graham</h3>
+<blockquote nil>
+<p>
+At big companies, software tends to be written by large (and
+frequently changing) teams of mediocre programmers. Object-oriented
+programming imposes a discipline on these programmers that prevents
+any one of them from doing too much damage. The price is that the
+resulting code is bloated with protocols and full of duplication.
+</p>
+</blockquote>
+<ul>
+<li>Paul Graham, Why ARC isn't especially Object-Oriented.</li>
+
+</ul>
+</section>
+<section id="slide-org47e2369">
+<h3 id="org47e2369">Eric S Raymond</h3>
+<blockquote nil>
+<p>
+OO has far too often been promoted as the One True Solution to the
+software-complexity problem. But&#x2026;
+OO languages make abstraction easy — perhaps too easy. They
+encourage architectures with thick glue and elaborate layers. This
+can be good when the problem domain is truly complex and demands a
+lot of abstraction, but it can backfire badly if coders end up
+doing simple things in complex ways just because they can.
+</p>
+</blockquote>
+<ul>
+<li>Eric S. Raymond, Unix and Object-Oriented Languages</li>
+
+</ul>
+</section>
+<section id="slide-orgc3de3ae">
+<h3 id="orgc3de3ae">Luca Cardelli</h3>
+<blockquote nil>
+<p>
+Although reuse is a big win of object-oriented languages, it is also
+the case that these languages have extremely poor modularity
+properties with respect to class extension and modification. For
+example, it is easy to override a method that should not be
+overridden, or to reimplement a class in a way that causes problems in
+subclasses.
+</p>
+</blockquote>
+<ul>
+<li>Luca Cardelli, Bad Engineering Properties of Object-Oriented Languages</li>
+
+</ul>
+</section>
+<section id="slide-orgaa408e6">
+<h3 id="orgaa408e6">Joe Armstrong</h3>
+<blockquote nil>
+<p>
+The problem with object-oriented languages is they've got all this
+implicit environment that they carry around with them. You wanted a
+banana but what you got was a gorilla holding the banana and the
+entire jungle.
+</p>
+</blockquote>
+<ul>
+<li>Joe Armstrong, Coders at Work</li>
+
+</ul>
+</section>
+</section>
+</div>
+</div>
+<script src="./reveal.js/lib/js/head.min.js"></script>
+<script src="./reveal.js/js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: true,
+slideNumber: 'c',
+rollingLinks: false,
+keyboard: true,
+overview: true,
+margin: 0.20,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+transitionSpeed: 'default',
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: './reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+ { src: './reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+});
+</script>
+</body>
+</html>
