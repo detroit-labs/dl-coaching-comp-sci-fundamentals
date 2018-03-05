@@ -1,0 +1,103 @@
+#+TITLE:  Computer Science Fundamentals
+#+AUTHOR: Detroit Labs Dev Coaching
+#+DATE:   2018
+#+EMAIL:  ndotz@detroitlabs.com
+#+LANGUAGE:  en
+#+OPTIONS:   H:3 num:nil toc:nil \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   skip:nil d:nil todo:t pri:nil tags:not-in-toc timestamp:nil
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+REVEAL_PLUGINS: (highlight notes)
+#+REVEAL_THEME: league
+#+REVEAL_MARGIN: 0.2
+# #+REVEAL_MIN_SCALE: 0.5
+# #+REVEAL_MAX_SCALE: 2.5
+#+REVEAL_EXTRA_CSS: ./presentation.css
+
+* Lab 7
+  #+BEGIN_NOTES
+  #+END_NOTES
+* Constructors
+  #+BEGIN_NOTES
+  - A constructor is a method with the same name as the object it
+    constructs and it is responsible for initializing data members and
+    potentially allocating heap space.
+  - Constructors can take arguments and be overloaded.
+  - A constructor is called when it is called directly, when we pass
+    an object to a function by value, or if we return a created value
+    of a type from a function.
+  #+END_NOTES
+  #+BEGIN_SRC c++
+  class Fraction {
+  public:
+      Fraction(int n, int d);
+  private:
+      int num, denom;
+      void reduce();
+  };
+
+  Fraction::Fraction(int n, int d) {
+      num = n;
+      denom = d;
+      reduce();
+  }
+  #+END_SRC
+** Default Constructors
+   #+BEGIN_NOTES
+   - A constructor with no required arguments is called a default
+     constructor. It could still have optional parameters.
+   - Classes that do not declare a constructor are provided with a
+     default constructor by the compiler.
+   - Classes that declare a constructor without declaring a default
+     constructor will not have one provided for them.
+   - A class that does not have a default constructor will cause an
+     error if used in an array allocation.
+   #+END_NOTES
+   #+BEGIN_SRC c++
+   Fraction::Fraction(int n = 0, int d = 1) {
+       num = n;
+       denom = d;
+       reduce();
+   }
+   #+END_SRC
+** Destructors
+   #+BEGIN_NOTES
+   - Destructors are the opposite of constructors.
+   - They have the same name as the class, but preceded by a tilde.
+   - The purpose of a destructor is to finalize objects that belong to
+     the class, close file handlers, free resources, and probably call
+     delete if there is heap memory allocated.
+   - Unlike constructors, destructors cannot be overloaded or take parameters.
+   - Destructors are called implicitly when an object goes out of
+     scope.
+   #+END_NOTES
+   #+BEGIN_SRC c++
+   Fraction::~Fraction() {
+       /* delete stuff here ... */
+   }
+   #+END_SRC
+** Conversion Constructors
+   #+BEGIN_NOTES
+   - Using constructor initializers, it's possible to create implicit
+     conversions into the
+   #+END_NOTES
+   #+BEGIN_SRC c++
+   Fraction::Fraction(int n = 0) : num(n), denom(1) {
+       reduce();
+   }
+   /* ... */
+   int i = 5;
+   Fraction f = i;
+   #+END_SRC
+** Copy Constructors
+   #+BEGIN_NOTES
+   #+END_NOTES
+   #+BEGIN_SRC c++
+   Fraction::Fraction(Fraction &f) {
+       num = f.num;
+       denom = f.denom;
+       reduce();
+   }
+   #+END_SRC
+* Hello, STL

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Computer Science Fundamentals</title>
+<meta name="author" content="(Detroit Labs Dev Coaching)"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="./reveal.js/css/reveal.css"/>
+
+<link rel="stylesheet" href="./reveal.js/css/theme/league.css" id="theme"/>
+
+<link rel="stylesheet" href="./presentation.css"/>
+<link rel="stylesheet" href="./reveal.js/lib/css/zenburn.css"/>
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = './reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h1 class="title">Computer Science Fundamentals</h1><h2 class="author">Detroit Labs Dev Coaching</h2><h2 class="date">2018</h2>
+</section>
+
+<section>
+<section id="slide-org1a3527e">
+<h2 id="org1a3527e">Lab 7</h2>
+<aside class="notes">
+nil
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-org3cac0ab">
+<h2 id="org3cac0ab">Constructors</h2>
+<aside class="notes">
+<ul>
+<li>A constructor is a method with the same name as the object it
+constructs and it is responsible for initializing data members and
+potentially allocating heap space.</li>
+<li>Constructors can take arguments and be overloaded.</li>
+<li>A constructor is called when it is called directly, when we pass
+an object to a function by value, or if we return a created value
+of a type from a function.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c++" >class Fraction {
+public:
+    Fraction(int n, int d);
+private:
+    int num, denom;
+    void reduce();
+};
+
+Fraction::Fraction(int n, int d) {
+    num = n;
+    denom = d;
+    reduce();
+}
+</code></pre>
+</div>
+</section>
+<section id="slide-org50a6247">
+<h3 id="org50a6247">Default Constructors</h3>
+<aside class="notes">
+<ul>
+<li>A constructor with no required arguments is called a default
+constructor. It could still have optional parameters.</li>
+<li>Classes that do not declare a constructor are provided with a
+default constructor by the compiler.</li>
+<li>Classes that declare a constructor without declaring a default
+constructor will not have one provided for them.</li>
+<li>A class that does not have a default constructor will cause an
+error if used in an array allocation.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c++" >Fraction::Fraction(int n = 0, int d = 1) {
+    num = n;
+    denom = d;
+    reduce();
+}
+</code></pre>
+</div>
+</section>
+<section id="slide-orgf22b519">
+<h3 id="orgf22b519">Destructors</h3>
+<aside class="notes">
+<ul>
+<li>Destructors are the opposite of constructors.</li>
+<li>They have the same name as the class, but preceded by a tilde.</li>
+<li>The purpose of a destructor is to finalize objects that belong to
+the class, close file handlers, free resources, and probably call
+delete if there is heap memory allocated.</li>
+<li>Unlike constructors, destructors cannot be overloaded or take parameters.</li>
+<li>Destructors are called implicitly when an object goes out of
+scope.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c++" >Fraction::~Fraction() {
+    /* delete stuff here ... */
+}
+</code></pre>
+</div>
+</section>
+<section id="slide-org9685666">
+<h3 id="org9685666">Conversion Constructors</h3>
+<aside class="notes">
+<ul>
+<li>Using constructor initializers, it's possible to create implicit
+conversions into the</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c++" >Fraction::Fraction(int n = 0) : num(n), denom(1) {
+    reduce();
+}
+/* ... */
+int i = 5;
+Fraction f = i;
+</code></pre>
+</div>
+</section>
+<section id="slide-orge5f8ac6">
+<h3 id="orge5f8ac6">Copy Constructors</h3>
+<aside class="notes">
+nil
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c++" >Fraction::Fraction(Fraction &f) {
+    num = f.num;
+    denom = f.denom;
+    reduce();
+}
+</code></pre>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-orgce39cc1">
+<h2 id="orgce39cc1">Hello, STL</h2>
+</section>
+</section>
+</div>
+</div>
+<script src="./reveal.js/lib/js/head.min.js"></script>
+<script src="./reveal.js/js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: true,
+slideNumber: 'c',
+rollingLinks: false,
+keyboard: true,
+overview: true,
+margin: 0.20,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+transitionSpeed: 'default',
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: './reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+ { src: './reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+});
+</script>
+</body>
+</html>
