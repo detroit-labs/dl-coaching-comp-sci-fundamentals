@@ -1,0 +1,246 @@
+#+TITLE:  Computer Science Fundamentals
+#+AUTHOR: Detroit Labs Dev Coaching
+#+DATE:   2018
+#+EMAIL:  ndotz@detroitlabs.com
+#+LANGUAGE:  en
+#+OPTIONS:   H:3 num:nil toc:nil \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   skip:nil d:nil todo:t pri:nil tags:not-in-toc timestamp:nil
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+REVEAL_PLUGINS: (highlight notes)
+#+REVEAL_THEME: league
+#+REVEAL_MARGIN: 0.2
+# #+REVEAL_MIN_SCALE: 0.5
+# #+REVEAL_MAX_SCALE: 2.5
+#+REVEAL_EXTRA_CSS: ./presentation.css
+
+* Lecture 8
+* The World's Favorite Data Structures
+** Data Structures
+   #+BEGIN_NOTES
+   - A data structure is a way of organizing data such that it can be
+     processed efficiently.
+   - A data structure is a collection of values with a defined
+     relationship between them as well as functions that may be
+     applied to that data.
+   - In C, we only had two primary data structures available to us as
+     part of the language, the array and the struct. A third if we
+     consider the packed struct as a separate entity.
+   - Any other data structure that we created, like the linked list,
+     was composed by some combination of these two fundamental data
+     structures. In essence, the linked list in C was just a struct
+     that we placed an implicit special meaning based on the functions
+     that we chose to use it with.
+   - With the addition of classes, better syntax and other language
+     features we've added in the move to C++, we are able to further
+     tie data and the functions that operate on that data together to
+     create more complex data structures and encourage or enforce
+     their use in more specific ways.
+   #+END_NOTES
+   https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Static_and_dynamic_data_structure.jpg/640px-Static_and_dynamic_data_structure.jpg
+** structs
+   #+BEGIN_NOTES
+   - The struct that we are now quite familiar with is the compound
+     data or record type available to us in C.
+   - The struct represents a relation between a specific number of
+     fields (often called members).
+   - The fields are identified by their keys, so data in a struct are
+     related by a key-value relation.
+   #+END_NOTES
+   #+ATTR_HTML: :height 50%, :width 50%
+   https://s3.amazonaws.com/s3-blogs.mentor.com/colinwalls/files/2014/06/1.png
+** Arrays
+   #+BEGIN_NOTES
+   - The array was the other data structure available to us and
+     represents an ordered relation between elements, usually of the
+     same type in languages with static typing.
+   - In C, arrays are allocated linearly in memory, making them
+     relatively fast for random access of the elements.
+   #+END_NOTES
+   https://upload.wikimedia.org/wikipedia/commons/a/a5/Array_pointer.svg
+** Classes
+   #+BEGIN_NOTES
+   - We have since added classes to our repertoire of data
+     structures.
+   - As we saw from our study of structs in C, a class is essentially
+     a special case of record type (that is, a struct) that also
+     contains the procedures to operate on that type, which we call
+     methods.
+   - However, along with classes, we also got new features for
+     controlling access to our data structures' members, allowing us
+     to enforce proper use of our abstractions, as opposed to that
+     abstraction being implicit.
+   - The inheritance capabilities of classes also make adding
+     complexity to a data structure based on existing functionality
+     easier, more maintainable, and more understandable in the
+     creation of abstractions for data structures.
+   - Thus, the addition of classes as a fundamental data type in C++
+     as compared to C facilitates the creation of more complex and
+     rich data structures with less concern for users of the data
+     structure about how to use the data structure correctly.
+   #+END_NOTES
+   #+BEGIN_SRC c++
+    class Animal {
+    public:
+        Animal(char const* name): m_name(name) {}
+        virtual ~Animal() {}
+        virtual void make_sound() = 0;
+    protected:
+        std::string m_name;
+    };
+   #+END_SRC
+* Abstract Data Types
+** List
+   #+BEGIN_NOTES
+   - Also known as a sequence
+   - Represents a countable number of ordered values. The value of the
+     elements is inconsequential, so a list could contain many
+     elements of the same value.
+   - Most commonly, this is implemented as a form of linked list,
+     whether singly or doubly linked. These involve list elements that
+     contain a value as well as a pointer to the other elements in the
+     list.
+   - Because of the inherently expandable nature of the linked list
+     collections, the linked list is often used for collection and
+     iterating over variable or ambiguous amounts of data.
+   #+END_NOTES
+   https://upload.wikimedia.org/wikipedia/commons/3/37/Singly_linked_list.png
+** Associative Array
+   #+BEGIN_NOTES
+   - Also known as a map, dictionary, symbol table.
+   - An associative array is an collection in which keys are
+     associated with values in a one-to-one relation. It makes no
+     guarantees about ordering and should be considered unordered.
+   - Thus, the keys in a map are unique. The value of the elements is
+     inconsequential and may be of any value.
+   - In many implementations, these will take the form of a Hashmap,
+     such as in Java.
+   - Because a map is an associative structure, it is often valuable
+     for storing data that must be accessed randomly based on its
+     relation to other data, which provide natural key-value candidates.
+   #+END_NOTES
+   https://upload.wikimedia.org/wikipedia/commons/0/05/Associative_array_as_linked_list.svg
+** Multimap
+   #+BEGIN_NOTES
+   - A multimap is similar in functionality to an associative array,
+     storing elements based on a key-value relationship.
+   - However, unlike a normal map, multiple values may be associated
+     with a single key.
+   - Depending on the implementation, a multimap may be implemented as
+     a map of keys to lists or sets, or in the case of the STL, as a
+     self-balancing binary tree.
+   - Multimaps are often used in algorithms which involve classifying
+     many pieces of data into categories, which can later be retrieved
+     as a collection.
+   #+END_NOTES
+** Set
+   #+BEGIN_NOTES
+   - Speaking of sets, a set is an unordered, non-associative
+     container type that does not allow duplicate values.
+   - Sets are unique in that they are not often used to retrieve
+     single values since they are neither associative nor ordered, but
+     rather to test other values for membership in the set.
+   - Sets commonly have operations available to compare them to other
+     sets, providing unions, intersections, and differences.
+   #+END_NOTES
+   #+BEGIN_SRC c++
+   std::set&lt;std::string> strings;
+   strings.insert("first");
+   strings.insert("second");
+   strings.insert("third");
+   // returns true if value is found
+   strings.find("second") != strings.end();
+   #+END_SRC
+** Multiset
+   #+BEGIN_NOTES
+   - Also sometimes called a bag
+   - A multiset is an interesting data structure in that it keeps
+     track of unique values, but also keeps track of the members
+     associated with each value.
+   - Multisets may keep track of values that are considered to be
+     identical, simply keeping a count of the number of instances, or
+     they may keep track of references to individual instances of the
+     values considered to be identical in the set (acting somewhat
+     similarly to a multimap).
+   - Multisets often find use in algorithms requiring tracking
+     associations among many objects, such as in group-by operations.
+   #+END_NOTES
+** Stack
+   #+BEGIN_NOTES
+   - A stack is an ordered collection with a tiny set of principal
+     operations, push and pop.
+   - A normal stack keeps track of its elements in a LIFO order, so
+     the last-added elements are the first to be retrieved, whereas
+     earlier items will be retrieved in the opposite order that they
+     were added.
+   - Stacks are common in algorithms where keeping track of a sequence
+     of operations is important, such as in depth-first searches.
+   #+END_NOTES
+   https://upload.wikimedia.org/wikipedia/commons/b/b4/Lifo_stack.png
+** Queue
+   #+BEGIN_NOTES
+   - Queue is an ordered collection similar to a stack, however its
+     operation is in a FIFO order, such that the earliest-added item
+     will always be the first to be removed, whereas other items will
+     build up in the queue until earlier items are removed.
+   - Queues are common in algorithms that involve multiprocessing,
+     used as a buffer to allow to multiple entities to add to and
+     remove from the queue.
+   #+END_NOTES
+   https://upload.wikimedia.org/wikipedia/commons/5/52/Data_Queue.svg
+** Deque
+   #+BEGIN_NOTES
+   - A deque or double-ended queue is similar to a queue or a stack,
+     however, items can be pushed or popped from both ends.
+   - A deque is useful for situations where the context of whether the
+     oldest or newest items need to be processed at any point.
+   - One such algorithm is A-steal job scheduling used in IBM's thread
+     building blocks.
+   #+END_NOTES
+   http://www.java2novice.com/images/dequeue.png
+** Priority Queue
+   #+BEGIN_NOTES
+   - A priority queue is like a stack or a queue, but elements are
+     inserted with a priority.
+   - When an element is to be removed from the queue, the queue then
+     serves up the element with the highest priority, as opposed to
+     returning or removing the elements based on what order they were
+     placed in the collection.
+   - Priority queues are used in a number of algorithms that involve
+     preferential treatment of certain elements when the internal
+     sorting or retrieval of the queue is implemented efficiently,
+     specifically in search or encoding algorithms.
+   #+END_NOTES
+   http://www.includehelp.com/ds/Images/priority-queue.jpg
+** Tree
+   #+BEGIN_NOTES
+   - A tree is a data structure which abstracts around a hierarchical
+     structure, similar to a tree.
+   - Some implementations represent nodes each containing a value as
+     well as a number of children similar to a linked linst, with
+     nodes not containing children known as leaves.
+   - Other implementations may have all values stored as leaves, with
+     nodes containing only references to their children. This is known
+     as an ordered tree or plane tree.
+   - The most common form is the binary tree, where each node contains
+     a reference to at most 2 child nodes. Binary trees are extremely
+     useful in search and recursive algorithms, particularly when they
+     maintain a sorted structure.
+   #+END_NOTES
+   https://upload.wikimedia.org/wikipedia/commons/f/f7/Binary_tree.svg
+   https://upload.wikimedia.org/wikipedia/commons/d/da/Binary_search_tree.svg
+** Graph
+   #+BEGIN_NOTES
+   - A graph is somewhat like a tree in that it contains nodes with
+     links to other nodes. However, unlike a tree, in a graph cyclical
+     references are allowed between the nodes, making this an
+     associative rather than hierarchical structure.
+   - The nodes in a graph are generally referred to as vertices, while
+     the connections between these nodes, are known as edges.
+   - The edges in a graph may be directional, in which case it is
+     considered a directed graph, or weighted for a weighted graph.
+   - Graphs can be important in many searching, matching and coding
+     algorithms.
+   #+END_NOTES
+   https://upload.wikimedia.org/wikipedia/commons/5/5b/6n-graf.svg

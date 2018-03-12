@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Computer Science Fundamentals</title>
+<meta name="author" content="(Detroit Labs Dev Coaching)"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="./reveal.js/css/reveal.css"/>
+
+<link rel="stylesheet" href="./reveal.js/css/theme/league.css" id="theme"/>
+
+<link rel="stylesheet" href="./presentation.css"/>
+<link rel="stylesheet" href="./reveal.js/lib/css/zenburn.css"/>
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = './reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h1 class="title">Computer Science Fundamentals</h1><h2 class="author">Detroit Labs Dev Coaching</h2><h2 class="date">2018</h2>
+</section>
+
+<section>
+<section id="slide-orgce278d1">
+<h2 id="orgce278d1">Lab 8</h2>
+<aside class="notes">
+nil
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-orgcca8f7c">
+<h2 id="orgcca8f7c">STL Containers</h2>
+<aside class="notes">
+<ul>
+<li>Now that we've seen some of the most common and useful data
+structures invented in computer science, let's see what C++ has to
+offer for us.</li>
+<li>The STL includes implementations of many of the abstract data
+types we discussed in the lecture, so we will review those
+implementations.</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org60f2ab9">
+<h3 id="org60f2ab9">Container Commonalities</h3>
+<aside class="notes">
+<ul>
+<li>Default Constructor</li>
+<li>Copy constructor w/ deep copy</li>
+<li>Content-based equality with the equal and not-equal operators</li>
+<li>Lexicographical ordering with comparison operators</li>
+<li>Functions that return iterators to the beginning and ending of
+collections</li>
+<li>Functions that provide information about the collection's
+capacity like empty, size and max<sub>size</sub>.</li>
+
+</ul>
+
+</aside>
+<ul>
+<li>Default Constructor</li>
+<li>Copy constructor</li>
+<li><code>==</code> &amp; <code>!=</code></li>
+<li><code>{1, 2, 3} &lt; {1, 3, 2}</code></li>
+<li><code>begin()</code> and <code>end()</code></li>
+<li><code>empty()</code>, <code>size()</code> and <code>max_size()</code></li>
+
+</ul>
+</section>
+<section id="slide-org9cbcad8">
+<h3 id="org9cbcad8">Vector</h3>
+<aside class="notes">
+nil
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c++" >vector&lt;int> v;
+vector&lt;int>::iterator it;
+for (int i = 1; i <= 5; i++)
+    v.push_back(i);
+for (it= v.begin(); it!= v.end(); ++it)
+    cout &lt;&lt; *it&lt;&lt; endl;
+</code></pre>
+</div>
+</section>
+<section id="slide-org253d4c3">
+<h3 id="org253d4c3">List</h3>
+<aside class="notes">
+<ul>
+<li>This is implemented as a doubly-linked list</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c++" >list&lt;int> l;
+list&lt;int>::iterator it;
+for (int i = 1; i <=5; ++i)
+    l.push(i);
+for(it = l.begin(); it != l.end(); ++it)
+    cout &lt;&lt; *it &lt;&lt; endl;
+</code></pre>
+</div>
+</section>
+<section id="slide-orgc6b590d">
+<h3 id="orgc6b590d">Map</h3>
+<aside class="notes">
+nil
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c++" >map&lt;int,int> m;
+map&lt;int,int>::iterator it;
+for (int i = 1; i <= 5; ++i)
+    m.insert(pair&lt;int,int>(i,i*100));
+
+for (it = m.begin(); it != m.end(); ++it)
+    cout &lt;&lt; it->first &lt;&lt; '\t' &lt;&lt; it->second &lt;&lt; endl;
+
+if (it = m.find(3) != m.end())
+    cout &lt;&lt; it->first &lt;&lt; ' is ' &lt;&lt; it->second &lt;&lt; endl;
+else
+    cout &lt;&lt; "Couldn't find that element!" &lt;&lt; endl;
+</code></pre>
+</div>
+</section>
+<section id="slide-orgbabcba8">
+<h3 id="orgbabcba8">Multimap</h3>
+<aside class="notes">
+nil
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c++" >multimap&lt;int,int> m;
+multimap&lt;int,int>::iterator it;
+for (int i = 1; i <= 5; ++i) {
+    m.insert(pair&lt;int,int>(i,i));
+    m.insert(pair&lt;int,int>(i,i*100));
+}
+
+m.count(2);
+
+typedef multimap<string, string>::iterator iter;
+pair<iter,iter> found = m.equal_range(4);
+for (it = found->first; i != found->second; i++)
+    cout &lt;&lt; it->first &lt;&lt; ' is ' &lt;&lt; it->second &lt;&lt; endl;
+</code></pre>
+</div>
+</section>
+<section id="slide-org3d119d1">
+<h3 id="org3d119d1">Set</h3>
+<aside class="notes">
+nil
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c++" >set&lt;int,int> s;
+set&lt;int,int>::iterator it;
+for (int i = 1; i <= 5; ++i) {
+    s.insert(i);
+    s.insert(i*2);
+}
+if (it = s.find(4) != s.end())
+    cout < '4 is in the set' < endl;
+</code></pre>
+</div>
+</section>
+<section id="slide-orgd4be54c">
+<h3 id="orgd4be54c">Multiset</h3>
+<aside class="notes">
+nil
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c++" >multiset&lt;int,int> m;
+multiset&lt;int,int>::iterator it;
+for (int i = 1; i <= 5; ++i) {
+    m.insert(i);
+    m.insert(i*2);
+}
+</code></pre>
+</div>
+</section>
+<section id="slide-orgf340853">
+<h3 id="orgf340853">Stack</h3>
+<aside class="notes">
+nil
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c++" >stack&lt;int> s;
+for (int i = 1; i <=5; ++i)
+    s.push(i);
+while(!s.empty()) {
+    cout &lt;&lt; s.top() &lt;&lt; endl;
+    s.pop();
+}
+</code></pre>
+</div>
+</section>
+<section id="slide-org7993885">
+<h3 id="org7993885">Queue</h3>
+<aside class="notes">
+nil
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c++" >queue&lt;int> q;
+for (int i = 1; i <= 5; ++i)
+    q.push(i);
+while(!q.empty()) {
+    cout &lt;&lt; q.front() &lt;&lt; endl;
+    q.pop();
+}
+</code></pre>
+</div>
+</section>
+<section id="slide-orgd43791d">
+<h3 id="orgd43791d">Deque</h3>
+<aside class="notes">
+nil
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c++" >deque&lt;int> q;
+for (int i = 1; i <= 5; ++i)
+    if (i % 2 == 0)
+        q.push_front(i);
+    else
+        q.push_back(i);
+while(!q.empty()) {
+    cout &lt;&lt; q.front() &lt;&lt; endl;
+    q.pop_front();
+}
+</code></pre>
+</div>
+</section>
+<section id="slide-org4c67005">
+<h3 id="org4c67005">Priority Queue</h3>
+<aside class="notes">
+nil
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c++" >priority_queue&lt;int> q;
+q.push(4);
+q.push(2);
+q.push(3);
+q.push(5);
+q.push(1);
+while (!q.empty()) {
+    cout &lt;&lt; "    " &lt;&lt; q.top();
+    q.pop();
+}
+cout < endl;
+// 5    4    3    2    1
+</code></pre>
+</div>
+</section>
+</section>
+</div>
+</div>
+<script src="./reveal.js/lib/js/head.min.js"></script>
+<script src="./reveal.js/js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: true,
+slideNumber: 'c',
+rollingLinks: false,
+keyboard: true,
+overview: true,
+margin: 0.20,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+transitionSpeed: 'default',
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: './reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+ { src: './reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+});
+</script>
+</body>
+</html>

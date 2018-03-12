@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Computer Science Fundamentals</title>
+<meta name="author" content="(Detroit Labs Dev Coaching)"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="./reveal.js/css/reveal.css"/>
+
+<link rel="stylesheet" href="./reveal.js/css/theme/league.css" id="theme"/>
+
+<link rel="stylesheet" href="./presentation.css"/>
+<link rel="stylesheet" href="./reveal.js/lib/css/zenburn.css"/>
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = './reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h1 class="title">Computer Science Fundamentals</h1><h2 class="author">Detroit Labs Dev Coaching</h2><h2 class="date">2018</h2>
+</section>
+
+<section>
+<section id="slide-org5dc2060">
+<h2 id="org5dc2060">Lecture 8</h2>
+</section>
+</section>
+<section>
+<section id="slide-org4738ca9">
+<h2 id="org4738ca9">The World's Favorite Data Structures</h2>
+<div class="outline-text-2" id="text-org4738ca9">
+</div>
+</section>
+<section id="slide-orgeb34df8">
+<h3 id="orgeb34df8">Data Structures</h3>
+<aside class="notes">
+<ul>
+<li>A data structure is a way of organizing data such that it can be
+processed efficiently.</li>
+<li>A data structure is a collection of values with a defined
+relationship between them as well as functions that may be
+applied to that data.</li>
+<li>In C, we only had two primary data structures available to us as
+part of the language, the array and the struct. A third if we
+consider the packed struct as a separate entity.</li>
+<li>Any other data structure that we created, like the linked list,
+was composed by some combination of these two fundamental data
+structures. In essence, the linked list in C was just a struct
+that we placed an implicit special meaning based on the functions
+that we chose to use it with.</li>
+<li>With the addition of classes, better syntax and other language
+features we've added in the move to C++, we are able to further
+tie data and the functions that operate on that data together to
+create more complex data structures and encourage or enforce
+their use in more specific ways.</li>
+
+</ul>
+
+</aside>
+
+<div class="figure">
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Static_and_dynamic_data_structure.jpg/640px-Static_and_dynamic_data_structure.jpg" alt="640px-Static_and_dynamic_data_structure.jpg" />
+</p>
+</div>
+</section>
+<section id="slide-org8127ff2">
+<h3 id="org8127ff2">structs</h3>
+<aside class="notes">
+<ul>
+<li>The struct that we are now quite familiar with is the compound
+data or record type available to us in C.</li>
+<li>The struct represents a relation between a specific number of
+fields (often called members).</li>
+<li>The fields are identified by their keys, so data in a struct are
+related by a key-value relation.</li>
+
+</ul>
+
+</aside>
+
+<div class="figure">
+<p><img src="https://s3.amazonaws.com/s3-blogs.mentor.com/colinwalls/files/2014/06/1.png" alt="1.png" height="50%," width="50%" />
+</p>
+</div>
+</section>
+<section id="slide-org1ac7974">
+<h3 id="org1ac7974">Arrays</h3>
+<aside class="notes">
+<ul>
+<li>The array was the other data structure available to us and
+represents an ordered relation between elements, usually of the
+same type in languages with static typing.</li>
+<li>In C, arrays are allocated linearly in memory, making them
+relatively fast for random access of the elements.</li>
+
+</ul>
+
+</aside>
+
+<div class="figure">
+<p><object type="image/svg+xml" data="https://upload.wikimedia.org/wikipedia/commons/a/a5/Array_pointer.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>
+</p>
+</div>
+</section>
+<section id="slide-orgda10995">
+<h3 id="orgda10995">Classes</h3>
+<aside class="notes">
+<ul>
+<li>We have since added classes to our repertoire of data
+structures.</li>
+<li>As we saw from our study of structs in C, a class is essentially
+a special case of record type (that is, a struct) that also
+contains the procedures to operate on that type, which we call
+methods.</li>
+<li>However, along with classes, we also got new features for
+controlling access to our data structures' members, allowing us
+to enforce proper use of our abstractions, as opposed to that
+abstraction being implicit.</li>
+<li>The inheritance capabilities of classes also make adding
+complexity to a data structure based on existing functionality
+easier, more maintainable, and more understandable in the
+creation of abstractions for data structures.</li>
+<li>Thus, the addition of classes as a fundamental data type in C++
+as compared to C facilitates the creation of more complex and
+rich data structures with less concern for users of the data
+structure about how to use the data structure correctly.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c++" >class Animal {
+public:
+    Animal(char const* name): m_name(name) {}
+    virtual ~Animal() {}
+    virtual void make_sound() = 0;
+protected:
+    std::string m_name;
+};
+</code></pre>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-org39049e9">
+<h2 id="org39049e9">Abstract Data Types</h2>
+<div class="outline-text-2" id="text-org39049e9">
+</div>
+</section>
+<section id="slide-org7425621">
+<h3 id="org7425621">List</h3>
+<aside class="notes">
+<ul>
+<li>Also known as a sequence</li>
+<li>Represents a countable number of ordered values. The value of the
+elements is inconsequential, so a list could contain many
+elements of the same value.</li>
+<li>Most commonly, this is implemented as a form of linked list,
+whether singly or doubly linked. These involve list elements that
+contain a value as well as a pointer to the other elements in the
+list.</li>
+<li>Because of the inherently expandable nature of the linked list
+collections, the linked list is often used for collection and
+iterating over variable or ambiguous amounts of data.</li>
+
+</ul>
+
+</aside>
+
+<div class="figure">
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/3/37/Singly_linked_list.png" alt="Singly_linked_list.png" />
+</p>
+</div>
+</section>
+<section id="slide-org6b4d614">
+<h3 id="org6b4d614">Associative Array</h3>
+<aside class="notes">
+<ul>
+<li>Also known as a map, dictionary, symbol table.</li>
+<li>An associative array is an collection in which keys are
+associated with values in a one-to-one relation. It makes no
+guarantees about ordering and should be considered unordered.</li>
+<li>Thus, the keys in a map are unique. The value of the elements is
+inconsequential and may be of any value.</li>
+<li>In many implementations, these will take the form of a Hashmap,
+such as in Java.</li>
+<li>Because a map is an associative structure, it is often valuable
+for storing data that must be accessed randomly based on its
+relation to other data, which provide natural key-value candidates.</li>
+
+</ul>
+
+</aside>
+
+<div class="figure">
+<p><object type="image/svg+xml" data="https://upload.wikimedia.org/wikipedia/commons/0/05/Associative_array_as_linked_list.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>
+</p>
+</div>
+</section>
+<section id="slide-org6b13c98">
+<h3 id="org6b13c98">Multimap</h3>
+<aside class="notes">
+<ul>
+<li>A multimap is similar in functionality to an associative array,
+storing elements based on a key-value relationship.</li>
+<li>However, unlike a normal map, multiple values may be associated
+with a single key.</li>
+<li>Depending on the implementation, a multimap may be implemented as
+a map of keys to lists or sets, or in the case of the STL, as a
+self-balancing binary tree.</li>
+<li>Multimaps are often used in algorithms which involve classifying
+many pieces of data into categories, which can later be retrieved
+as a collection.</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-orgfdeaab3">
+<h3 id="orgfdeaab3">Set</h3>
+<aside class="notes">
+<ul>
+<li>Speaking of sets, a set is an unordered, non-associative
+container type that does not allow duplicate values.</li>
+<li>Sets are unique in that they are not often used to retrieve
+single values since they are neither associative nor ordered, but
+rather to test other values for membership in the set.</li>
+<li>Sets commonly have operations available to compare them to other
+sets, providing unions, intersections, and differences.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c++" >std::set&lt;std::string> strings;
+strings.insert("first");
+strings.insert("second");
+strings.insert("third");
+// returns true if value is found
+strings.find("second") != strings.end();
+</code></pre>
+</div>
+</section>
+<section id="slide-org30ed13d">
+<h3 id="org30ed13d">Multiset</h3>
+<aside class="notes">
+<ul>
+<li>Also sometimes called a bag</li>
+<li>A multiset is an interesting data structure in that it keeps
+track of unique values, but also keeps track of the members
+associated with each value.</li>
+<li>Multisets may keep track of values that are considered to be
+identical, simply keeping a count of the number of instances, or
+they may keep track of references to individual instances of the
+values considered to be identical in the set (acting somewhat
+similarly to a multimap).</li>
+<li>Multisets often find use in algorithms requiring tracking
+associations among many objects, such as in group-by operations.</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-orgee387ab">
+<h3 id="orgee387ab">Stack</h3>
+<aside class="notes">
+<ul>
+<li>A stack is an ordered collection with a tiny set of principal
+operations, push and pop.</li>
+<li>A normal stack keeps track of its elements in a LIFO order, so
+the last-added elements are the first to be retrieved, whereas
+earlier items will be retrieved in the opposite order that they
+were added.</li>
+<li>Stacks are common in algorithms where keeping track of a sequence
+of operations is important, such as in depth-first searches.</li>
+
+</ul>
+
+</aside>
+
+<div class="figure">
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/b/b4/Lifo_stack.png" alt="Lifo_stack.png" />
+</p>
+</div>
+</section>
+<section id="slide-org104365b">
+<h3 id="org104365b">Queue</h3>
+<aside class="notes">
+<ul>
+<li>Queue is an ordered collection similar to a stack, however its
+operation is in a FIFO order, such that the earliest-added item
+will always be the first to be removed, whereas other items will
+build up in the queue until earlier items are removed.</li>
+<li>Queues are common in algorithms that involve multiprocessing,
+used as a buffer to allow to multiple entities to add to and
+remove from the queue.</li>
+
+</ul>
+
+</aside>
+
+<div class="figure">
+<p><object type="image/svg+xml" data="https://upload.wikimedia.org/wikipedia/commons/5/52/Data_Queue.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>
+</p>
+</div>
+</section>
+<section id="slide-org6b65e14">
+<h3 id="org6b65e14">Deque</h3>
+<aside class="notes">
+<ul>
+<li>A deque or double-ended queue is similar to a queue or a stack,
+however, items can be pushed or popped from both ends.</li>
+<li>A deque is useful for situations where the context of whether the
+oldest or newest items need to be processed at any point.</li>
+<li>One such algorithm is A-steal job scheduling used in IBM's thread
+building blocks.</li>
+
+</ul>
+
+</aside>
+
+<div class="figure">
+<p><img src="http://www.java2novice.com/images/dequeue.png" alt="dequeue.png" />
+</p>
+</div>
+</section>
+<section id="slide-orge4c3efb">
+<h3 id="orge4c3efb">Priority Queue</h3>
+<aside class="notes">
+<ul>
+<li>A priority queue is like a stack or a queue, but elements are
+inserted with a priority.</li>
+<li>When an element is to be removed from the queue, the queue then
+serves up the element with the highest priority, as opposed to
+returning or removing the elements based on what order they were
+placed in the collection.</li>
+<li>Priority queues are used in a number of algorithms that involve
+preferential treatment of certain elements when the internal
+sorting or retrieval of the queue is implemented efficiently,
+specifically in search or encoding algorithms.</li>
+
+</ul>
+
+</aside>
+
+<div class="figure">
+<p><img src="http://www.includehelp.com/ds/Images/priority-queue.jpg" alt="priority-queue.jpg" />
+</p>
+</div>
+</section>
+<section id="slide-org96fd6b3">
+<h3 id="org96fd6b3">Tree</h3>
+<aside class="notes">
+<ul>
+<li>A tree is a data structure which abstracts around a hierarchical
+structure, similar to a tree.</li>
+<li>Some implementations represent nodes each containing a value as
+well as a number of children similar to a linked linst, with
+nodes not containing children known as leaves.</li>
+<li>Other implementations may have all values stored as leaves, with
+nodes containing only references to their children. This is known
+as an ordered tree or plane tree.</li>
+<li>The most common form is the binary tree, where each node contains
+a reference to at most 2 child nodes. Binary trees are extremely
+useful in search and recursive algorithms, particularly when they
+maintain a sorted structure.</li>
+
+</ul>
+
+</aside>
+<p>
+<object type="image/svg+xml" data="https://upload.wikimedia.org/wikipedia/commons/f/f7/Binary_tree.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>
+<object type="image/svg+xml" data="https://upload.wikimedia.org/wikipedia/commons/d/da/Binary_search_tree.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>
+</p>
+</section>
+<section id="slide-org22b46ac">
+<h3 id="org22b46ac">Graph</h3>
+<aside class="notes">
+<ul>
+<li>A graph is somewhat like a tree in that it contains nodes with
+links to other nodes. However, unlike a tree, in a graph cyclical
+references are allowed between the nodes, making this an
+associative rather than hierarchical structure.</li>
+<li>The nodes in a graph are generally referred to as vertices, while
+the connections between these nodes, are known as edges.</li>
+<li>The edges in a graph may be directional, in which case it is
+considered a directed graph, or weighted for a weighted graph.</li>
+<li>Graphs can be important in many searching, matching and coding
+algorithms.</li>
+
+</ul>
+
+</aside>
+
+<div class="figure">
+<p><object type="image/svg+xml" data="https://upload.wikimedia.org/wikipedia/commons/5/5b/6n-graf.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>
+</p>
+</div>
+</section>
+</section>
+</div>
+</div>
+<script src="./reveal.js/lib/js/head.min.js"></script>
+<script src="./reveal.js/js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: true,
+slideNumber: 'c',
+rollingLinks: false,
+keyboard: true,
+overview: true,
+margin: 0.20,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+transitionSpeed: 'default',
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: './reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+ { src: './reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+});
+</script>
+</body>
+</html>
