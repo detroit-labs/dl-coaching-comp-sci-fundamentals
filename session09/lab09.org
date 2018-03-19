@@ -1,0 +1,310 @@
+#+TITLE:  Computer Science Fundamentals
+#+AUTHOR: Detroit Labs Dev Coaching
+#+DATE:   2018
+#+EMAIL:  ndotz@detroitlabs.com
+#+LANGUAGE:  en
+#+OPTIONS:   H:3 num:nil toc:nil \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   skip:nil d:nil todo:t pri:nil tags:not-in-toc timestamp:nil
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+REVEAL_PLUGINS: (highlight notes)
+#+REVEAL_THEME: league
+#+REVEAL_MARGIN: 0.2
+# #+REVEAL_MIN_SCALE: 0.5
+# #+REVEAL_MAX_SCALE: 2.5
+#+REVEAL_EXTRA_CSS: ./presentation.css
+
+* Lab 9
+  #+BEGIN_NOTES
+  - Two weeks ago, we went through principles of Object oriented
+    programming, and last week we took a look at Data structures,
+    which gave us a better understanding of how encapsulation and
+    abstraction are implemented.
+  - This week, we'll be looking at how Polymorphism and Inheritance
+    are implemented.
+  #+END_NOTES
+* Polymorphism
+  #+BEGIN_NOTES
+  - Polymorphism is the ability to provide a single interface to
+    entities of different types.
+  - There are many types of polymorphism.
+  - We have already seen parametric polymorphism in the form of
+    templates for functions and classes. The type parameters we
+    provide determine the resulting type of the function.
+  - Also subtype polymorphism, in the form of passing a derived class
+    to functions which declare the use of a base class.
+  - The type of polymorphism we'll be looking at today primarily is
+    ad-hoc polymorphism, wherein a function has different
+    implementations for different types of arguments, which is known
+    as overloading.
+  #+END_NOTES
+** Overloading
+   #+BEGIN_NOTES
+   - Overloading is the process of providing multiple function
+     implementations for a function with the same name and number of
+     arguments.
+   - The compiler will select the appropriate implementation to use.
+   #+END_NOTES
+   #+BEGIN_SRC c++
+   Fraction add(Fraction f1, Fraction f2);
+   Fraction add(Fraction f1, int n);
+   Fraction add(Fraction f1, double d);
+   #+END_SRC
+** Function Selection
+   #+BEGIN_NOTES
+   - Exact matches happen first
+   - Then promotions, such as float to double or char to int
+   - Conversion, such as float to int
+   - Conversions we define through conversion constructors
+   - Or lastly, if the function takes variadic arguments using the
+     ellipsis, then it will match any unmatched types with the
+     variadic argument.
+   #+END_NOTES
+   - Exact Match
+   - Standard Promotion
+   - Standard Conversion
+   - User-defined conversion
+   - Variadic arguments
+** Operator Overloading
+   #+BEGIN_NOTES
+   - Aside from normal functions, C++ also gives us the ability to
+     overload operators.
+   - This allows us to add functionality to our types that lets them
+     act like built-in types.
+   #+END_NOTES
+   #+BEGIN_SRC c++
+   class Fraction {
+   public:
+       Fraction operator+(Fraction f); // binary addition
+       Fraction operator-();           // unary negation
+       // ...
+
+   Fraction c = Fraction(3/2) + Fraction(4/3); // Fraction 17/6
+   #+END_SRC
+** Operator Overloading
+   #+BEGIN_NOTES
+   - Any operator can be overloaded, including assignment with the
+     equal sign, indexing with the subscript operator, or even
+     customization of the new and delete operators.
+   - Often, operator overloading is seen as bad practice, especially
+     for inappropriate types. For example, what would the subscript
+     operator do for a fraction type?
+   - When overloading operators, be sure that the operator's use would
+     make sense based on the way that operator works on other types.
+   #+END_NOTES
+   #+BEGIN_SRC c++
+   class Fraction {
+   public:
+       int operator[](int n); // Subscript operator
+       Fraction operator->();      // Pointer operator
+       void* operator new(size_t size); // new operator
+       // ...
+   Fraction f = Fraction(3/2);
+   int n = f[1];
+   #+END_SRC
+** Friends
+   #+BEGIN_NOTES
+   - Because of the extensive options in allowing types to relate to
+     one another through implicit conversions and overloading, it is
+     sometimes convenient to allow certain types to break the normal
+     class exposure rules.
+   - Types can make exceptions to the normal rules by declaring
+     function prototypes or whole classes to be friends
+   - Friends of the type get access to all members of the type
+   - So, the fraction class may declare some global function
+     print_stuff as its friend, allowing it to access private and
+     protected members of Fraction
+   - Likewise, classes like ComplexNumber might declare the whole
+     fraction class as a friend so that Fraction can use
+     ComplexNumber's members uninhibited.
+   #+END_NOTES
+   #+BEGIN_SRC c++
+   void print_stuff(Fraction f) {
+       cout &lt;&lt; f.num &lt;&lt; "/" &lt;&lt; f.denom &lt;&lt; endl;
+   }
+   class Fraction {
+   friend void print_stuff(Fraction f);
+   // ...
+   class ComplexNumber {
+   friend class Fraction;
+   #+END_SRC
+** Friends and Overloading
+   #+BEGIN_NOTES
+   - A practical use of the friend keyword is to make objects we create
+     compatible with library operators such as the STL.
+   - So, overloading the streaming output operator must be declared as
+     a friend of the fraction class to enable it to see the internal
+     representation of fraction.
+   #+END_NOTES
+   #+BEGIN_SRC C++
+   class Fraction {
+   public:
+       friend ostream& operator&lt;&lt;(ostream& out, Fraction f);
+       // ...
+   };
+
+   ostream& operator&lt;&lt;(ostream& out, Fraction f) {
+       return (out &lt;&lt; f.num &lt;&lt; "/" &lt;&lt; f.denom);
+   }
+   #+END_SRC
+* Inheritance
+  #+BEGIN_NOTES
+  - Establishes is-a relationships between logically similar data
+    structures, allowing them to share functionality.
+  - Allows for significant code reuse
+  #+END_NOTES
+  https://upload.wikimedia.org/wikipedia/commons/a/a9/CPT-OOP-inheritance-roleplay.svg
+
+** Derived Class
+   #+BEGIN_NOTES
+   - Classes can inherit from other classes
+   - Base classes can control what properties are visible to derived
+     classes by using public, protected and private keywords.
+   #+END_NOTES
+   #+BEGIN_SRC c++
+   class Animal {
+   public:
+       Animal(char const* n): name(n) {}
+       void make_noise();
+   protected:
+       string name;
+   };
+   class Dog: public Animal {
+   public:
+       Dog(char const* name): Animal(name) {}
+   };
+   void Animal::make_noise() {
+       cout &lt;&lt; name;
+   }
+   #+END_SRC
+** Method Inheritance
+   #+BEGIN_NOTES
+   - Methods from a base class can be called by a derived class if
+     those classes have visibility.
+   #+END_NOTES
+   #+BEGIN_SRC c++
+   int main(void) {
+       Dog d = Dog("Earl");
+       d.make_noise();
+       cout &lt;&lt; endl;
+   }
+   #+END_SRC
+   #+BEGIN_SRC
+   Earl
+   #+END_SRC
+** Scope Visibility
+   #+BEGIN_NOTES
+   - Derived classes can override methods from their base classes.
+   - Derived classes wishing to make use of a base class's
+     implementation need to use the scope resolution operator to call
+     a parent class's implementation.
+   #+END_NOTES
+   #+BEGIN_SRC c++
+   class Dog: public Animal {
+   public:
+       Dog(char const* name): Animal(name) {}
+       void make_noise();
+   };
+   void Dog::make_noise() {
+       Animal::make_noise();
+       cout &lt;&lt; " the dog says \"woof\"" &lt;&lt; endl;
+   }
+   #+END_SRC
+   #+BEGIN_SRC
+   Earl the dog says "woof"
+   #+END_SRC
+* Virtual Members
+  #+BEGIN_NOTES
+  - Virtual methods provide runtime polymorphism as opposed to static
+    polymorphism, also known as dynamic dispatch.
+  - If a method is declared as virtual, then the implementation used
+    when calling a method will be determined by the type the object
+    was instantiated as.
+  - Because of this, virtual methods must be public and cannot be static.
+  - As of C++11 there is an override keyword for explicitly declaring
+    that an overridden virtual method is an override.
+  #+END_NOTES
+  #+BEGIN_SRC c++
+  class Animal {
+  public:
+      Animal(char const* n): name(n) {}
+      virtual void make_noise();
+  protected:
+      string name;
+  };
+  #+END_SRC
+** Virtual Methods
+  #+BEGIN_NOTES
+  - So, even if we use a pointer to an instance of a class whose type
+    is more primitive than the derived class that was instantiated, if
+    that method is virtual, the appropriate method implementation for
+    the derived class is called.
+  - It should also be noted that because this dispatch is done at
+    runtime, there is a slight performance cost at runtime, so virtual
+    methods are sometimes frowned up in performance-sensitive
+    applications unless the implementation requires it.
+  #+END_NOTES
+  #+BEGIN_SRC c++
+  Dog f = Dog("Fiona");
+  Animal a = f;    // does this line do what you think?
+  Animal *a2 = &f;
+  a.make_noise();
+  cout &lt;&lt; endl;
+  a2->make_noise();
+  #+END_SRC
+  #+BEGIN_SRC
+  Fiona
+  Fiona the dog says "woof"
+  #+END_SRC
+** Abstract Base Classes
+   #+BEGIN_NOTES
+   - A pure virtual function is a function whose pointer is set to
+     null.
+   - This forces derived classes to implement this method, which we
+     can call a deferred method.
+   - A class with a pure virtual function is known as an abstract base
+     class, as it cannot be instantiated on its own.
+   #+END_NOTES
+   #+BEGIN_SRC c++
+   class Animal {
+   public:
+       Animal(char const* n): name(n) {}
+       virtual void make_noise() = 0;
+   protected:
+       string name;
+   };
+   void Dog::make_noise() {
+       cout &lt;&lt; name &lt;&lt; " the dog says \"woof\"" &lt;&lt; endl;
+   }
+   #+END_SRC
+   #+BEGIN_SRC c++
+   Animal a = f; // this line will no longer compile
+   #+END_SRC
+* Multiple Inheritance
+   #+BEGIN_NOTES
+   - C++ allows for multiple inheritance.
+   - This is a contentious feature, because it allows for
+     what is known as the "diamond inheritance problem".
+   - It can also cause confusion if there are similarly named
+     properties or methods about which override which members of the
+     base classes in what order.
+   - However, having an object belong to many different types can be
+     extremely powerful, and many languages have tried to improve upon
+     this functionality with features such as traits, mixins, default
+     methods, protocol extensions and so forth.
+   #+END_NOTES
+   #+BEGIN_SRC c++
+   class HasLegs {
+   public:
+       HasLegs(int n) : numLegs(n) {}
+       int get_legs() const { return numLegs; }
+   protected:
+       int numLegs;
+   };
+
+   class Dog: public Animal, public HasLegs {
+   public:
+       Dog(char const* name): Animal(name), HasLegs(4) {}
+       // ...
+   #+END_SRC

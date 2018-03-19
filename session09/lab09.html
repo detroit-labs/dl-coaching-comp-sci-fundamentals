@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Computer Science Fundamentals</title>
+<meta name="author" content="(Detroit Labs Dev Coaching)"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="./reveal.js/css/reveal.css"/>
+
+<link rel="stylesheet" href="./reveal.js/css/theme/league.css" id="theme"/>
+
+<link rel="stylesheet" href="./presentation.css"/>
+<link rel="stylesheet" href="./reveal.js/lib/css/zenburn.css"/>
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = './reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h1 class="title">Computer Science Fundamentals</h1><h2 class="author">Detroit Labs Dev Coaching</h2><h2 class="date">2018</h2>
+</section>
+
+<section>
+<section id="slide-orgbb0835b">
+<h2 id="orgbb0835b">Lab 9</h2>
+<aside class="notes">
+<ul>
+<li>Two weeks ago, we went through principles of Object oriented
+programming, and last week we took a look at Data structures,
+which gave us a better understanding of how encapsulation and
+abstraction are implemented.</li>
+<li>This week, we'll be looking at how Polymorphism and Inheritance
+are implemented.</li>
+
+</ul>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-org9b19b71">
+<h2 id="org9b19b71">Polymorphism</h2>
+<aside class="notes">
+<ul>
+<li>Polymorphism is the ability to provide a single interface to
+entities of different types.</li>
+<li>There are many types of polymorphism.</li>
+<li>We have already seen parametric polymorphism in the form of
+templates for functions and classes. The type parameters we
+provide determine the resulting type of the function.</li>
+<li>Also subtype polymorphism, in the form of passing a derived class
+to functions which declare the use of a base class.</li>
+<li>The type of polymorphism we'll be looking at today primarily is
+ad-hoc polymorphism, wherein a function has different
+implementations for different types of arguments, which is known
+as overloading.</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-orgd6b0990">
+<h3 id="orgd6b0990">Overloading</h3>
+<aside class="notes">
+<ul>
+<li>Overloading is the process of providing multiple function
+implementations for a function with the same name and number of
+arguments.</li>
+<li>The compiler will select the appropriate implementation to use.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c++" >Fraction add(Fraction f1, Fraction f2);
+Fraction add(Fraction f1, int n);
+Fraction add(Fraction f1, double d);
+</code></pre>
+</div>
+</section>
+<section id="slide-org0f1d241">
+<h3 id="org0f1d241">Function Selection</h3>
+<aside class="notes">
+<ul>
+<li>Exact matches happen first</li>
+<li>Then promotions, such as float to double or char to int</li>
+<li>Conversion, such as float to int</li>
+<li>Conversions we define through conversion constructors</li>
+<li>Or lastly, if the function takes variadic arguments using the
+ellipsis, then it will match any unmatched types with the
+variadic argument.</li>
+
+</ul>
+
+</aside>
+<ul>
+<li>Exact Match</li>
+<li>Standard Promotion</li>
+<li>Standard Conversion</li>
+<li>User-defined conversion</li>
+<li>Variadic arguments</li>
+
+</ul>
+</section>
+<section id="slide-org79f42f5">
+<h3 id="org79f42f5">Operator Overloading</h3>
+<aside class="notes">
+<ul>
+<li>Aside from normal functions, C++ also gives us the ability to
+overload operators.</li>
+<li>This allows us to add functionality to our types that lets them
+act like built-in types.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c++" >class Fraction {
+public:
+    Fraction operator+(Fraction f); // binary addition
+    Fraction operator-();           // unary negation
+    // ...
+
+Fraction c = Fraction(3/2) + Fraction(4/3); // Fraction 17/6
+</code></pre>
+</div>
+</section>
+<section id="slide-org3bba19f">
+<h3 id="org3bba19f">Operator Overloading</h3>
+<aside class="notes">
+<ul>
+<li>Any operator can be overloaded, including assignment with the
+equal sign, indexing with the subscript operator, or even
+customization of the new and delete operators.</li>
+<li>Often, operator overloading is seen as bad practice, especially
+for inappropriate types. For example, what would the subscript
+operator do for a fraction type?</li>
+<li>When overloading operators, be sure that the operator's use would
+make sense based on the way that operator works on other types.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c++" >class Fraction {
+public:
+    int operator[](int n); // Subscript operator
+    Fraction operator->();      // Pointer operator
+    void* operator new(size_t size); // new operator
+    // ...
+Fraction f = Fraction(3/2);
+int n = f[1];
+</code></pre>
+</div>
+</section>
+<section id="slide-org58bcb58">
+<h3 id="org58bcb58">Friends</h3>
+<aside class="notes">
+<ul>
+<li>Because of the extensive options in allowing types to relate to
+one another through implicit conversions and overloading, it is
+sometimes convenient to allow certain types to break the normal
+class exposure rules.</li>
+<li>Types can make exceptions to the normal rules by declaring
+function prototypes or whole classes to be friends</li>
+<li>Friends of the type get access to all members of the type</li>
+<li>So, the fraction class may declare some global function
+print<sub>stuff</sub> as its friend, allowing it to access private and
+protected members of Fraction</li>
+<li>Likewise, classes like ComplexNumber might declare the whole
+fraction class as a friend so that Fraction can use
+ComplexNumber's members uninhibited.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c++" >void print_stuff(Fraction f) {
+    cout < f.num < "/" < f.denom < endl;
+}
+class Fraction {
+friend void print_stuff(Fraction f);
+// ...
+class ComplexNumber {
+friend class Fraction;
+</code></pre>
+</div>
+</section>
+<section id="slide-org195c8e3">
+<h3 id="org195c8e3">Friends and Overloading</h3>
+<aside class="notes">
+<ul>
+<li>A practical use of the friend keyword is to make objects we create
+compatible with library operators such as the STL.</li>
+<li>So, overloading the streaming output operator must be declared as
+a friend of the fraction class to enable it to see the internal
+representation of fraction.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="C++" >class Fraction {
+public:
+    friend ostream& operator<(ostream& out, Fraction f);
+    // ...
+};
+
+ostream& operator<(ostream& out, Fraction f) {
+    return (out < f.num < "/" < f.denom);
+}
+</code></pre>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-org55e8a9b">
+<h2 id="org55e8a9b">Inheritance</h2>
+<aside class="notes">
+<ul>
+<li>Establishes is-a relationships between logically similar data
+structures, allowing them to share functionality.</li>
+<li>Allows for significant code reuse</li>
+
+</ul>
+
+</aside>
+
+<div class="figure">
+<p><object type="image/svg+xml" data="https://upload.wikimedia.org/wikipedia/commons/a/a9/CPT-OOP-inheritance-roleplay.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>
+</p>
+</div>
+
+</section>
+<section id="slide-orgf4f7564">
+<h3 id="orgf4f7564">Derived Class</h3>
+<aside class="notes">
+<ul>
+<li>Classes can inherit from other classes</li>
+<li>Base classes can control what properties are visible to derived
+classes by using public, protected and private keywords.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c++" >class Animal {
+public:
+    Animal(char const* n): name(n) {}
+    void make_noise();
+protected:
+    string name;
+};
+class Dog: public Animal {
+public:
+    Dog(char const* name): Animal(name) {}
+};
+void Animal::make_noise() {
+    cout < name;
+}
+</code></pre>
+</div>
+</section>
+<section id="slide-orgac69573">
+<h3 id="orgac69573">Method Inheritance</h3>
+<aside class="notes">
+<ul>
+<li>Methods from a base class can be called by a derived class if
+those classes have visibility.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c++" >int main(void) {
+    Dog d = Dog("Earl");
+    d.make_noise();
+    cout < endl;
+}
+</code></pre>
+</div>
+<pre  class="example">
+Earl
+</pre>
+</section>
+<section id="slide-org3380911">
+<h3 id="org3380911">Scope Visibility</h3>
+<aside class="notes">
+<ul>
+<li>Derived classes can override methods from their base classes.</li>
+<li>Derived classes wishing to make use of a base class's
+implementation need to use the scope resolution operator to call
+a parent class's implementation.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c++" >class Dog: public Animal {
+public:
+    Dog(char const* name): Animal(name) {}
+    void make_noise();
+};
+void Dog::make_noise() {
+    Animal::make_noise();
+    cout < " the dog says \"woof\"" < endl;
+}
+</code></pre>
+</div>
+<pre  class="example">
+Earl the dog says "woof"
+</pre>
+</section>
+</section>
+<section>
+<section id="slide-orgd871fa1">
+<h2 id="orgd871fa1">Virtual Members</h2>
+<aside class="notes">
+<ul>
+<li>Virtual methods provide runtime polymorphism as opposed to static
+polymorphism, also known as dynamic dispatch.</li>
+<li>If a method is declared as virtual, then the implementation used
+when calling a method will be determined by the type the object
+was instantiated as.</li>
+<li>Because of this, virtual methods must be public and cannot be static.</li>
+<li>As of C++11 there is an override keyword for explicitly declaring
+that an overridden virtual method is an override.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c++" >class Animal {
+public:
+    Animal(char const* n): name(n) {}
+    virtual void make_noise();
+protected:
+    string name;
+};
+</code></pre>
+</div>
+</section>
+<section id="slide-org60e27cc">
+<h3 id="org60e27cc">Virtual Methods</h3>
+<aside class="notes">
+<ul>
+<li>So, even if we use a pointer to an instance of a class whose type
+is more primitive than the derived class that was instantiated, if
+that method is virtual, the appropriate method implementation for
+the derived class is called.</li>
+<li>It should also be noted that because this dispatch is done at
+runtime, there is a slight performance cost at runtime, so virtual
+methods are sometimes frowned up in performance-sensitive
+applications unless the implementation requires it.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c++" >Dog f = Dog("Fiona");
+Animal a = f;    // does this line do what you think?
+Animal *a2 = &f;
+a.make_noise();
+cout < endl;
+a2->make_noise();
+</code></pre>
+</div>
+<pre  class="example">
+Fiona
+Fiona the dog says "woof"
+</pre>
+</section>
+<section id="slide-org4b1f69b">
+<h3 id="org4b1f69b">Abstract Base Classes</h3>
+<aside class="notes">
+<ul>
+<li>A pure virtual function is a function whose pointer is set to
+null.</li>
+<li>This forces derived classes to implement this method, which we
+can call a deferred method.</li>
+<li>A class with a pure virtual function is known as an abstract base
+class, as it cannot be instantiated on its own.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c++" >class Animal {
+public:
+    Animal(char const* n): name(n) {}
+    virtual void make_noise() = 0;
+protected:
+    string name;
+};
+void Dog::make_noise() {
+    cout < name < " the dog says \"woof\"" < endl;
+}
+</code></pre>
+</div>
+<div class="org-src-container">
+
+<pre><code class="c++" >Animal a = f; // this line will no longer compile
+</code></pre>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-org9adafc6">
+<h2 id="org9adafc6">Multiple Inheritance</h2>
+<aside class="notes">
+<ul>
+<li>C++ allows for multiple inheritance.</li>
+<li>This is a contentious feature, because it allows for
+what is known as the "diamond inheritance problem".</li>
+<li>It can also cause confusion if there are similarly named
+properties or methods about which override which members of the
+base classes in what order.</li>
+<li>However, having an object belong to many different types can be
+extremely powerful, and many languages have tried to improve upon
+this functionality with features such as traits, mixins, default
+methods, protocol extensions and so forth.</li>
+
+</ul>
+
+</aside>
+<div class="org-src-container">
+
+<pre><code class="c++" >class HasLegs {
+public:
+    HasLegs(int n) : numLegs(n) {}
+    int get_legs() const { return numLegs; }
+protected:
+    int numLegs;
+};
+
+class Dog: public Animal, public HasLegs {
+public:
+    Dog(char const* name): Animal(name), HasLegs(4) {}
+    // ...
+</code></pre>
+</div>
+</section>
+</section>
+</div>
+</div>
+<script src="./reveal.js/lib/js/head.min.js"></script>
+<script src="./reveal.js/js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: true,
+slideNumber: 'c',
+rollingLinks: false,
+keyboard: true,
+overview: true,
+margin: 0.20,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+transitionSpeed: 'default',
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: './reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+ { src: './reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+});
+</script>
+</body>
+</html>

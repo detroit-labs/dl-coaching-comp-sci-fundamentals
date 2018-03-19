@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Computer Science Fundamentals</title>
+<meta name="author" content="(Detroit Labs Dev Coaching)"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="./reveal.js/css/reveal.css"/>
+
+<link rel="stylesheet" href="./reveal.js/css/theme/league.css" id="theme"/>
+
+<link rel="stylesheet" href="./presentation.css"/>
+<link rel="stylesheet" href="./reveal.js/lib/css/zenburn.css"/>
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = './reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h1 class="title">Computer Science Fundamentals</h1><h2 class="author">Detroit Labs Dev Coaching</h2><h2 class="date">2018</h2>
+</section>
+
+<section>
+<section id="slide-org5fc1884">
+<h2 id="org5fc1884">Lecture 9</h2>
+</section>
+</section>
+<section>
+<section id="slide-orgf5b45f1">
+<h2 id="orgf5b45f1">If Only Programming Languages Were Perfect.</h2>
+<aside class="notes">
+nil
+</aside>
+</section>
+<section id="slide-org23843fd">
+<h3 id="org23843fd">Assembly</h3>
+<div class="org-src-container">
+
+<pre><code class="asm" >.text
+.global pgcd
+pgcd:
+        push    %ebp
+        mov     %esp, %ebp
+
+        mov     8(%ebp), %eax
+        mov     12(%ebp), %ecx
+        push    %edx
+.loop:
+        cmp     $0, %ecx
+        je      .end
+        xor     %edx, %edx
+        div     %ecx
+        mov     %ecx, %eax
+        mov     %edx, %ecx
+        jmp     .loop
+.end:
+        pop     %edx
+        leave
+        ret
+</code></pre>
+</div>
+</section>
+<section id="slide-org6fa0a66">
+<h3 id="org6fa0a66">C</h3>
+<div class="org-src-container">
+
+<pre><code class="c" >int gcd(int u, int v) {
+    if (u < 0)
+        u = -u;
+    if (v < 0)
+        v = -v;
+    if (v)
+        while ((u %= v) && (v %= u));
+    return (u + v);
+}
+</code></pre>
+</div>
+</section>
+<section id="slide-org86729f0">
+<h3 id="org86729f0">C++</h3>
+<div class="org-src-container">
+
+<pre><code class="c++" >#include <boost/math/common_factor.hpp>
+#include <iostream>
+
+int main() {
+   std::cout < "The least common multiple of 12 and 18 is "
+             < boost::math::lcm(12, 18) < " ,\n"
+             < "and the greatest common divisor "
+             < boost::math::gcd(12, 18) < " !" < std::endl;
+   return 0;
+}
+</code></pre>
+</div>
+</section>
+<section id="slide-orge7a9eb9">
+<h3 id="orge7a9eb9">Object Oriented</h3>
+<ul>
+<li>Smalltalk</li>
+<li>Java</li>
+<li>Ruby</li>
+<li>Python</li>
+<li>C#</li>
+<li>Javascript</li>
+
+</ul>
+</section>
+<section id="slide-org3a9582c">
+<h3 id="org3a9582c">Functional</h3>
+<ul>
+<li>Racket</li>
+<li>Clojure</li>
+<li>OCaml</li>
+<li>Haskell</li>
+<li>Erlang</li>
+
+</ul>
+</section>
+<section id="slide-org436e7d7">
+<h3 id="org436e7d7">Interpreted</h3>
+<ul>
+<li>Most LISPs</li>
+<li>Perl</li>
+<li>Javascript</li>
+<li>Ruby</li>
+<li>Python</li>
+<li>PHP</li>
+
+</ul>
+</section>
+<section id="slide-org3c705b6">
+<h3 id="org3c705b6">Static Typing</h3>
+<ul>
+<li>Java</li>
+<li>C#</li>
+<li>Swift</li>
+<li>Scala</li>
+<li>Kotlin</li>
+<li>Haskell</li>
+<li>Rust</li>
+
+</ul>
+</section>
+<section id="slide-orgbf5b074">
+<h3 id="orgbf5b074">Dynamic Typing</h3>
+<ul>
+<li>Most LISPs</li>
+<li>Perl</li>
+<li>Javascript</li>
+<li>Ruby</li>
+<li>Python</li>
+<li>PHP</li>
+
+</ul>
+</section>
+<section id="slide-org1b86df4">
+<h3 id="org1b86df4">VMs</h3>
+<ul>
+<li>C# / .NET</li>
+<li>Java / JVM</li>
+<li>Racket</li>
+<li>Erlang</li>
+<li>Ruby</li>
+<li>Python</li>
+<li>Smalltalk</li>
+
+</ul>
+</section>
+<section id="slide-org7d3e9fb">
+<h3 id="org7d3e9fb">Native Code</h3>
+<ul>
+<li>Delphi</li>
+<li>Common LISP</li>
+<li>OCaml</li>
+<li>Go</li>
+<li>Rust</li>
+<li>Haskell</li>
+
+</ul>
+</section>
+<section id="slide-org7643f23">
+<h3 id="org7643f23">Why?</h3>
+</section>
+<section id="slide-org6e09739">
+<h3 id="org6e09739">The Best Programming Language</h3>
+<aside class="notes">
+<ul>
+<li>If you have nails, use a hammer</li>
+<li>If you have screws, use a screwdriver</li>
+<li>If you must cut boards, use a saw</li>
+
+</ul>
+
+</aside>
+<p>
+… is the one that fits the problem space best.
+</p>
+</section>
+</section>
+</div>
+</div>
+<script src="./reveal.js/lib/js/head.min.js"></script>
+<script src="./reveal.js/js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: true,
+slideNumber: 'c',
+rollingLinks: false,
+keyboard: true,
+overview: true,
+margin: 0.20,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+transitionSpeed: 'default',
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: './reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+ { src: './reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+});
+</script>
+</body>
+</html>
