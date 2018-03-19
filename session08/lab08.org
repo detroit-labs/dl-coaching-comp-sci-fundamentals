@@ -97,7 +97,7 @@
 
    m.count(2);
 
-   typedef multimap<string, string>::iterator iter;
+   typedef multimap&lt;int, int>::iterator iter;
    pair<iter,iter> found = m.equal_range(4);
    for (it = found->first; i != found->second; i++)
        cout &lt;&lt; it->first &lt;&lt; ' is ' &lt;&lt; it->second &lt;&lt; endl;
@@ -113,7 +113,7 @@
        s.insert(i*2);
    }
    if (it = s.find(4) != s.end())
-       cout << '4 is in the set' << endl;
+       cout &lt;&lt; '4 is in the set' &lt;&lt; endl;
    #+END_SRC
 ** Multiset
    #+BEGIN_NOTES
@@ -179,6 +179,6 @@
         cout &lt;&lt; "    " &lt;&lt; q.top();
         q.pop();
     }
-    cout << endl;
+    cout &lt;&lt; endl;
     // 5    4    3    2    1
    #+END_SRC
