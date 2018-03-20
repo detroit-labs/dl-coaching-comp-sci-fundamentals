@@ -31,8 +31,8 @@
 </section>
 
 <section>
-<section id="slide-orgbb0835b">
-<h2 id="orgbb0835b">Lab 9</h2>
+<section id="slide-org0edd875">
+<h2 id="org0edd875">Lab 9</h2>
 <aside class="notes">
 <ul>
 <li>Two weeks ago, we went through principles of Object oriented
@@ -48,8 +48,8 @@ are implemented.</li>
 </section>
 </section>
 <section>
-<section id="slide-org9b19b71">
-<h2 id="org9b19b71">Polymorphism</h2>
+<section id="slide-orge087ab8">
+<h2 id="orge087ab8">Polymorphism</h2>
 <aside class="notes">
 <ul>
 <li>Polymorphism is the ability to provide a single interface to
@@ -69,8 +69,8 @@ as overloading.</li>
 
 </aside>
 </section>
-<section id="slide-orgd6b0990">
-<h3 id="orgd6b0990">Overloading</h3>
+<section id="slide-org6c0f3d7">
+<h3 id="org6c0f3d7">Overloading</h3>
 <aside class="notes">
 <ul>
 <li>Overloading is the process of providing multiple function
@@ -89,8 +89,8 @@ Fraction add(Fraction f1, double d);
 </code></pre>
 </div>
 </section>
-<section id="slide-org0f1d241">
-<h3 id="org0f1d241">Function Selection</h3>
+<section id="slide-orgf112eda">
+<h3 id="orgf112eda">Function Selection</h3>
 <aside class="notes">
 <ul>
 <li>Exact matches happen first</li>
@@ -113,8 +113,8 @@ variadic argument.</li>
 
 </ul>
 </section>
-<section id="slide-org79f42f5">
-<h3 id="org79f42f5">Operator Overloading</h3>
+<section id="slide-orge04dbbf">
+<h3 id="orge04dbbf">Operator Overloading</h3>
 <aside class="notes">
 <ul>
 <li>Aside from normal functions, C++ also gives us the ability to
@@ -137,8 +137,8 @@ Fraction c = Fraction(3/2) + Fraction(4/3); // Fraction 17/6
 </code></pre>
 </div>
 </section>
-<section id="slide-org3bba19f">
-<h3 id="org3bba19f">Operator Overloading</h3>
+<section id="slide-orgf09e341">
+<h3 id="orgf09e341">Operator Overloading</h3>
 <aside class="notes">
 <ul>
 <li>Any operator can be overloaded, including assignment with the
@@ -166,8 +166,8 @@ int n = f[1];
 </code></pre>
 </div>
 </section>
-<section id="slide-org58bcb58">
-<h3 id="org58bcb58">Friends</h3>
+<section id="slide-org25eb626">
+<h3 id="org25eb626">Friends</h3>
 <aside class="notes">
 <ul>
 <li>Because of the extensive options in allowing types to relate to
@@ -190,7 +190,7 @@ ComplexNumber's members uninhibited.</li>
 <div class="org-src-container">
 
 <pre><code class="c++" >void print_stuff(Fraction f) {
-    cout < f.num < "/" < f.denom < endl;
+    cout &lt;&lt; f.num &lt;&lt; "/" &lt;&lt; f.denom &lt;&lt; endl;
 }
 class Fraction {
 friend void print_stuff(Fraction f);
@@ -200,8 +200,8 @@ friend class Fraction;
 </code></pre>
 </div>
 </section>
-<section id="slide-org195c8e3">
-<h3 id="org195c8e3">Friends and Overloading</h3>
+<section id="slide-org917d831">
+<h3 id="org917d831">Friends and Overloading</h3>
 <aside class="notes">
 <ul>
 <li>A practical use of the friend keyword is to make objects we create
@@ -217,20 +217,20 @@ representation of fraction.</li>
 
 <pre><code class="C++" >class Fraction {
 public:
-    friend ostream& operator<(ostream& out, Fraction f);
+    friend ostream& operator&lt;&lt;(ostream& out, Fraction f);
     // ...
 };
 
-ostream& operator<(ostream& out, Fraction f) {
-    return (out < f.num < "/" < f.denom);
+ostream& operator&lt;&lt;(ostream& out, Fraction f) {
+    return (out &lt;&lt; f.num &lt;&lt; "/" &lt;&lt; f.denom);
 }
 </code></pre>
 </div>
 </section>
 </section>
 <section>
-<section id="slide-org55e8a9b">
-<h2 id="org55e8a9b">Inheritance</h2>
+<section id="slide-orge9fb1c5">
+<h2 id="orge9fb1c5">Inheritance</h2>
 <aside class="notes">
 <ul>
 <li>Establishes is-a relationships between logically similar data
@@ -248,8 +248,8 @@ Sorry, your browser does not support SVG.</object>
 </div>
 
 </section>
-<section id="slide-orgf4f7564">
-<h3 id="orgf4f7564">Derived Class</h3>
+<section id="slide-org231bf83">
+<h3 id="org231bf83">Derived Class</h3>
 <aside class="notes">
 <ul>
 <li>Classes can inherit from other classes</li>
@@ -273,13 +273,13 @@ public:
     Dog(char const* name): Animal(name) {}
 };
 void Animal::make_noise() {
-    cout < name;
+    cout &lt;&lt; name;
 }
 </code></pre>
 </div>
 </section>
-<section id="slide-orgac69573">
-<h3 id="orgac69573">Method Inheritance</h3>
+<section id="slide-orgab4aa4a">
+<h3 id="orgab4aa4a">Method Inheritance</h3>
 <aside class="notes">
 <ul>
 <li>Methods from a base class can be called by a derived class if
@@ -293,7 +293,7 @@ those classes have visibility.</li>
 <pre><code class="c++" >int main(void) {
     Dog d = Dog("Earl");
     d.make_noise();
-    cout < endl;
+    cout &lt;&lt; endl;
 }
 </code></pre>
 </div>
@@ -301,8 +301,8 @@ those classes have visibility.</li>
 Earl
 </pre>
 </section>
-<section id="slide-org3380911">
-<h3 id="org3380911">Scope Visibility</h3>
+<section id="slide-orge2aba41">
+<h3 id="orge2aba41">Scope Visibility</h3>
 <aside class="notes">
 <ul>
 <li>Derived classes can override methods from their base classes.</li>
@@ -322,7 +322,7 @@ public:
 };
 void Dog::make_noise() {
     Animal::make_noise();
-    cout < " the dog says \"woof\"" < endl;
+    cout &lt;&lt; " the dog says \"woof\"" &lt;&lt; endl;
 }
 </code></pre>
 </div>
@@ -332,8 +332,8 @@ Earl the dog says "woof"
 </section>
 </section>
 <section>
-<section id="slide-orgd871fa1">
-<h2 id="orgd871fa1">Virtual Members</h2>
+<section id="slide-org4eb8b71">
+<h2 id="org4eb8b71">Virtual Members</h2>
 <aside class="notes">
 <ul>
 <li>Virtual methods provide runtime polymorphism as opposed to static
@@ -360,8 +360,8 @@ protected:
 </code></pre>
 </div>
 </section>
-<section id="slide-org60e27cc">
-<h3 id="org60e27cc">Virtual Methods</h3>
+<section id="slide-org6b6b6c3">
+<h3 id="org6b6b6c3">Virtual Methods</h3>
 <aside class="notes">
 <ul>
 <li>So, even if we use a pointer to an instance of a class whose type
@@ -382,7 +382,7 @@ applications unless the implementation requires it.</li>
 Animal a = f;    // does this line do what you think?
 Animal *a2 = &f;
 a.make_noise();
-cout < endl;
+cout &lt;&lt; endl;
 a2->make_noise();
 </code></pre>
 </div>
@@ -391,8 +391,8 @@ Fiona
 Fiona the dog says "woof"
 </pre>
 </section>
-<section id="slide-org4b1f69b">
-<h3 id="org4b1f69b">Abstract Base Classes</h3>
+<section id="slide-orgc20e482">
+<h3 id="orgc20e482">Abstract Base Classes</h3>
 <aside class="notes">
 <ul>
 <li>A pure virtual function is a function whose pointer is set to
@@ -415,7 +415,7 @@ protected:
     string name;
 };
 void Dog::make_noise() {
-    cout < name < " the dog says \"woof\"" < endl;
+    cout &lt;&lt; name &lt;&lt; " the dog says \"woof\"" &lt;&lt; endl;
 }
 </code></pre>
 </div>
@@ -427,8 +427,8 @@ void Dog::make_noise() {
 </section>
 </section>
 <section>
-<section id="slide-org9adafc6">
-<h2 id="org9adafc6">Multiple Inheritance</h2>
+<section id="slide-org69a7895">
+<h2 id="org69a7895">Multiple Inheritance</h2>
 <aside class="notes">
 <ul>
 <li>C++ allows for multiple inheritance.</li>

@@ -31,19 +31,19 @@
 </section>
 
 <section>
-<section id="slide-org5fc1884">
-<h2 id="org5fc1884">Lecture 9</h2>
+<section id="slide-orgde5e808">
+<h2 id="orgde5e808">Lecture 9</h2>
 </section>
 </section>
 <section>
-<section id="slide-orgf5b45f1">
-<h2 id="orgf5b45f1">If Only Programming Languages Were Perfect.</h2>
+<section id="slide-org24d41d7">
+<h2 id="org24d41d7">If Only Programming Languages Were Perfect.</h2>
 <aside class="notes">
 nil
 </aside>
 </section>
-<section id="slide-org23843fd">
-<h3 id="org23843fd">Assembly</h3>
+<section id="slide-orgea89b30">
+<h3 id="orgea89b30">Assembly</h3>
 <div class="org-src-container">
 
 <pre><code class="asm" >.text
@@ -70,14 +70,14 @@ pgcd:
 </code></pre>
 </div>
 </section>
-<section id="slide-org6fa0a66">
-<h3 id="org6fa0a66">C</h3>
+<section id="slide-orga2df1ff">
+<h3 id="orga2df1ff">C</h3>
 <div class="org-src-container">
 
 <pre><code class="c" >int gcd(int u, int v) {
-    if (u < 0)
+    if (u &lt; 0)
         u = -u;
-    if (v < 0)
+    if (v &lt; 0)
         v = -v;
     if (v)
         while ((u %= v) && (v %= u));
@@ -86,25 +86,25 @@ pgcd:
 </code></pre>
 </div>
 </section>
-<section id="slide-org86729f0">
-<h3 id="org86729f0">C++</h3>
+<section id="slide-org304b1d9">
+<h3 id="org304b1d9">C++</h3>
 <div class="org-src-container">
 
-<pre><code class="c++" >#include <boost/math/common_factor.hpp>
-#include <iostream>
+<pre><code class="c++" >#include &lt;boost/math/common_factor.hpp>
+#include &lt;iostream>
 
 int main() {
-   std::cout < "The least common multiple of 12 and 18 is "
-             < boost::math::lcm(12, 18) < " ,\n"
-             < "and the greatest common divisor "
-             < boost::math::gcd(12, 18) < " !" < std::endl;
+   std::cout &lt;&lt; "The least common multiple of 12 and 18 is "
+             &lt;&lt; boost::math::lcm(12, 18) &lt;&lt; " ,\n"
+             &lt;&lt; "and the greatest common divisor "
+             &lt;&lt; boost::math::gcd(12, 18) &lt;&lt; " !" &lt;&lt; std::endl;
    return 0;
 }
 </code></pre>
 </div>
 </section>
-<section id="slide-orge7a9eb9">
-<h3 id="orge7a9eb9">Object Oriented</h3>
+<section id="slide-org5194faf">
+<h3 id="org5194faf">Object Oriented</h3>
 <ul>
 <li>Smalltalk</li>
 <li>Java</li>
@@ -115,8 +115,8 @@ int main() {
 
 </ul>
 </section>
-<section id="slide-org3a9582c">
-<h3 id="org3a9582c">Functional</h3>
+<section id="slide-orgecfd52d">
+<h3 id="orgecfd52d">Functional</h3>
 <ul>
 <li>Racket</li>
 <li>Clojure</li>
@@ -126,8 +126,8 @@ int main() {
 
 </ul>
 </section>
-<section id="slide-org436e7d7">
-<h3 id="org436e7d7">Interpreted</h3>
+<section id="slide-org8eb1800">
+<h3 id="org8eb1800">Interpreted</h3>
 <ul>
 <li>Most LISPs</li>
 <li>Perl</li>
@@ -138,8 +138,8 @@ int main() {
 
 </ul>
 </section>
-<section id="slide-org3c705b6">
-<h3 id="org3c705b6">Static Typing</h3>
+<section id="slide-orgea5d2ff">
+<h3 id="orgea5d2ff">Static Typing</h3>
 <ul>
 <li>Java</li>
 <li>C#</li>
@@ -151,8 +151,8 @@ int main() {
 
 </ul>
 </section>
-<section id="slide-orgbf5b074">
-<h3 id="orgbf5b074">Dynamic Typing</h3>
+<section id="slide-orgf0f2f70">
+<h3 id="orgf0f2f70">Dynamic Typing</h3>
 <ul>
 <li>Most LISPs</li>
 <li>Perl</li>
@@ -163,8 +163,8 @@ int main() {
 
 </ul>
 </section>
-<section id="slide-org1b86df4">
-<h3 id="org1b86df4">VMs</h3>
+<section id="slide-orgb5e7b74">
+<h3 id="orgb5e7b74">VMs</h3>
 <ul>
 <li>C# / .NET</li>
 <li>Java / JVM</li>
@@ -176,8 +176,8 @@ int main() {
 
 </ul>
 </section>
-<section id="slide-org7d3e9fb">
-<h3 id="org7d3e9fb">Native Code</h3>
+<section id="slide-orgf15cb65">
+<h3 id="orgf15cb65">Native Code</h3>
 <ul>
 <li>Delphi</li>
 <li>Common LISP</li>
@@ -188,11 +188,11 @@ int main() {
 
 </ul>
 </section>
-<section id="slide-org7643f23">
-<h3 id="org7643f23">Why?</h3>
+<section id="slide-org025509e">
+<h3 id="org025509e">Why?</h3>
 </section>
-<section id="slide-org6e09739">
-<h3 id="org6e09739">The Best Programming Language</h3>
+<section id="slide-org77c7af8">
+<h3 id="org77c7af8">The Best Programming Language</h3>
 <aside class="notes">
 <ul>
 <li>If you have nails, use a hammer</li>

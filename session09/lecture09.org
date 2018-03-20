@@ -46,9 +46,9 @@ pgcd:
 ** C
    #+BEGIN_SRC c
 int gcd(int u, int v) {
-    if (u < 0)
+    if (u &lt; 0)
         u = -u;
-    if (v < 0)
+    if (v &lt; 0)
         v = -v;
     if (v)
         while ((u %= v) && (v %= u));
@@ -57,14 +57,14 @@ int gcd(int u, int v) {
    #+END_SRC
 ** C++
    #+BEGIN_SRC c++
-#include <boost/math/common_factor.hpp>
-#include <iostream>
+#include &lt;boost/math/common_factor.hpp>
+#include &lt;iostream>
 
 int main() {
-   std::cout << "The least common multiple of 12 and 18 is "
-             << boost::math::lcm(12, 18) << " ,\n"
-             << "and the greatest common divisor "
-             << boost::math::gcd(12, 18) << " !" << std::endl;
+   std::cout &lt;&lt; "The least common multiple of 12 and 18 is "
+             &lt;&lt; boost::math::lcm(12, 18) &lt;&lt; " ,\n"
+             &lt;&lt; "and the greatest common divisor "
+             &lt;&lt; boost::math::gcd(12, 18) &lt;&lt; " !" &lt;&lt; std::endl;
    return 0;
 }
    #+END_SRC
