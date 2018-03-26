@@ -75,7 +75,7 @@ Requirements scoring
 
   Comments:
 
-* 12 - Base class implements desctructor
+* 12 - Base class implements destructor
 
   Score:
 
