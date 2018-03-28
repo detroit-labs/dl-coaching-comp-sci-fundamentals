@@ -50,7 +50,8 @@ Requirements
    elements appropriately for the class they are being implemented on.
 9. Override the `pop` methods for Stack and Queue so that they remove
    and return elements appropriately for the class they are being
-   implemented on.
+   implemented on. Calling `pop` on an empty container should throw
+   an exception or cause an assertion to fail.
 10. Pushing into a full container should expand the maximum capacity
     for the container. If the push method is called on either the
     Stack or the Queue while the container is full, double the
@@ -62,7 +63,7 @@ Requirements
     structure. Clean up any allocated memory that is no longer needed
     after the data has been copied to its new memory location.
 12. Create a destructor for the LinearContainer class which deallocates
-    any stack-allocated memory when the object is destroyed.
+    any heap-allocated memory when the object is destroyed.
 13. Create a preprocessor macro `log(x)` in a header called
     `debug.hpp`. This macro will be used to handle any output other
     than the output of the main program. This macro should be defined
