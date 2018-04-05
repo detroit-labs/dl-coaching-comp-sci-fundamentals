@@ -6,7 +6,7 @@ classes. One will be a stack, and the other a queue. These container
 classes should be generic, using templates, to support containing any
 primitive type such as int, bool, char, pointer or struct ­ you will
 not be evaluated on storing class instances or deeply-copied
-arrays. Do not use the STL. You may other headers from the C++
+arrays. Do not use the STL. You may use other headers from the C++
 Standard Library or C Standard Library if you so choose, but
 `iostream` is likely the only header that you will find useful.
 
