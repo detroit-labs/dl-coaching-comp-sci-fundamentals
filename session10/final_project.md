@@ -37,7 +37,9 @@ Requirements
    number of elements.
 4. Your LinearContainer class should have a public constructor that
    takes as single integer as an argument. This is the initial maximum
-   number of elements it should be prepared to contain.
+   number of elements it should be prepared to contain. Have your
+   constructor allocate enough heap memory to store up to the maximum
+   amount of elements.
 5. Your LinearContainer class should also have a default constructor
    that sets the initial maximum number of elements to 10.
 6. Create a Stack class that extends your LinearContainer class. This
@@ -56,8 +58,10 @@ Requirements
     for the container. If the push method is called on either the
     Stack or the Queue while the container is full, double the
     container capacity from its current capacity to accommodate the
-    new element. Do not worry about reducing the size of a container
-    with a large capacity that is mostly unutilized.
+    new element, and in the process be sure to once again allocate
+    enough heap space so that the container can store up to its
+    maximum number of elements. Do not worry about reducing the size
+    of a container with a large capacity that is mostly unutilized.
 11. If a container has its capacity expanded, the existing elements
     should be copied into a new storage space adequate to hold the data
     structure. Clean up any allocated memory that is no longer needed
