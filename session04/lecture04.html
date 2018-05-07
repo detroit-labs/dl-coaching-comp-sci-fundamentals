@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Computer Science Fundamentals</title>
+<meta name="author" content="(Detroit Labs Dev Coaching)"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="./reveal.js/css/reveal.css"/>
+
+<link rel="stylesheet" href="./reveal.js/css/theme/league.css" id="theme"/>
+
+<link rel="stylesheet" href="./presentation.css"/>
+<link rel="stylesheet" href="./reveal.js/lib/css/zenburn.css"/>
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = './reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h1 class="title">Computer Science Fundamentals</h1><h2 class="author">Detroit Labs Dev Coaching</h2><h2 class="date">2018</h2>
+</section>
+
+<section>
+<section id="slide-org0f64412">
+<h2 id="org0f64412">Lecture 4</h2>
+<aside class="notes">
+<ul>
+<li>Beyond the Processor</li>
+<li>Computer Architectures</li>
+
+</ul>
+
+</aside>
+
+</section>
+</section>
+<section>
+<section id="slide-orge5ec160">
+<h2 id="orge5ec160">Beyond the Processor</h2>
+<div class="outline-text-2" id="text-orge5ec160">
+</div>
+</section>
+<section id="slide-org4e32bc5">
+<h3 id="org4e32bc5"><object type="image/svg+xml" data="https://upload.wikimedia.org/wikipedia/commons/e/ec/Dual_Core_Generic.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object></h3>
+</section>
+<section id="slide-org6b7a7ef">
+<h3 id="org6b7a7ef">Caches</h3>
+
+<div class="figure">
+<p><object type="image/svg+xml" data="https://upload.wikimedia.org/wikipedia/commons/1/11/Cache,hierarchy-example.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>
+</p>
+</div>
+</section>
+<section id="slide-org2e13a7f">
+<h3 id="org2e13a7f"><img src="https://upload.wikimedia.org/wikipedia/commons/3/3d/Square_array_of_mosfet_cells_read.png" alt="Square_array_of_mosfet_cells_read.png" /></h3>
+</section>
+<section id="slide-org834e6f9">
+<h3 id="org834e6f9">Storage Media</h3>
+
+<div class="figure">
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/9/92/Intel_DC_S3700_SSD_series,_top_side_of_a_100_GB_SATA_3.0_model.jpg" alt="Intel_DC_S3700_SSD_series,_top_side_of_a_100_GB_SATA_3.0_model.jpg" height="50%" width="50%" />
+</p>
+</div>
+</section>
+<section id="slide-org998a439">
+<h3 id="org998a439">Parallel and Serial Communication</h3>
+
+<div class="figure">
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Parallel_computer_printer_port.jpg" alt="Parallel_computer_printer_port.jpg" height="50%" width="50%" />
+</p>
+</div>
+</section>
+<section id="slide-orgeef3c34">
+<h3 id="orgeef3c34">Parallel and Serial Communication</h3>
+<p>
+<a href="http://electrosofts.com/parallel/">Parallel protocol</a>
+</p>
+</section>
+<section id="slide-orgbc270a2">
+<h3 id="orgbc270a2">Parallel and Serial Communication</h3>
+
+<div class="figure">
+<p><img src="https://78462f86-a-191d98a1-s-sites.googlegroups.com/a/robotmaker.eu/www/ROBOTmaker/t/GRBLCNC_ParallelUSBConverter_Nano2.JPG" alt="GRBLCNC_ParallelUSBConverter_Nano2.JPG" />
+</p>
+</div>
+</section>
+<section id="slide-org61debbf">
+<h3 id="org61debbf">USB</h3>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/USB_(Physical)#Pinouts">USB Pinouts</a></li>
+<li><a href="https://en.wikipedia.org/wiki/USB_(Communications)#Protocol_layer">USB Protocol Layer</a></li>
+
+</ul>
+</section>
+</section>
+</div>
+</div>
+<script src="./reveal.js/lib/js/head.min.js"></script>
+<script src="./reveal.js/js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: true,
+slideNumber: 'c',
+rollingLinks: false,
+keyboard: true,
+overview: true,
+margin: 0.20,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+transitionSpeed: 'default',
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: './reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+ { src: './reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+});
+</script>
+</body>
+</html>

@@ -18,5 +18,25 @@
 * Lecture 4
   #+BEGIN_NOTES
   - Beyond the Processor
-  - Computer Architectures
   #+END_NOTES
+
+* Beyond the Processor
+** https://upload.wikimedia.org/wikipedia/commons/e/ec/Dual_Core_Generic.svg
+** Caches
+   https://upload.wikimedia.org/wikipedia/commons/1/11/Cache%2Chierarchy-example.svg
+** RAM
+   #+ATTR_HTML: :height 40% :width 40%
+   https://upload.wikimedia.org/wikipedia/commons/3/3d/Square_array_of_mosfet_cells_read.png
+** Storage Media
+   #+ATTR_HTML: :height 70% :width 70%
+   https://upload.wikimedia.org/wikipedia/commons/9/92/Intel_DC_S3700_SSD_series%2C_top_side_of_a_100_GB_SATA_3.0_model.jpg
+** Parallel and Serial Communication
+   #+ATTR_HTML: :height 70% :width 70%
+   https://upload.wikimedia.org/wikipedia/commons/f/fa/Parallel_computer_printer_port.jpg
+** Parallel and Serial Communication
+   [[http://electrosofts.com/parallel/][Parallel protocol]]
+** Parallel and Serial Communication
+   https://78462f86-a-191d98a1-s-sites.googlegroups.com/a/robotmaker.eu/www/ROBOTmaker/t/GRBLCNC_ParallelUSBConverter_Nano2.JPG
+** USB
+   - [[https://en.wikipedia.org/wiki/USB_(Physical)#Pinouts][USB Pinouts]]
+   - [[https://en.wikipedia.org/wiki/USB_(Communications)#Protocol_layer][USB Protocol Layer]]
