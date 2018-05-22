@@ -28,7 +28,10 @@
   - Programming in C (4th Edition), Kochan ­ ISBN-10: 0321776410
   - C++ For C Programmers (3rd Edition), Pohl ­ ISBN-10: 0201395193 (optional)
 * Course Outline
-** Session 1 -
+** Session 1
+   Reading
+   Programming in C
+   - Chapters 1-6
    Lecture
    - How does data look to a computer?
    - What does a program look like to a computer?
@@ -38,7 +41,13 @@
    - Type sizes
    - Loops
    - Conditionals
-** Session 2 -
+** Session 2
+   Reading
+   Programming in C
+   - Chapter 7: Working with Arrays
+   - Chapter 8: Working with Functions
+   - Chapter 9: Working with Structures
+   Lecture
    - What is computer science?
    - What is a data structure?
    - What is an algorithm?
@@ -46,7 +55,13 @@
    - Arrays
    - Structs
    - Functions
-** Session 3 -
+** Session 3
+   Reading
+   Programming in C
+   - Chapter 10 - Character Strings
+   - Chapter 11 - Pointers
+   - Chapter 12 - Operations on Bits
+   - Chapter 14 - More on Data Types
    Lecture
    - Why is C so Weird?
    - Systems and General Purpose programming
@@ -55,7 +70,12 @@
    - Pointers
    - Bit-wise operations
    - Enumerations
-** Session 4 -
+** Session 4
+   Reading
+   Programming in C
+   - Chapter 13 - The Preprocessor
+   - Chapter 15 - Working with Larger Programs
+   - Chapter 16 - Input and Output Operations in C
    Lecture
    - Beyond the Processor
    - Computer Architectures
@@ -64,13 +84,22 @@
    - macros
    - Working with larger programs
    - I/O part 1
-** Session 5 -
+** Session 5
+   Reading
+   Programming in C
+   - Chapter 17 - Miscellaneous and Advanced Features
+   - Chapter 19 - Object-Oriented Programming
    Lecture
    - The Heap and the Stack
    Lab
    - malloc, calloc, and free
    - I/O part 2
-** Session 6 -
+** Session 6
+   Reading
+   C++ for C Programmers by Ira Pohl
+   - Chapter 1 - An Overview of C++ and Object-Oriented Programming
+   - Chapter 3 - Functions, Pointers and Arrays
+   - Chapter 4 - Classes
    Lecture
    - In search of a better C
    - Differences between C and C++
@@ -80,7 +109,11 @@
    - Classes and object orientation
    - C++ Functions and Generics
    - namespaces
-** Session 7 -
+** Session 7
+   Reading
+   C++ for C Programmers by Ira Pohl
+   - Chapter 5 - Constructors and Destructors
+   - Chapter 7 - Templates, Generic Programming, and STL
    Lecture
    - Principles of Object Oriented Programming
    Lab
@@ -89,14 +122,18 @@
    - Conversion and Copy constructors
    - Dynamic memory allocation
    - Hello, STL
-** Session 8 -
+** Session 8
+   Reading
+   C++ for C Programmers by Ira Pohl
+   - Chapter 6 - Operator Overloading and Conversions
+   - Chapter 8 - Inheritance
    Lecture
    - The World's Favorite Data structures
    Lab
    - STL Containers
    - STL I/O types
    - Iterators
-** Session 9 -
+** Session 9
    Lecture
    - If Only Programming Languages Were Perfect
    Lab
@@ -104,6 +141,6 @@
    - Virtual members
    - Virtual functions
    - Assertions & Exceptions
-** Session 10 -
+** Session 10
    - Wrap up
    - Final homework
